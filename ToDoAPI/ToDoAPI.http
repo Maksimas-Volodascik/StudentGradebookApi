@@ -8,8 +8,19 @@ Accept: application/json
 POST {{ToDoAPI_HostAddress}}/api/todoitems
 Content-Type: application/json
 {
-  "name": "walk dog",
-  "isComplete": true
+  "name": "sleep",
+  "isComplete": false
 }
+
+###
+
+GET {{ToDoAPI_HostAddress}}/api/todoitems/
+Accept: application/json
+
+###
+
+@id=1
+GET {{ToDoAPI_HostAddress}}/api/todoitems/{{id}}
+Accept: application/json
 
 ###
