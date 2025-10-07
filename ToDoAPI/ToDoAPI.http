@@ -1,0 +1,15 @@
+@ToDoAPI_HostAddress = https://localhost:7220
+
+GET {{ToDoAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{ToDoAPI_HostAddress}}/api/todoitems
+Content-Type: application/json
+{
+  "name": "walk dog",
+  "isComplete": true
+}
+
+###
