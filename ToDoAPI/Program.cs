@@ -12,8 +12,11 @@ namespace ToDoAPI
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-            builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
-
+            //builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            builder.Services.AddDbContext<StudentContext>(options =>
+            {
+                options.UseSqlServer("Server=DESKTOP-SB9TOF8\\SQLEXPRESS;Database=DBSchool;Trusted_Connection=True;TrustServerCertificate=True;");
+            });
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
