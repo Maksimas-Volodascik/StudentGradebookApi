@@ -17,6 +17,7 @@ namespace ToDoAPI.Models
         public string email { get; set; }
         public DateTime date_of_birth { get; set; }
         public DateTime enrollment_date { get; set; }
+        [Required(ErrorMessage = "Select student status!")]
         public string status { get; set; }
 
         public List<Enrollments> enrollments { get; set; } = new();  //student can enroll in many classes
