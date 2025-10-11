@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Data;
+using ToDoAPI.Repositories;
+using ToDoAPI.Services;
 
 namespace ToDoAPI
 {
@@ -12,10 +14,14 @@ namespace ToDoAPI
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
-            //builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 
+            // Database
             builder.Services.AddDbContext<SchoolDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Repository and Services
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IStudentService, StudentService>();
 
             var app = builder.Build();
 
