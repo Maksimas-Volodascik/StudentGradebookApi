@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using ToDoAPI.Models;
 
-namespace ToDoAPI.Models
+namespace ToDoAPI.Data
 {
     public class SchoolDbContext : DbContext
     {

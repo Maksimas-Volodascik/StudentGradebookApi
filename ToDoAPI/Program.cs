@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using ToDoAPI.Models;
+using ToDoAPI.Data;
 
 namespace ToDoAPI
 {
