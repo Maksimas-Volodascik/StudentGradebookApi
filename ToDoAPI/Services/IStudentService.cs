@@ -7,5 +7,6 @@ namespace ToDoAPI.Services
         Task<IEnumerable<Students>> GetAllStudentsAsync();
         Task<Students?> GetStudentByIdAsync(int id);
         Task AddStudentAsync(Students student);
+        Task DeleteStudentAsync(Students student);
     }
 }

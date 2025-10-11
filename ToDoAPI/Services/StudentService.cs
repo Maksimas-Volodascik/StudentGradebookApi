@@ -18,6 +18,11 @@ namespace ToDoAPI.Services
         public async Task AddStudentAsync(Students student){
             await _studentRepository.AddAsync(student);
             await _studentRepository.SaveChangesAsync();
-        }          
+        }
+        public async Task DeleteStudentAsync(Students student)
+        {
+            _studentRepository.Delete(student);
+            await _studentRepository.SaveChangesAsync();
+        }
     }
 }
