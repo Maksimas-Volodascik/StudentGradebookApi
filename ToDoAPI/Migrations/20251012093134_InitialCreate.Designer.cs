@@ -7,13 +7,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoAPI.Data;
 
-
 #nullable disable
 
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20251010175341_InitialCreate")]
+    [Migration("20251012093134_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -59,8 +58,9 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("class_id"));
 
-                    b.Property<DateTime>("academic_year")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("academic_year")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("room")
                         .HasColumnType("int");

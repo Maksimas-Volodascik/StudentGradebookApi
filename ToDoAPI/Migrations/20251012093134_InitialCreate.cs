@@ -17,7 +17,7 @@ namespace ToDoAPI.Migrations
                 {
                     class_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    academic_year = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    academic_year = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     room = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
