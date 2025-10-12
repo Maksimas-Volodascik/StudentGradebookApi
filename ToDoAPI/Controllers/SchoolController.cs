@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Data;
+using ToDoAPI.DTOs;
 using ToDoAPI.Models;
 using ToDoAPI.Services;
 
@@ -13,23 +14,32 @@ namespace ToDoAPI.Controllers
         private readonly IStudentService _studentService;
         //will need to add more services (teachers, classes etc).
 
+
         public SchoolController(IStudentService studentService)
         {
             _studentService = studentService;
         }
 
         // GET: api/Students
-        [HttpGet]
+        [HttpGet("students")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
             return Ok(students);
         }
-        [HttpGet]
+        [HttpGet("students/{id}")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
-            return Ok(student);
+
+            StudentData response = new StudentData()
+            {
+                first_name = student.first_name,
+                last_name = student.last_name,
+                email = student.email
+            };
+
+            return Ok(response);
         }
 
         [HttpDelete]
