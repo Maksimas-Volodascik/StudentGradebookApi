@@ -9,13 +9,13 @@ Content-Type: application/json
 
 ###
 
-GET {{ToDoAPI_HostAddress}}/api/students/
+GET {{ToDoAPI_HostAddress}}/api/school/students
 Accept: application/json
 
 ###
 
 @id=1
-GET {{ToDoAPI_HostAddress}}/api/todoitems/{{id}}
+GET {{ToDoAPI_HostAddress}}/api/school/students/{{id}}
 Accept: application/json
 
 ###
