@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ToDoAPI.Data;
+using ToDoAPI.Mappings;
 using ToDoAPI.Repositories;
 using ToDoAPI.Services;
 
@@ -22,6 +24,7 @@ namespace ToDoAPI
             // Repository and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
 
             var app = builder.Build();
 

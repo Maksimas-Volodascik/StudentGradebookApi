@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Data;
 using ToDoAPI.DTOs;
@@ -13,11 +14,11 @@ namespace ToDoAPI.Controllers
     {
         private readonly IStudentService _studentService;
         //will need to add more services (teachers, classes etc).
-
-
-        public SchoolController(IStudentService studentService)
+        private readonly IMapper _mapper;
+        public SchoolController(IStudentService studentService, IMapper mapper)
         {
             _studentService = studentService;
+            _mapper = mapper;
         }
 
         // GET: api/Students
@@ -31,14 +32,7 @@ namespace ToDoAPI.Controllers
         public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
-
-            StudentData response = new StudentData()
-            {
-                first_name = student.first_name,
-                last_name = student.last_name,
-                email = student.email
-            };
-
+            StudentData response = _mapper.Map<StudentData>(student);
             return Ok(response);
         }
 
