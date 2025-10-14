@@ -7,7 +7,7 @@ namespace ToDoAPI.Data
     public class SchoolDbContext : DbContext
     {
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options) : base(options) { }
-
+        //public DbSet<ParentLogins> ParentLogins { get; set; }
         public DbSet<Students> Students { get; set; } = null!;
         public DbSet<Enrollments> Enrollments{ get; set; } = null!;
         public DbSet<Attendance> Attendances { get; set; } = null!;
