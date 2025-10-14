@@ -15,11 +15,21 @@ namespace ToDoAPI.Controllers
         private readonly IStudentService _studentService;
         //will need to add more services (teachers, classes etc).
         private readonly IMapper _mapper;
-        public SchoolController(IStudentService studentService, IMapper mapper)
+        private readonly TokenService _tokenService;
+        public SchoolController(IStudentService studentService, IMapper mapper, TokenService tokenService)
         {
             _studentService = studentService;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
+
+        // POST: api/auth/login
+        [HttpPost("login")]
+        public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
+        {
+
+        }
+
 
         // GET: api/Students
         [HttpGet("students")]
