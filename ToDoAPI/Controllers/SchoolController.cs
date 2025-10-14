@@ -23,14 +23,6 @@ namespace ToDoAPI.Controllers
             _tokenService = tokenService;
         }
 
-        // POST: api/auth/login
-        [HttpPost("login")]
-        public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
-        {
-
-        }
-
-
         // GET: api/Students
         [HttpGet("students")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
