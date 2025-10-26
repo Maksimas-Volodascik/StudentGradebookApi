@@ -27,6 +27,58 @@
   },
   {
     "ContainingType": "ToDoAPI.Controllers.SchoolController",
+    "Method": "LoginStudent",
+    "RelativePath": "api/School/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentData",
+        "Type": "ToDoAPI.DTOs.StudentData",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.SchoolController",
+    "Method": "RegisterStudent",
+    "RelativePath": "api/School/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentData",
+        "Type": "ToDoAPI.DTOs.StudentData",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Students, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.SchoolController",
     "Method": "GetStudents",
     "RelativePath": "api/School/students",
     "HttpMethod": "GET",
