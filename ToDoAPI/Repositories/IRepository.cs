@@ -4,7 +4,7 @@
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
-        Task<T?> GetByNameAsync(string name);
+        Task<T?> GetByEmailAsync(string email);
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);

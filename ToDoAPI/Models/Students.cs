@@ -14,7 +14,10 @@ namespace ToDoAPI.Models
         [Required]
         [MaxLength(100)]
         public string last_name { get; set; } = null!;
+        [Required]
         public string email { get; set; }
+        [Required]
+        public string passwordHash { get; set; }
         public DateTime date_of_birth { get; set; }
         public DateTime enrollment_date { get; set; }
         [Required(ErrorMessage = "Select student status!")]

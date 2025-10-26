@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ToDoAPI.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using ToDoAPI.DTOs;
 using ToDoAPI.Models;
 using ToDoAPI.Services;
@@ -15,12 +19,10 @@ namespace ToDoAPI.Controllers
         private readonly IStudentService _studentService;
         //will need to add more services (teachers, classes etc).
         private readonly IMapper _mapper;
-        private readonly TokenService _tokenService;
-        public SchoolController(IStudentService studentService, IMapper mapper, TokenService tokenService)
+        public SchoolController(IConfiguration configuration, IStudentService studentService, IMapper mapper)
         {
             _studentService = studentService;
             _mapper = mapper;
-            _tokenService = tokenService;
         }
 
         // GET: api/Students
@@ -37,12 +39,34 @@ namespace ToDoAPI.Controllers
             StudentData response = _mapper.Map<StudentData>(student);
             return Ok(response);
         }
-
         [HttpDelete]
         public async Task<ActionResult<IEnumerable<Students>>> DeleteStudent(Students student)
         {
             await _studentService.DeleteStudentAsync(student);
             return Ok();
+        }      
+        //Register user
+        [HttpPost("register")]
+        public async Task<ActionResult<IEnumerable<Students>>> RegisterStudent (StudentData studentData)
+        {
+            var student = await _studentService.RegisterAsync(studentData);
+            if (student == null)
+            {
+                return BadRequest("Invalid email or password.");
+            }
+            return Ok(student);
         }
+        //Login user
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> LoginStudent (StudentData studentData)
+        {
+            var token = await _studentService.LoginAsync(studentData);
+            if (token is null)
+            {
+                return BadRequest("Invalid email or password");
+            }
+            return Ok(token);
+        }
+        
     }
 }
