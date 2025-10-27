@@ -31,7 +31,22 @@ namespace ToDoAPI
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
-            
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => 
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["AppSettings:Audience"],
+                        ValidateLifetime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
             var app = builder.Build();
 
