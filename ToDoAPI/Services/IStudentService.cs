@@ -10,5 +10,6 @@ namespace ToDoAPI.Services
         Task DeleteStudentAsync(Students student);
         Task<Students?> RegisterAsync(StudentData request);
         Task<TokenResponse?> LoginAsync(StudentData request);
+        Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request);
     }
 }

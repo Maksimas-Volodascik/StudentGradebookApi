@@ -56,13 +56,34 @@ namespace ToDoAPI.Services
             {
                 return null;
             }
-            var response = new TokenResponse
+
+            return await CreateTokenResponse(student); 
+        }
+
+        private async Task<TokenResponse> CreateTokenResponse(Students student)
+        {
+            return new TokenResponse
             {
                 AccessToken = CreateToken(student),
                 RefreshToken = await GenerateAndSaveRefreshTokenAsyc(student),
             };
-            return response;
+        }
 
+        private async Task<Students?> ValidateRefreshTokenAsync(int studentId, string refreshToken)
+        {
+            var student = await _studentRepository.GetByIdAsync(studentId);
+            if (student is null || student.refreshToken != refreshToken || student.refreshTokenExpiryTime <= DateTime.UtcNow)
+            {
+                return null;
+            }
+            return student;
+        }
+        public async Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request)
+        {
+            var student = await ValidateRefreshTokenAsync(request.StudentID, request.RefreshToken);
+            if (student is null)
+                return null;
+            return await CreateTokenResponse(student);
         }
         public string GenerateRefreshToken()
         {
@@ -102,5 +123,7 @@ namespace ToDoAPI.Services
                 );
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
+
+
     }
 }
