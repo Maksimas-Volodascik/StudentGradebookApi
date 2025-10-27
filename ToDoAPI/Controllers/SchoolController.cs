@@ -25,7 +25,6 @@ namespace ToDoAPI.Controllers
             _studentService = studentService;
             _mapper = mapper;
         }
-
         // GET: api/Students
         [HttpGet("students")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
@@ -68,19 +67,26 @@ namespace ToDoAPI.Controllers
             }
             return Ok(response);
         }
-
         [Authorize]
         [HttpGet("Auth")]
         public IActionResult AuthorizedOnlyEndpoint()
         {
             return Ok("You are admin!");
         }
-
         [Authorize(Roles ="Admin")]
         [HttpGet("admin-only")]
         public IActionResult AdminOnlyOnlyEndpoint()
         {
             return Ok("You are admin!");
         }
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<TokenResponse>> RefreshToken(RefreshTokenRequest request)
+        {
+            var result = await _studentService.RefreshTokensAsync(request);
+            if (result is null || result.AccessToken is null || result.RefreshToken is null)
+                return Unauthorized("Invalid refresh token.");
+            return Ok(result);
+        }
+
     }
 }

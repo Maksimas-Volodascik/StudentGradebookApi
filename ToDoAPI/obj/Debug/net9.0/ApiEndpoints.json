@@ -73,6 +73,32 @@
   },
   {
     "ContainingType": "ToDoAPI.Controllers.SchoolController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/School/refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ToDoAPI.DTOs.RefreshTokenRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoAPI.DTOs.TokenResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.SchoolController",
     "Method": "RegisterStudent",
     "RelativePath": "api/School/register",
     "HttpMethod": "POST",
