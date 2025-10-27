@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -52,7 +53,7 @@ namespace ToDoAPI.Controllers
             var student = await _studentService.RegisterAsync(studentData);
             if (student == null)
             {
-                return BadRequest("Invalid email or password.");
+                return BadRequest("User already exists.");
             }
             return Ok(student);
         }
@@ -67,6 +68,12 @@ namespace ToDoAPI.Controllers
             }
             return Ok(token);
         }
-        
+
+        [Authorize]
+        [HttpGet("Auth")]
+        public IActionResult AuthenticatedOnlyEndpoint()
+        {
+            return Ok("You are authenticated!");
+        }
     }
 }

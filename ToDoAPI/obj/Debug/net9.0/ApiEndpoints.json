@@ -27,6 +27,16 @@
   },
   {
     "ContainingType": "ToDoAPI.Controllers.SchoolController",
+    "Method": "AuthenticatedOnlyEndpoint",
+    "RelativePath": "api/School/Auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.SchoolController",
     "Method": "LoginStudent",
     "RelativePath": "api/School/login",
     "HttpMethod": "POST",
