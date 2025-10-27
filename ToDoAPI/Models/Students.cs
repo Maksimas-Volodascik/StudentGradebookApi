@@ -22,7 +22,9 @@ namespace ToDoAPI.Models
         public DateTime enrollment_date { get; set; }
         [Required(ErrorMessage = "Select student status!")]
         public string status { get; set; }
-
+        public string role { get; set; } = string.Empty;
+        public string? refreshToken { get; set; }
+        public DateTime? refreshTokenExpiryTime { get; set; }
         public List<Enrollments> enrollments { get; set; } = new();  //student can enroll in many classes
     }
 }

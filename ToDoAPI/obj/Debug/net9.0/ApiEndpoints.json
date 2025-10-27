@@ -27,7 +27,17 @@
   },
   {
     "ContainingType": "ToDoAPI.Controllers.SchoolController",
-    "Method": "AuthenticatedOnlyEndpoint",
+    "Method": "AdminOnlyOnlyEndpoint",
+    "RelativePath": "api/School/admin-only",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.SchoolController",
+    "Method": "AuthorizedOnlyEndpoint",
     "RelativePath": "api/School/Auth",
     "HttpMethod": "GET",
     "IsController": true,
@@ -51,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.String",
+        "Type": "ToDoAPI.DTOs.TokenResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",

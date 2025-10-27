@@ -59,21 +59,28 @@ namespace ToDoAPI.Controllers
         }
         //Login user
         [HttpPost("login")]
-        public async Task<ActionResult<string>> LoginStudent (StudentData studentData)
+        public async Task<ActionResult<TokenResponse>> LoginStudent (StudentData studentData)
         {
-            var token = await _studentService.LoginAsync(studentData);
-            if (token is null)
+            var response = await _studentService.LoginAsync(studentData);
+            if (response is null)
             {
                 return BadRequest("Invalid email or password");
             }
-            return Ok(token);
+            return Ok(response);
         }
 
         [Authorize]
         [HttpGet("Auth")]
-        public IActionResult AuthenticatedOnlyEndpoint()
+        public IActionResult AuthorizedOnlyEndpoint()
         {
-            return Ok("You are authenticated!");
+            return Ok("You are admin!");
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpGet("admin-only")]
+        public IActionResult AdminOnlyOnlyEndpoint()
+        {
+            return Ok("You are admin!");
         }
     }
 }

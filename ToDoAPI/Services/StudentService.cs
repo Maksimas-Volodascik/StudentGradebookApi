@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using ToDoAPI.DTOs;
 using ToDoAPI.Models;
@@ -48,23 +49,43 @@ namespace ToDoAPI.Services
 
             return student;
         }
-        public async Task<string?> LoginAsync(StudentData studentData)
+        public async Task<TokenResponse?> LoginAsync(StudentData studentData)
         {
             var student = await _studentRepository.GetByEmailAsync(studentData.email);
             if (student is null || new PasswordHasher<Students>().VerifyHashedPassword(student, student.passwordHash, studentData.password) == PasswordVerificationResult.Failed)
             {
                 return null;
             }
+            var response = new TokenResponse
+            {
+                AccessToken = CreateToken(student),
+                RefreshToken = await GenerateAndSaveRefreshTokenAsyc(student),
+            };
+            return response;
 
-            return CreateToken(student);
-
+        }
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+        private async Task<string> GenerateAndSaveRefreshTokenAsyc(Students student)
+        {
+            var refreshToken = GenerateRefreshToken();
+            student.refreshToken = refreshToken;
+            student.refreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _studentRepository.SaveChangesAsync();
+            return refreshToken;
         }
         private string CreateToken(Students students)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, students.email),
-                new Claim(ClaimTypes.NameIdentifier, students.student_id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, students.student_id.ToString()),
+                new Claim(ClaimTypes.Role, students.role)
             };
 
             var key = new SymmetricSecurityKey(
