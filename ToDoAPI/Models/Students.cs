@@ -20,8 +20,7 @@ namespace ToDoAPI.Models
         public string passwordHash { get; set; }
         public DateTime date_of_birth { get; set; }
         public DateTime enrollment_date { get; set; }
-        [Required(ErrorMessage = "Select student status!")]
-        public string status { get; set; }
+        public string status { get; set; } = "Enrolled";
         public string role { get; set; } = string.Empty;
         public string? refreshToken { get; set; }
         public DateTime? refreshTokenExpiryTime { get; set; }
