@@ -31,7 +31,16 @@ namespace ToDoAPI
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5173") //frontend URL
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
@@ -55,7 +64,7 @@ namespace ToDoAPI
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
-
+            app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
