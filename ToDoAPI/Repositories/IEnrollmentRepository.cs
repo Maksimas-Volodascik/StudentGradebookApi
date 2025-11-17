@@ -2,7 +2,7 @@
 {
     public interface IEnrollmentRepository
     {
-        //Here we can create custom repository if require special database logic
+        //Custom repository that will have special database logic
         //e.g. GetStudentEnrollmentsWithGradesAsync
     }
 }

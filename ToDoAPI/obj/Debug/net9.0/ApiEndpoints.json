@@ -55,7 +55,7 @@
     "Parameters": [
       {
         "Name": "studentData",
-        "Type": "ToDoAPI.DTOs.StudentData",
+        "Type": "ToDoAPI.DTOs.StudentLogin",
         "IsRequired": true
       }
     ],
