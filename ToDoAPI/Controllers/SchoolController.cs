@@ -58,7 +58,7 @@ namespace ToDoAPI.Controllers
         }
         //Login user
         [HttpPost("login")]
-        public async Task<ActionResult<TokenResponse>> LoginStudent (StudentData studentData)
+        public async Task<ActionResult<TokenResponse>> LoginStudent (StudentLogin studentData)
         {
             var response = await _studentService.LoginAsync(studentData);
             if (response is null)

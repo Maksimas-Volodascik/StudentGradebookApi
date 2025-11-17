@@ -49,7 +49,7 @@ namespace ToDoAPI.Services
 
             return student;
         }
-        public async Task<TokenResponse?> LoginAsync(StudentData studentData)
+        public async Task<TokenResponse?> LoginAsync(StudentLogin studentData)
         {
             var student = await _studentRepository.GetByEmailAsync(studentData.email);
             if (student is null || new PasswordHasher<Students>().VerifyHashedPassword(student, student.passwordHash, studentData.password) == PasswordVerificationResult.Failed)
@@ -59,7 +59,6 @@ namespace ToDoAPI.Services
 
             return await CreateTokenResponse(student); 
         }
-
         private async Task<TokenResponse> CreateTokenResponse(Students student)
         {
             return new TokenResponse
@@ -68,7 +67,6 @@ namespace ToDoAPI.Services
                 RefreshToken = await GenerateAndSaveRefreshTokenAsyc(student),
             };
         }
-
         private async Task<Students?> ValidateRefreshTokenAsync(int studentId, string refreshToken)
         {
             var student = await _studentRepository.GetByIdAsync(studentId);
@@ -123,7 +121,5 @@ namespace ToDoAPI.Services
                 );
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
-
-
     }
 }

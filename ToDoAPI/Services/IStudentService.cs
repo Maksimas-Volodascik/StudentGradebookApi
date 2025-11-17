@@ -9,7 +9,7 @@ namespace ToDoAPI.Services
         Task<Students?> GetStudentByIdAsync(int id);
         Task DeleteStudentAsync(Students student);
         Task<Students?> RegisterAsync(StudentData request);
-        Task<TokenResponse?> LoginAsync(StudentData request);
+        Task<TokenResponse?> LoginAsync(StudentLogin request);
         Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request);
     }
 }
