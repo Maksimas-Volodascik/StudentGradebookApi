@@ -8,7 +8,8 @@ namespace ToDoAPI.Mappings
     {
         public StudentProfile()
         {
-            CreateMap<Students, StudentData>();
+            CreateMap<Students, StudentList>();
         }
+        
     }
 }

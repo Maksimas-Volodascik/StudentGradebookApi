@@ -30,13 +30,14 @@ namespace ToDoAPI.Controllers
         public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
-            return Ok(students);
+            var respones = _mapper.Map<List<StudentList>>(students);
+            return Ok(respones);
         }
         [HttpGet("students/{id}")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
-            StudentData response = _mapper.Map<StudentData>(student);
+            StudentList response = _mapper.Map<StudentList>(student);
             return Ok(response);
         }
         [HttpDelete]

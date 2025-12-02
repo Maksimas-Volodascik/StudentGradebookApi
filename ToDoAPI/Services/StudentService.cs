@@ -64,7 +64,7 @@ namespace ToDoAPI.Services
             return new TokenResponse
             {
                 AccessToken = CreateToken(student),
-                RefreshToken = await GenerateAndSaveRefreshTokenAsyc(student),
+                RefreshToken = await GenerateAndSaveRefreshTokenAsyc(student)
             };
         }
         private async Task<Students?> ValidateRefreshTokenAsync(int studentId, string refreshToken)
@@ -94,7 +94,7 @@ namespace ToDoAPI.Services
         {
             var refreshToken = GenerateRefreshToken();
             student.refreshToken = refreshToken;
-            student.refreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            student.refreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(10);
             await _studentRepository.SaveChangesAsync();
             return refreshToken;
         }
@@ -116,7 +116,7 @@ namespace ToDoAPI.Services
                 issuer: _configuration.GetValue<string>("AppSettings:Issuer"),
                 audience: _configuration.GetValue<string>("AppSettings:Audience"),
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(1),
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
                 );
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
