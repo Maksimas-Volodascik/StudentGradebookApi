@@ -34,8 +34,7 @@
               "RelativeToolTip": "ToDoAPI\\Mappings\\StudentProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T19:18:40.477Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T19:18:40.477Z"
             },
             {
               "$type": "Document",
@@ -47,8 +46,7 @@
               "RelativeToolTip": "ToDoAPI\\DTOs\\StudentList.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T17:52:24.602Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T17:52:24.602Z"
             },
             {
               "$type": "Document",
@@ -58,7 +56,7 @@
               "RelativeDocumentMoniker": "ToDoAPI\\Controllers\\SchoolController.cs",
               "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Controllers\\SchoolController.cs",
               "RelativeToolTip": "ToDoAPI\\Controllers\\SchoolController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB8AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-17T15:37:05.252Z",
               "EditorCaption": ""
