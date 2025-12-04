@@ -5,6 +5,7 @@ namespace ToDoAPI.DTOs
 {
     public class StudentList
     {
+        public int student_id { get; set; }
         public string first_name { get; set; } = null!;
         public string last_name { get; set; } = null!;
         public string email { get; set; }
