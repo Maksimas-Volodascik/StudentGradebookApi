@@ -5,14 +5,13 @@ namespace ToDoAPI.Models
     public class Teachers
     {
         [Key]
-        public int teacher_id { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "First name is required!")]
-        public string first_name { get; set; } = null!;
+        public string First_name { get; set; } = null!;
         [Required(ErrorMessage = "Last name is required!")]
-        public string last_name { get; set; } = null!;
-        public string email { get; set; }
-        public int class_id { get; set; }
-        public Classes classes { get; set; } = null!;
-
+        public string Last_name { get; set; } = null!;
+        public int Class_id { get; set; }
+        public Classes Classes { get; set; } = null!;
+        public WebUsers User { get; set; } = null!;
     }
 }

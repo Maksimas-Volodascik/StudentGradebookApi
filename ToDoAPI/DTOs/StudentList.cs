@@ -5,12 +5,11 @@ namespace ToDoAPI.DTOs
 {
     public class StudentList
     {
-        public int student_id { get; set; }
-        public string first_name { get; set; } = null!;
-        public string last_name { get; set; } = null!;
-        public string email { get; set; }
-        public DateTime date_of_birth { get; set; }
-        public DateTime enrollment_date { get; set; }
-        public string status { get; set; }
+        public int Student_id { get; set; }
+        public string First_name { get; set; } = null!;
+        public string Last_name { get; set; } = null!;
+        public DateTime Date_of_birth { get; set; }
+        public DateTime Enrollment_date { get; set; }
+        public string Status { get; set; }
     }
 }

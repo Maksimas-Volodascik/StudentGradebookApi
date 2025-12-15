@@ -14,7 +14,7 @@ namespace ToDoAPI.Repositories
         }
         public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
         public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
-        public async Task<T?> GetByEmailAsync(string email) =>await _dbSet.FirstOrDefaultAsync(e => EF.Property<string>(e, "email") == email);
+        public async Task<T?> GetByEmailAsync(string email) =>await _dbSet.FirstOrDefaultAsync(e => EF.Property<string>(e, "Email") == email);
         public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
         public async void Update(T entity) => _dbSet.Update(entity);
         public async void Delete(T entity) => _dbSet.Remove(entity);

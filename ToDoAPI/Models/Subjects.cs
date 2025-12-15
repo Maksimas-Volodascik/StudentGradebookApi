@@ -5,13 +5,13 @@ namespace ToDoAPI.Models
     public class Subjects
     {
         [Key]
-        public int subject_id { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "Must contain subject name!")]
-        public string subject_name { get; set; } = null!;
+        public string Subject_name { get; set; } = null!;
         [Required(ErrorMessage = "Must contain subject code!")]
-        public string subject_code { get; set; } = null!;
-        public int class_id { get; set; }
-        public Classes classes { get; set; } = null!;
+        public string Subject_code { get; set; } = null!;
+        public int Class_id { get; set; }
+        public Classes Classes { get; set; } = null!;
 
     }
 }

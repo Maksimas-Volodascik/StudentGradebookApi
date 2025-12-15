@@ -2,7 +2,7 @@
 {
     public class RefreshTokenRequest
     {
-        public int StudentID { get; set; }
+        public int UserID { get; set; }
         public required string RefreshToken { get; set; }   
     }
 }

@@ -15,79 +15,73 @@ namespace ToDoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchoolController : Controller
+    public class UserController : Controller
     {
-        private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
         //will need to add more services (teachers, classes etc).
         private readonly IMapper _mapper;
-        public SchoolController(IConfiguration configuration, IStudentService studentService, IMapper mapper)
+        public UserController(IConfiguration configuration, IUserService userService, IMapper mapper)
         {
-            _studentService = studentService;
+            _userService = userService;
             _mapper = mapper;
         }
         // GET: api/Students
-        [HttpGet("students")]
+        /*[HttpGet("students")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
             var respones = _mapper.Map<List<StudentList>>(students);
             return Ok(respones);
-        }
-        [HttpGet("students/{id}")]
+        }*/
+        /*[HttpGet("students/{id}")]
         public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
             StudentList response = _mapper.Map<StudentList>(student);
             return Ok(response);
-        }
-        [HttpDelete]
+        }*/
+        /*[HttpDelete]
         public async Task<ActionResult<IEnumerable<Students>>> DeleteStudent(Students student)
         {
             await _studentService.DeleteStudentAsync(student);
             return Ok();
-        }      
+        }    */  
         //Register user
         [HttpPost("register")]
-        public async Task<ActionResult<IEnumerable<Students>>> RegisterStudent (StudentData studentData)
+        public async Task<IActionResult> RegisterUser (LoginDTO loginDto)
         {
-            var student = await _studentService.RegisterAsync(studentData);
-            if (student == null)
+            var user = await _userService.RegisterAsync(loginDto);
+            if (user == null)
             {
                 return BadRequest("User already exists.");
             }
-            return Ok(student);
+            return Ok();
         }
         //Login user
         [HttpPost("login")]
-        public async Task<ActionResult<TokenResponse>> LoginStudent (StudentLogin studentData)
+        public async Task<ActionResult<TokenResponse>> LoginUser (LoginDTO loginDto)
         {
-            var response = await _studentService.LoginAsync(studentData);
+            var response = await _userService.LoginAsync(loginDto);
             if (response is null)
             {
                 return BadRequest("Invalid email or password");
             }
             return Ok(response);
         }
-        [Authorize]
-        [HttpGet("Auth")]
-        public IActionResult AuthorizedOnlyEndpoint()
-        {
-            return Ok("You are admin!");
-        }
-        [Authorize(Roles ="Admin")]
-        [HttpGet("admin-only")]
-        public IActionResult AdminOnlyOnlyEndpoint()
-        {
-            return Ok("You are admin!");
-        }
+
         [HttpPost("refresh-token")]
         public async Task<ActionResult<TokenResponse>> RefreshToken(RefreshTokenRequest request)
         {
-            var result = await _studentService.RefreshTokensAsync(request);
+            var result = await _userService.RefreshTokensAsync(request);
             if (result is null || result.AccessToken is null || result.RefreshToken is null)
                 return Unauthorized("Invalid refresh token.");
             return Ok(result);
         }
-
+        /*[Authorize(Roles ="Admin")]
+          [HttpGet("admin-only")]
+          public IActionResult AdminOnlyOnlyEndpoint()
+          {
+              return Ok("You are admin!");
+          }*/
     }
 }
