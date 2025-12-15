@@ -12,8 +12,8 @@ using ToDoAPI.Data;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20251026150937_SchoolDatabase")]
-    partial class SchoolDatabase
+    [Migration("20251215193938_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,68 +27,68 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Attendance", b =>
                 {
-                    b.Property<int>("attendance_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("attendance_id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("enrollment_id")
+                    b.Property<int>("Enrollment_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("status")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("attendance_id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("enrollment_id");
+                    b.HasIndex("Enrollment_id");
 
                     b.ToTable("Attendances");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Classes", b =>
                 {
-                    b.Property<int>("class_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("class_id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("academic_year")
+                    b.Property<string>("Academic_year")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("room")
+                    b.Property<int>("Room")
                         .HasColumnType("int");
 
-                    b.HasKey("class_id");
+                    b.HasKey("Id");
 
                     b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
                 {
-                    b.Property<int>("enrollment_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("enrollment_id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ClassID")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("status")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("enrollment_id");
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ClassID");
 
@@ -99,87 +99,76 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Grades", b =>
                 {
-                    b.Property<int>("grade_id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<int>("Enrollment_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Grade_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("Score")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("enrollment_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("grade_type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("grade_id");
+                    b.HasKey("Id");
 
                     b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Students", b =>
                 {
-                    b.Property<int>("student_id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("student_id"));
-
-                    b.Property<DateTime>("date_of_birth")
+                    b.Property<DateTime>("Date_of_birth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("enrollment_date")
+                    b.Property<DateTime>("Enrollment_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("first_name")
+                    b.Property<string>("First_name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("last_name")
+                    b.Property<string>("Last_name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("passwordHash")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("student_id");
+                    b.HasKey("Id");
 
                     b.ToTable("Students");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Subjects", b =>
                 {
-                    b.Property<int>("subject_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("subject_id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("class_id")
+                    b.Property<int>("Class_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("subject_code")
+                    b.Property<string>("Subject_code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("subject_name")
+                    b.Property<string>("Subject_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("subject_id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("class_id")
+                    b.HasIndex("Class_id")
                         .IsUnique();
 
                     b.ToTable("Subjects");
@@ -187,40 +176,64 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Teachers", b =>
                 {
-                    b.Property<int>("teacher_id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("teacher_id"));
-
-                    b.Property<int>("class_id")
+                    b.Property<int>("Class_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("email")
+                    b.Property<string>("First_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("first_name")
+                    b.Property<string>("Last_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("last_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("teacher_id");
-
-                    b.HasIndex("class_id")
+                    b.HasIndex("Class_id")
                         .IsUnique();
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("ToDoAPI.Models.WebUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WebUsers");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Attendance", b =>
                 {
                     b.HasOne("ToDoAPI.Models.Enrollments", "enrollments")
                         .WithMany("Attendances")
-                        .HasForeignKey("enrollment_id")
+                        .HasForeignKey("Enrollment_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -230,13 +243,13 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
                 {
                     b.HasOne("ToDoAPI.Models.Classes", "Classes")
-                        .WithMany("enrollments")
+                        .WithMany("Enrollments")
                         .HasForeignKey("ClassID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ToDoAPI.Models.Students", "Student")
-                        .WithMany("enrollments")
+                        .WithMany("Enrollments")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -248,45 +261,64 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Grades", b =>
                 {
-                    b.HasOne("ToDoAPI.Models.Enrollments", "enrollments")
+                    b.HasOne("ToDoAPI.Models.Enrollments", "Enrollments")
                         .WithMany("Grades")
-                        .HasForeignKey("grade_id")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("enrollments");
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("ToDoAPI.Models.Students", b =>
+                {
+                    b.HasOne("ToDoAPI.Models.WebUsers", "User")
+                        .WithOne("Students")
+                        .HasForeignKey("ToDoAPI.Models.Students", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Subjects", b =>
                 {
-                    b.HasOne("ToDoAPI.Models.Classes", "classes")
-                        .WithOne("subjects")
-                        .HasForeignKey("ToDoAPI.Models.Subjects", "class_id")
+                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
+                        .WithOne("Subjects")
+                        .HasForeignKey("ToDoAPI.Models.Subjects", "Class_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("classes");
+                    b.Navigation("Classes");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Teachers", b =>
                 {
-                    b.HasOne("ToDoAPI.Models.Classes", "classes")
-                        .WithOne("teachers")
-                        .HasForeignKey("ToDoAPI.Models.Teachers", "class_id")
+                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
+                        .WithOne("Teachers")
+                        .HasForeignKey("ToDoAPI.Models.Teachers", "Class_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("classes");
+                    b.HasOne("ToDoAPI.Models.WebUsers", "User")
+                        .WithOne("Teachers")
+                        .HasForeignKey("ToDoAPI.Models.Teachers", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Classes");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Classes", b =>
                 {
-                    b.Navigation("enrollments");
+                    b.Navigation("Enrollments");
 
-                    b.Navigation("subjects")
+                    b.Navigation("Subjects")
                         .IsRequired();
 
-                    b.Navigation("teachers")
+                    b.Navigation("Teachers")
                         .IsRequired();
                 });
 
@@ -299,7 +331,16 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Students", b =>
                 {
-                    b.Navigation("enrollments");
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("ToDoAPI.Models.WebUsers", b =>
+                {
+                    b.Navigation("Students")
+                        .IsRequired();
+
+                    b.Navigation("Teachers")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

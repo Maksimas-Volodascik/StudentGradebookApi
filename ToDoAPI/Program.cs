@@ -29,7 +29,7 @@ namespace ToDoAPI
 
             // Repository and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
             builder.Services.AddCors(options =>
             {
