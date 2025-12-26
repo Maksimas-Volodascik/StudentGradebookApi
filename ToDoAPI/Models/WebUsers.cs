@@ -12,7 +12,7 @@ namespace ToDoAPI.Models
         public string PasswordHash { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
-        public string Role { get; set; } = "Demo";
+        public string Role { get; set; } = "demo";
         public Teachers Teachers { get; set; } = null!;
         public Students Students { get; set; } = null!;
     }

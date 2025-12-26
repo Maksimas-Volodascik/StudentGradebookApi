@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ToDoAPI.DTOs;
+using ToDoAPI.DTOs.Students;
 using ToDoAPI.Models;
 
 namespace ToDoAPI.Mappings

@@ -1,41 +1,119 @@
 [
   {
-    "ContainingType": "ToDoAPI.Controllers.UserController",
-    "Method": "AdminOnlyOnlyEndpoint",
-    "RelativePath": "api/User/admin-only",
+    "ContainingType": "ToDoAPI.Controllers.StudentController",
+    "Method": "GetStudents",
+    "RelativePath": "api/student",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Students, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
-    "ContainingType": "ToDoAPI.Controllers.UserController",
-    "Method": "AuthorizedOnlyEndpoint",
-    "RelativePath": "api/User/Auth",
+    "ContainingType": "ToDoAPI.Controllers.StudentController",
+    "Method": "AddStudent",
+    "RelativePath": "api/student",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentData",
+        "Type": "ToDoAPI.DTOs.Students.NewStudent",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Students, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.StudentController",
+    "Method": "DeleteStudent",
+    "RelativePath": "api/student",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "student",
+        "Type": "ToDoAPI.Models.Students",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Students, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.StudentController",
+    "Method": "GetStudent",
+    "RelativePath": "api/student/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Students, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "ToDoAPI.Controllers.UserController",
     "Method": "LoginUser",
-    "RelativePath": "api/User/login",
+    "RelativePath": "api/user/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "loginDto",
-        "Type": "ToDoAPI.DTOs.LoginDTO",
+        "Type": "ToDoAPI.DTOs.Users.LoginDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ToDoAPI.DTOs.TokenResponse",
+        "Type": "ToDoAPI.DTOs.Users.TokenResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -48,20 +126,20 @@
   {
     "ContainingType": "ToDoAPI.Controllers.UserController",
     "Method": "RefreshToken",
-    "RelativePath": "api/User/refresh-token",
+    "RelativePath": "api/user/refresh-token",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "request",
-        "Type": "ToDoAPI.DTOs.RefreshTokenRequest",
+        "Type": "ToDoAPI.DTOs.Users.RefreshTokenRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "ToDoAPI.DTOs.TokenResponse",
+        "Type": "ToDoAPI.DTOs.Users.TokenResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -74,14 +152,14 @@
   {
     "ContainingType": "ToDoAPI.Controllers.UserController",
     "Method": "RegisterUser",
-    "RelativePath": "api/User/register",
+    "RelativePath": "api/user/register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "loginDto",
-        "Type": "ToDoAPI.DTOs.LoginDTO",
+        "Type": "ToDoAPI.DTOs.Users.LoginDTO",
         "IsRequired": true
       }
     ],
