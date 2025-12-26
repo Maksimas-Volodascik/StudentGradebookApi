@@ -7,13 +7,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ToDoAPI.DTOs;
+using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
-using ToDoAPI.Services;
+using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : Controller
     {
@@ -24,28 +24,8 @@ namespace ToDoAPI.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-        }
-        // GET: api/Students
-        /*[HttpGet("students")]
-        public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
-        {
-            var students = await _studentService.GetAllStudentsAsync();
-            var respones = _mapper.Map<List<StudentList>>(students);
-            return Ok(respones);
-        }*/
-        /*[HttpGet("students/{id}")]
-        public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
-        {
-            var student = await _studentService.GetStudentByIdAsync(id);
-            StudentList response = _mapper.Map<StudentList>(student);
-            return Ok(response);
-        }*/
-        /*[HttpDelete]
-        public async Task<ActionResult<IEnumerable<Students>>> DeleteStudent(Students student)
-        {
-            await _studentService.DeleteStudentAsync(student);
-            return Ok();
-        }    */  
+        }    
+    
         //Register user
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser (LoginDTO loginDto)
@@ -53,7 +33,7 @@ namespace ToDoAPI.Controllers
             var user = await _userService.RegisterAsync(loginDto);
             if (user == null)
             {
-                return BadRequest("User already exists.");
+                return BadRequest("Error.");
             }
             return Ok();
         }

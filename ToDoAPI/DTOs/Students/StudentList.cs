@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ToDoAPI.Models;
 
-namespace ToDoAPI.DTOs
+namespace ToDoAPI.DTOs.Students
 {
     public class StudentList
     {

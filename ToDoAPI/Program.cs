@@ -8,7 +8,8 @@ using System.Text;
 using ToDoAPI.Data;
 using ToDoAPI.Mappings;
 using ToDoAPI.Repositories;
-using ToDoAPI.Services;
+using ToDoAPI.Services.StudentServices;
+using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI
 {
@@ -30,6 +31,7 @@ namespace ToDoAPI
             // Repository and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
             builder.Services.AddCors(options =>
             {

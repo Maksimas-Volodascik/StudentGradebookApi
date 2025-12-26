@@ -1,4 +1,4 @@
-﻿namespace ToDoAPI.DTOs
+﻿namespace ToDoAPI.DTOs.Users
 {
     public class LoginDTO
     {

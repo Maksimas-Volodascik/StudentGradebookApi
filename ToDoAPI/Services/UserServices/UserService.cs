@@ -5,11 +5,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using ToDoAPI.DTOs;
+using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
 using ToDoAPI.Repositories;
 
-namespace ToDoAPI.Services
+namespace ToDoAPI.Services.UserServices
 {
     public class UserService : IUserService
     {
@@ -22,7 +22,7 @@ namespace ToDoAPI.Services
         }
         public async Task<WebUsers?> RegisterAsync(LoginDTO loginDto)
         {
-            if (await _userRepository.GetByEmailAsync(loginDto.Email) != null)
+            if (await _userRepository.GetByEmailAsync(loginDto.Email) != null || loginDto.Password.Length <= 5 || loginDto.Email.Length <= 5)
             {
                 return null; //User exists
             }
