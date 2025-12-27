@@ -23,7 +23,7 @@ namespace ToDoAPI.Controllers
         {
             var students = await _studentService.GetAllStudentsAsync();
             var respones = _mapper.Map<List<StudentList>>(students);
-            return Ok(respones);
+            return Ok(students);
         }
 
         [HttpGet("{id}")]

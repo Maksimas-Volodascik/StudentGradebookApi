@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -19,11 +18,10 @@ namespace ToDoAPI.Controllers
     {
         private readonly IUserService _userService;
         //will need to add more services (teachers, classes etc).
-        private readonly IMapper _mapper;
-        public UserController(IConfiguration configuration, IUserService userService, IMapper mapper)
+
+        public UserController(IConfiguration configuration, IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
         }    
     
         //Register user
