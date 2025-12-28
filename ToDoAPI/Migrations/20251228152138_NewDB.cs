@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToDoAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class NewDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,19 +67,21 @@ namespace ToDoAPI.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     First_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Last_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Date_of_birth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Enrollment_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Date_of_birth = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Enrollment_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_WebUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Students_WebUsers_UserID",
+                        column: x => x.UserID,
                         principalTable: "WebUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -89,10 +91,12 @@ namespace ToDoAPI.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     First_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Class_id = table.Column<int>(type: "int", nullable: false)
+                    Class_id = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,8 +108,8 @@ namespace ToDoAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Teachers_WebUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Teachers_WebUsers_UserID",
+                        column: x => x.UserID,
                         principalTable: "WebUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -195,6 +199,12 @@ namespace ToDoAPI.Migrations
                 column: "StudentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_UserID",
+                table: "Students",
+                column: "UserID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subjects_Class_id",
                 table: "Subjects",
                 column: "Class_id",
@@ -204,6 +214,12 @@ namespace ToDoAPI.Migrations
                 name: "IX_Teachers_Class_id",
                 table: "Teachers",
                 column: "Class_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_UserID",
+                table: "Teachers",
+                column: "UserID",
                 unique: true);
         }
 

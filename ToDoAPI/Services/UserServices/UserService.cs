@@ -37,6 +37,16 @@ namespace ToDoAPI.Services.UserServices
 
             return user;
         }
+        public async Task<WebUsers?> GetUserByIdAsync(int id)
+        {
+            WebUsers user = await _userRepository.GetByIdAsync(id);
+            return user;
+        }
+        public async Task DeleteUserAsync(WebUsers user)
+        {
+            _userRepository.Delete(user);
+            await _userRepository.SaveChangesAsync();
+        }
         public async Task<TokenResponse?> LoginAsync(LoginDTO loginDto)
         {
             var user = await _userRepository.GetByEmailAsync(loginDto.Email);
@@ -109,5 +119,7 @@ namespace ToDoAPI.Services.UserServices
                 );
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
+
+
     }
 }

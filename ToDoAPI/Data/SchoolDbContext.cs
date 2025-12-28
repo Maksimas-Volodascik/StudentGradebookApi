@@ -51,12 +51,13 @@ namespace ToDoAPI.Data
             modelBuilder.Entity<WebUsers>()
                 .HasOne(u => u.Teachers)
                 .WithOne(s => s.User)
-                .HasForeignKey<Teachers>(s => s.Id);
+                .HasForeignKey<Teachers>(s => s.UserID);
 
             modelBuilder.Entity<WebUsers>()
                 .HasOne(u => u.Students)
                 .WithOne(s => s.User)
-                .HasForeignKey<Students>(s => s.Id);
+                .HasForeignKey<Students>(s => s.UserID);
+
         }
 
     }

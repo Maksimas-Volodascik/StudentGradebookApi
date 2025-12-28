@@ -16,6 +16,8 @@ namespace ToDoAPI.Models
         public DateTimeOffset Enrollment_date { get; set; } = DateTimeOffset.Now;
         public string Status { get; set; } = "Enrolled";
         public List<Enrollments> Enrollments { get; set; } = new();  //student can enroll in many classes
+        public int UserID { get; set; } //FK
         public WebUsers User { get; set; } = null!;
+
     }
 }

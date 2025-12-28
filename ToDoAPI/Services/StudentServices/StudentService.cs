@@ -27,7 +27,10 @@ namespace ToDoAPI.Services.StudentServices
             newLogin.Email = studentData.Email;
             newLogin.Password = studentData.Password;
             var newUser = await _userService.RegisterAsync(newLogin);
-
+            if(newUser == null)
+            {
+                return null;
+            }
             var student = new Students();
             student.First_name = studentData.First_name;
             student.Last_name = studentData.Last_name;
@@ -41,7 +44,10 @@ namespace ToDoAPI.Services.StudentServices
 
         public async Task DeleteStudentAsync(Students student)
         {
+            WebUsers userToDelete = await _userService.GetUserByIdAsync(student.UserID);
             _studentsRepository.Delete(student);
+            _userService.DeleteUserAsync(userToDelete);
+            
             await _studentsRepository.SaveChangesAsync();
         }
         public async Task<IEnumerable<Students>> GetAllStudentsAsync()
