@@ -19,15 +19,15 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpGet()]
-        public async Task<ActionResult<IEnumerable<Students>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<StudentList>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
             var respones = _mapper.Map<List<StudentList>>(students);
-            return Ok(students);
+            return Ok(respones);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Students>>> GetStudent(int id)
+        public async Task<ActionResult<IEnumerable<StudentList>>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
             StudentList response = _mapper.Map<StudentList>(student);
@@ -37,13 +37,18 @@ namespace ToDoAPI.Controllers
         [HttpPost()]
         public async Task<ActionResult<IEnumerable<Students>>> AddStudent(NewStudent studentData)
         {
-            await _studentService.AddStudentAsync(studentData);
+            var response = await _studentService.AddStudentAsync(studentData);
+            if(response == null)
+            {
+                return BadRequest("User Already Exists");
+            }
             return Ok();
         }
         
-        [HttpDelete]
-        public async Task<ActionResult<IEnumerable<Students>>> DeleteStudent(Students student)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteStudent(int id)
         {
+            var student = await _studentService.GetStudentByIdAsync(id);
             await _studentService.DeleteStudentAsync(student);
             return Ok();
         }   

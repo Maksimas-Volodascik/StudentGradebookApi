@@ -12,15 +12,15 @@ using ToDoAPI.Data;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20251215193938_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251228152138_NewDB")]
+    partial class NewDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "9.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -120,13 +120,16 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Students", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date_of_birth")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Enrollment_date")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Date_of_birth")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("Enrollment_date")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("First_name")
                         .IsRequired()
@@ -142,7 +145,13 @@ namespace ToDoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserID")
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });
@@ -177,7 +186,10 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Teachers", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Class_id")
                         .HasColumnType("int");
@@ -190,9 +202,15 @@ namespace ToDoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Class_id")
+                        .IsUnique();
+
+                    b.HasIndex("UserID")
                         .IsUnique();
 
                     b.ToTable("Teachers");
@@ -274,7 +292,7 @@ namespace ToDoAPI.Migrations
                 {
                     b.HasOne("ToDoAPI.Models.WebUsers", "User")
                         .WithOne("Students")
-                        .HasForeignKey("ToDoAPI.Models.Students", "Id")
+                        .HasForeignKey("ToDoAPI.Models.Students", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -302,7 +320,7 @@ namespace ToDoAPI.Migrations
 
                     b.HasOne("ToDoAPI.Models.WebUsers", "User")
                         .WithOne("Teachers")
-                        .HasForeignKey("ToDoAPI.Models.Teachers", "Id")
+                        .HasForeignKey("ToDoAPI.Models.Teachers", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
