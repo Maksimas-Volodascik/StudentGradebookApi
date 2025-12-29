@@ -49,8 +49,12 @@ namespace ToDoAPI.Controllers
         public async Task<ActionResult> DeleteStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
+            if (student == null)
+            {
+                return BadRequest("Invalid ID");
+            }
             await _studentService.DeleteStudentAsync(student);
-            return Ok();
+            return Ok("Student Deleted");
         }   
     }
 }
