@@ -73,6 +73,27 @@
   },
   {
     "ContainingType": "ToDoAPI.Controllers.StudentController",
+    "Method": "EditStudent",
+    "RelativePath": "api/student/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentData",
+        "Type": "ToDoAPI.DTOs.Students.EditStudent",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.StudentController",
     "Method": "DeleteStudent",
     "RelativePath": "api/student/{id}",
     "HttpMethod": "DELETE",
