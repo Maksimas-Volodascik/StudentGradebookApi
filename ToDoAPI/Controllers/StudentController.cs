@@ -44,7 +44,14 @@ namespace ToDoAPI.Controllers
             }
             return Ok();
         }
-        
+        [HttpPost("{id}")]
+        public async Task<ActionResult> EditStudent(EditStudent studentData, int id)
+        {
+            await _studentService.EditStudentAsync(studentData, id);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudent(int id)
         {

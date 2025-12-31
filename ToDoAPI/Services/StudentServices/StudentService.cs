@@ -49,6 +49,28 @@ namespace ToDoAPI.Services.StudentServices
             _studentsRepository.Delete(student);
             _userService.DeleteUserAsync(userToDelete);
         }
+
+        public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
+        {
+            if (studentData == null || studentData.First_name == "" || studentData.Last_name =="")
+            {
+                return null;
+            }
+
+            Students student = await _studentsRepository.GetByIdAsync(id);
+            if (student == null)
+            {
+                return null;
+            }
+            student.First_name=studentData.First_name;
+            student.Last_name=studentData.Last_name;
+            student.Date_of_birth=studentData.Date_of_birth;
+            _studentsRepository.Update(student);
+            await _studentsRepository.SaveChangesAsync();
+
+            return student;
+        }
+
         public async Task<IEnumerable<Students>> GetAllStudentsAsync()
         {
             return await _studentsRepository.GetAllAsync();
