@@ -1,7 +1,7 @@
 ﻿using ToDoAPI.DTOs.Students;
 using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
-using ToDoAPI.Repositories;
+using ToDoAPI.Repositories.Main;
 using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI.Services.StudentServices
@@ -10,10 +10,8 @@ namespace ToDoAPI.Services.StudentServices
     {
         private readonly IRepository<Students> _studentsRepository;
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
-        public StudentService(IConfiguration configuration, IRepository<Students> studentsRepository, IUserService userService)
+        public StudentService(IRepository<Students> studentsRepository, IUserService userService)
         {
-            _configuration = configuration;
             _studentsRepository = studentsRepository;
             _userService = userService;
         }
@@ -47,7 +45,7 @@ namespace ToDoAPI.Services.StudentServices
             WebUsers userToDelete = await _userService.GetUserByIdAsync(student.UserID);
 
             _studentsRepository.Delete(student);
-            _userService.DeleteUserAsync(userToDelete);
+            await _userService.DeleteUserAsync(userToDelete);
         }
 
         public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
@@ -57,7 +55,7 @@ namespace ToDoAPI.Services.StudentServices
                 return null;
             }
 
-            Students student = await _studentsRepository.GetByIdAsync(id);
+            Students ?student = await _studentsRepository.GetByIdAsync(id);
             if (student == null)
             {
                 return null;

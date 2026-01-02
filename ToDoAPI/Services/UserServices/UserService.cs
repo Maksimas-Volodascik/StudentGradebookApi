@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
-using ToDoAPI.Repositories;
+using ToDoAPI.Repositories.Main;
 
 namespace ToDoAPI.Services.UserServices
 {
@@ -39,7 +39,8 @@ namespace ToDoAPI.Services.UserServices
         }
         public async Task<WebUsers?> GetUserByIdAsync(int id)
         {
-            WebUsers user = await _userRepository.GetByIdAsync(id);
+            WebUsers ?user = await _userRepository.GetByIdAsync(id);
+            if (user == null) { return null; }
             return user;
         }
         public async Task DeleteUserAsync(WebUsers user)

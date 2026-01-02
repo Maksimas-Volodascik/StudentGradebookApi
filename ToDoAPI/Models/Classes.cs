@@ -6,7 +6,7 @@ namespace ToDoAPI.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Academic_year { get; set; }
+        public string Academic_year { get; set; } = null!;
         [Required(ErrorMessage = "Must pick a room!")]
         public int Room {  get; set; }
         public Teachers Teachers { get; set; } = null!;

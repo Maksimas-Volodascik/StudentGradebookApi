@@ -12,8 +12,8 @@ using ToDoAPI.Data;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20251228152138_NewDB")]
-    partial class NewDB
+    [Migration("20260102094759_DatabaseInitialization")]
+    partial class DatabaseInitialization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,7 +100,10 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Grades", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Enrollment_id")
                         .HasColumnType("int");
@@ -113,6 +116,8 @@ namespace ToDoAPI.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Enrollment_id");
 
                     b.ToTable("Grades");
                 });
@@ -281,7 +286,7 @@ namespace ToDoAPI.Migrations
                 {
                     b.HasOne("ToDoAPI.Models.Enrollments", "Enrollments")
                         .WithMany("Grades")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("Enrollment_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

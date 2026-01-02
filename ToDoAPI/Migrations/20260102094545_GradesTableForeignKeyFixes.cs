@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToDoAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class NewDB : Migration
+    public partial class GradesTableForeignKeyFixes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,7 +167,8 @@ namespace ToDoAPI.Migrations
                 name: "Grades",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Score = table.Column<byte>(type: "tinyint", nullable: false),
                     Grade_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Enrollment_id = table.Column<int>(type: "int", nullable: false)
@@ -176,8 +177,8 @@ namespace ToDoAPI.Migrations
                 {
                     table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Grades_Enrollments_Id",
-                        column: x => x.Id,
+                        name: "FK_Grades_Enrollments_Enrollment_id",
+                        column: x => x.Enrollment_id,
                         principalTable: "Enrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -197,6 +198,11 @@ namespace ToDoAPI.Migrations
                 name: "IX_Enrollments_StudentID",
                 table: "Enrollments",
                 column: "StudentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_Enrollment_id",
+                table: "Grades",
+                column: "Enrollment_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserID",

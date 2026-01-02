@@ -31,7 +31,7 @@ namespace ToDoAPI.Data
             modelBuilder.Entity<Enrollments>()
                 .HasMany(g => g.Grades)
                 .WithOne(e => e.Enrollments)
-                .HasForeignKey(e => e.Id);
+                .HasForeignKey(g => g.Enrollment_id);
 
             modelBuilder.Entity<Classes>()
                 .HasOne(c => c.Teachers)

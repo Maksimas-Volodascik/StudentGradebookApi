@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Data;
 
-namespace ToDoAPI.Repositories
+namespace ToDoAPI.Repositories.Main
 {
     public class Repository<T> : IRepository<T> where T : class
     {

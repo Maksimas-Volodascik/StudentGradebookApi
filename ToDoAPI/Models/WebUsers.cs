@@ -7,9 +7,9 @@ namespace ToDoAPI.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
         [Required]
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = null!;
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
         public string Role { get; set; } = "demo";

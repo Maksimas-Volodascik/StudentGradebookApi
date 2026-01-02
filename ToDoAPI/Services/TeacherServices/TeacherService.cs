@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using ToDoAPI.Models;
-using ToDoAPI.Repositories;
+using ToDoAPI.Repositories.Main;
 
 namespace ToDoAPI.Services.TeacherServices
 {

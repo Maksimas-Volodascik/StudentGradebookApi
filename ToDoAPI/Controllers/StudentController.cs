@@ -17,7 +17,7 @@ namespace ToDoAPI.Controllers
             _studentService = studentService;
             _mapper = mapper;
         }
-
+        
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<StudentList>>> GetStudents()
         {
@@ -44,7 +44,7 @@ namespace ToDoAPI.Controllers
             }
             return Ok();
         }
-        [HttpPost("{id}")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> EditStudent(EditStudent studentData, int id)
         {
             await _studentService.EditStudentAsync(studentData, id);
@@ -58,9 +58,9 @@ namespace ToDoAPI.Controllers
             var student = await _studentService.GetStudentByIdAsync(id);
             if (student == null)
             {
-                return BadRequest("Invalid ID");
+                //do nothing
             }
-            await _studentService.DeleteStudentAsync(student);
+            await _studentService.DeleteStudentAsync(student!);
             return Ok("Student Deleted");
         }   
     }

@@ -1,4 +1,4 @@
-﻿namespace ToDoAPI.Repositories
+﻿namespace ToDoAPI.Repositories.Main
 {
     public interface IRepository<T> where T : class
     {
