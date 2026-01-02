@@ -6,24 +6,34 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using ToDoAPI.DTOs.Students;
+using ToDoAPI.DTOs.SubjectClass;
 using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
+using ToDoAPI.Services.SubjectClassServices;
 using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ISubjectClassService _subjectClassService;
         //will need to add more services (teachers, classes etc).
 
-        public UserController(IConfiguration configuration, IUserService userService)
+        public UserController(IUserService userService, ISubjectClassService subjectClassService)
         {
+            _subjectClassService = subjectClassService;
             _userService = userService;
         }    
-    
+        [HttpGet("classSubj")]
+        public async Task<ActionResult<IEnumerable<ClassSubjects>>> GetAllClassesAndSubj()
+        {
+            var classSubjects = await _subjectClassService.GetAllClassSubjects();
+            return Ok(classSubjects);
+        }
         //Register user
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser (LoginDTO loginDto)

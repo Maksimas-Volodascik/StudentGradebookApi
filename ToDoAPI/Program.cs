@@ -4,11 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Diagnostics;
 using System.Text;
 using ToDoAPI.Data;
 using ToDoAPI.Mappings;
-using ToDoAPI.Repositories;
+using ToDoAPI.Repositories.Joined;
+using ToDoAPI.Repositories.Main;
 using ToDoAPI.Services.StudentServices;
+using ToDoAPI.Services.SubjectClassServices;
+using ToDoAPI.Services.TeacherServices;
 using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI
@@ -30,8 +34,12 @@ namespace ToDoAPI
 
             // Repository and Services
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IJoinedRepository, JoinedRepository>();
+            builder.Services.AddScoped<ISubjectClassService, SubjectClassService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ITeacherService, TeacherService>();
+
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
             builder.Services.AddCors(options =>
             {
@@ -58,7 +66,7 @@ namespace ToDoAPI
                         ValidateIssuerSigningKey = true
                     };
                 });
-
+            
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -76,6 +84,8 @@ namespace ToDoAPI
             app.MapControllers();
 
             app.Run();
+
+            
         }
     }
 }
