@@ -3,11 +3,11 @@ using ToDoAPI.Data;
 
 namespace ToDoAPI.Repositories.Main
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private readonly SchoolDbContext _context;
         private readonly DbSet<T> _dbSet;
-        public Repository(SchoolDbContext context)
+        public RepositoryBase(SchoolDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

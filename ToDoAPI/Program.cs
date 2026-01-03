@@ -8,8 +8,8 @@ using System.Diagnostics;
 using System.Text;
 using ToDoAPI.Data;
 using ToDoAPI.Mappings;
-using ToDoAPI.Repositories.Joined;
 using ToDoAPI.Repositories.Main;
+using ToDoAPI.Repositories.StudentsRepository;
 using ToDoAPI.Services.StudentServices;
 using ToDoAPI.Services.SubjectClassServices;
 using ToDoAPI.Services.TeacherServices;
@@ -33,8 +33,8 @@ namespace ToDoAPI
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Repository and Services
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            builder.Services.AddScoped<IJoinedRepository, JoinedRepository>();
+            builder.Services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<ISubjectClassService, SubjectClassService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();

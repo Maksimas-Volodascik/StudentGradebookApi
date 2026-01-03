@@ -7,10 +7,10 @@ namespace ToDoAPI.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Must contain subject name!")]
-        public string Subject_name { get; set; } = null!;
+        public string SubjectName { get; set; } = null!;
         [Required(ErrorMessage = "Must contain subject code!")]
-        public string Subject_code { get; set; } = null!;
-        public int Class_id { get; set; }
+        public string SubjectCode { get; set; } = null!;
+        public int ClassId { get; set; }
         public Classes Classes { get; set; } = null!;
 
     }

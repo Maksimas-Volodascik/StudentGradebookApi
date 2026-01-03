@@ -28,10 +28,14 @@ namespace ToDoAPI.Data
                 .WithMany(c => c.Enrollments)
                 .HasForeignKey(e => e.ClassID);
 
+            modelBuilder.Entity<Enrollments>()  //Enrollments table can have only unique students and their classes
+                .HasIndex(e => new { e.StudentID, e.ClassID }) // student.id = 1 class.id = 1   - will only be mentioned once
+                .IsUnique();
+
             modelBuilder.Entity<Enrollments>()
                 .HasMany(g => g.Grades)
                 .WithOne(e => e.Enrollments)
-                .HasForeignKey(g => g.Enrollment_id);
+                .HasForeignKey(g => g.EnrollmentId);
 
             modelBuilder.Entity<Classes>()
                 .HasOne(c => c.Teachers)
@@ -41,12 +45,16 @@ namespace ToDoAPI.Data
             modelBuilder.Entity<Classes>()
                 .HasOne(c => c.Subjects)
                 .WithOne(s => s.Classes)
-                .HasForeignKey<Subjects>(s => s.Class_id);
+                .HasForeignKey<Subjects>(s => s.ClassId);
+
+            modelBuilder.Entity<Classes>()
+                .HasIndex(e => new { e.AcademicYear, e.Room }) //unique room per academic year
+                .IsUnique();
 
             modelBuilder.Entity<Attendance>()
-                .HasOne(a => a.enrollments)
+                .HasOne(a => a.Enrollments)
                 .WithMany(e => e.Attendances)
-                .HasForeignKey(a => a.Enrollment_id);
+                .HasForeignKey(a => a.EnrollmentId);
 
             modelBuilder.Entity<WebUsers>()
                 .HasOne(u => u.Teachers)
