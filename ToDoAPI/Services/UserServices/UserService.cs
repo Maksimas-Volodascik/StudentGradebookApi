@@ -13,9 +13,9 @@ namespace ToDoAPI.Services.UserServices
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<WebUsers> _userRepository;
+        private readonly IRepositoryBase<WebUsers> _userRepository;
         private readonly IConfiguration _configuration;
-        public UserService(IConfiguration configuration, IRepository<WebUsers> userRepository)
+        public UserService(IConfiguration configuration, IRepositoryBase<WebUsers> userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;

@@ -33,7 +33,7 @@ namespace ToDoAPI.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Enrollment_id")
+                    b.Property<int>("EnrollmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -42,7 +42,7 @@ namespace ToDoAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Enrollment_id");
+                    b.HasIndex("EnrollmentId");
 
                     b.ToTable("Attendances");
                 });
@@ -55,7 +55,7 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Academic_year")
+                    b.Property<string>("AcademicYear")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -89,7 +89,8 @@ namespace ToDoAPI.Migrations
 
                     b.HasIndex("ClassID");
 
-                    b.HasIndex("StudentID");
+                    b.HasIndex("StudentID", "ClassID")
+                        .IsUnique();
 
                     b.ToTable("Enrollments");
                 });
@@ -102,19 +103,22 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Enrollment_id")
+                    b.Property<int>("EnrollmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Grade_type")
+                    b.Property<string>("Grade_Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("GradingDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<byte>("Score")
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Enrollment_id");
+                    b.HasIndex("EnrollmentId");
 
                     b.ToTable("Grades");
                 });
@@ -127,18 +131,18 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTimeOffset>("Date_of_birth")
+                    b.Property<DateTimeOffset>("DateOfBirth")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset>("Enrollment_date")
+                    b.Property<DateTimeOffset>("EnrollmentDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("First_name")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Last_name")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -166,20 +170,20 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Class_id")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Subject_code")
+                    b.Property<string>("SubjectCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Subject_name")
+                    b.Property<string>("SubjectName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Class_id")
+                    b.HasIndex("ClassId")
                         .IsUnique();
 
                     b.ToTable("Subjects");
@@ -196,11 +200,11 @@ namespace ToDoAPI.Migrations
                     b.Property<int>("Class_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("First_name")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Last_name")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -251,13 +255,13 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Attendance", b =>
                 {
-                    b.HasOne("ToDoAPI.Models.Enrollments", "enrollments")
+                    b.HasOne("ToDoAPI.Models.Enrollments", "Enrollments")
                         .WithMany("Attendances")
-                        .HasForeignKey("Enrollment_id")
+                        .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("enrollments");
+                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
@@ -283,7 +287,7 @@ namespace ToDoAPI.Migrations
                 {
                     b.HasOne("ToDoAPI.Models.Enrollments", "Enrollments")
                         .WithMany("Grades")
-                        .HasForeignKey("Enrollment_id")
+                        .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -305,7 +309,7 @@ namespace ToDoAPI.Migrations
                 {
                     b.HasOne("ToDoAPI.Models.Classes", "Classes")
                         .WithOne("Subjects")
-                        .HasForeignKey("ToDoAPI.Models.Subjects", "Class_id")
+                        .HasForeignKey("ToDoAPI.Models.Subjects", "ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

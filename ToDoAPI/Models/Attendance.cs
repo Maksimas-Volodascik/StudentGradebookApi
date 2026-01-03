@@ -9,8 +9,8 @@ namespace ToDoAPI.Models
         public DateTime Date { get; set; }
         [Required(ErrorMessage = "Select attendance status!")]
         public string Status { get; set; } = null!;
-        public int Enrollment_id { get; set; }
-        public Enrollments enrollments { get; set; } = null!;
+        public int EnrollmentId { get; set; }
+        public Enrollments Enrollments { get; set; } = null!;
 
     }
 }

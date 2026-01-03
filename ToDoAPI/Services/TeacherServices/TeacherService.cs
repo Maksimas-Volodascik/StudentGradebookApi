@@ -6,8 +6,8 @@ namespace ToDoAPI.Services.TeacherServices
 {
     public class TeacherService : ITeacherService
     {
-        private readonly IRepository<Teachers> _teachersRepository;
-        public TeacherService(IRepository<Teachers> teachersRepository) { 
+        private readonly IRepositoryBase<Teachers> _teachersRepository;
+        public TeacherService(IRepositoryBase<Teachers> teachersRepository) { 
             _teachersRepository = teachersRepository;
         }
         public async Task<Teachers?> AddNewTeacher(Teachers teacherData)
@@ -31,7 +31,7 @@ namespace ToDoAPI.Services.TeacherServices
             Teachers? updatedTeacher = await _teachersRepository.GetByIdAsync(id);
             if(updatedTeacher == null) return null;
 
-            updatedTeacher.First_name = teacher.First_name;
+            updatedTeacher.FirstName = teacher.FirstName;
             // add remaining data
             _teachersRepository.Update(updatedTeacher);
             await _teachersRepository.SaveChangesAsync();

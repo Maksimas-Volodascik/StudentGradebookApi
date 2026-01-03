@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToDoAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class GradesTableForeignKeyFixes : Migration
+    public partial class DbInitialization : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace ToDoAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Academic_year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AcademicYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Room = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -48,16 +48,16 @@ namespace ToDoAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Subject_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Class_id = table.Column<int>(type: "int", nullable: false)
+                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClassId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subjects_Classes_Class_id",
-                        column: x => x.Class_id,
+                        name: "FK_Subjects_Classes_ClassId",
+                        column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -69,10 +69,10 @@ namespace ToDoAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    First_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Last_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Date_of_birth = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Enrollment_date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DateOfBirth = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EnrollmentDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -93,8 +93,8 @@ namespace ToDoAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    First_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Class_id = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -150,14 +150,14 @@ namespace ToDoAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Enrollment_id = table.Column<int>(type: "int", nullable: false)
+                    EnrollmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attendances_Enrollments_Enrollment_id",
-                        column: x => x.Enrollment_id,
+                        name: "FK_Attendances_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
                         principalTable: "Enrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -170,24 +170,25 @@ namespace ToDoAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Score = table.Column<byte>(type: "tinyint", nullable: false),
-                    Grade_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Enrollment_id = table.Column<int>(type: "int", nullable: false)
+                    Grade_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GradingDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EnrollmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Grades_Enrollments_Enrollment_id",
-                        column: x => x.Enrollment_id,
+                        name: "FK_Grades_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
                         principalTable: "Enrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attendances_Enrollment_id",
+                name: "IX_Attendances_EnrollmentId",
                 table: "Attendances",
-                column: "Enrollment_id");
+                column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_ClassID",
@@ -200,9 +201,9 @@ namespace ToDoAPI.Migrations
                 column: "StudentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Grades_Enrollment_id",
+                name: "IX_Grades_EnrollmentId",
                 table: "Grades",
-                column: "Enrollment_id");
+                column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserID",
@@ -211,9 +212,9 @@ namespace ToDoAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_Class_id",
+                name: "IX_Subjects_ClassId",
                 table: "Subjects",
-                column: "Class_id",
+                column: "ClassId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

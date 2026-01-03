@@ -2,15 +2,16 @@
 using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
 using ToDoAPI.Repositories.Main;
+using ToDoAPI.Repositories.StudentsRepository;
 using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI.Services.StudentServices
 {
     public class StudentService : IStudentService
     {
-        private readonly IRepository<Students> _studentsRepository;
+        private readonly IStudentsRepository _studentsRepository;
         private readonly IUserService _userService;
-        public StudentService(IRepository<Students> studentsRepository, IUserService userService)
+        public StudentService(IUserService userService, IStudentsRepository studentsRepository)
         {
             _studentsRepository = studentsRepository;
             _userService = userService;
@@ -30,9 +31,9 @@ namespace ToDoAPI.Services.StudentServices
                 return null;
             }
             var student = new Students();
-            student.First_name = studentData.First_name;
-            student.Last_name = studentData.Last_name;
-            student.Date_of_birth = studentData.Date_of_birth;
+            student.FirstName = studentData.FirstName;
+            student.LastName = studentData.LastName;
+            student.DateOfBirth = studentData.DateOfBirth;
             student.User = newUser;
             await _studentsRepository.AddAsync(student);
             await _studentsRepository.SaveChangesAsync();
@@ -50,7 +51,7 @@ namespace ToDoAPI.Services.StudentServices
 
         public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
         {
-            if (studentData == null || studentData.First_name == "" || studentData.Last_name =="")
+            if (studentData == null || studentData.FirstName == "" || studentData.LastName =="")
             {
                 return null;
             }
@@ -60,9 +61,9 @@ namespace ToDoAPI.Services.StudentServices
             {
                 return null;
             }
-            student.First_name=studentData.First_name;
-            student.Last_name=studentData.Last_name;
-            student.Date_of_birth=studentData.Date_of_birth;
+            student.FirstName=studentData.FirstName;
+            student.LastName=studentData.LastName;
+            student.DateOfBirth=studentData.DateOfBirth;
             _studentsRepository.Update(student);
             await _studentsRepository.SaveChangesAsync();
 

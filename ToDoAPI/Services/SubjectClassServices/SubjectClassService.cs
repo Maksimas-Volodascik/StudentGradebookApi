@@ -1,17 +1,16 @@
 ﻿using ToDoAPI.DTOs.SubjectClass;
 using ToDoAPI.Models;
-using ToDoAPI.Repositories.Joined;
 using ToDoAPI.Repositories.Main;
 
 namespace ToDoAPI.Services.SubjectClassServices
 {
     public class SubjectClassService : ISubjectClassService
     {
-        private readonly IJoinedRepository _joinedRepo;
+        /*private readonly IJoinedRepository _joinedRepo;
 
         public SubjectClassService(IJoinedRepository joinedRepo) {
             _joinedRepo = joinedRepo;
-        }
+        }*/
         public Task<Classes> AddClasses(Classes classes)
         {
             throw new NotImplementedException();
@@ -54,7 +53,8 @@ namespace ToDoAPI.Services.SubjectClassServices
 
         public async Task<IEnumerable<ClassSubjects>> GetAllClassSubjects()
         {
-            return await _joinedRepo.GetClassSubjectsAsync();
+            //return await _joinedRepo.GetClassSubjectsAsync();
+            throw new NotImplementedException();
         }
 
         public Task<Subjects> GetSubjectAsync()

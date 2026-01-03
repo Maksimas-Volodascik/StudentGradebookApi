@@ -8,12 +8,12 @@ namespace ToDoAPI.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(100)]
-        public string First_name { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
         [Required]
         [MaxLength(100)]
-        public string Last_name { get; set; } = null!;
-        public DateTimeOffset Date_of_birth { get; set; } = DateTimeOffset.Now;
-        public DateTimeOffset Enrollment_date { get; set; } = DateTimeOffset.Now;
+        public string LastName { get; set; } = null!;
+        public DateTimeOffset DateOfBirth { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset EnrollmentDate { get; set; } = DateTimeOffset.Now;
         public string Status { get; set; } = "Enrolled";
         public List<Enrollments> Enrollments { get; set; } = new();  //student can enroll in many classes
         public int UserID { get; set; } //FK
