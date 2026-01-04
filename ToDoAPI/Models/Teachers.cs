@@ -10,7 +10,7 @@ namespace ToDoAPI.Models
         public string FirstName { get; set; } = null!;
         [Required(ErrorMessage = "Last name is required!")]
         public string LastName { get; set; } = null!;
-        public int Class_id { get; set; } //FK
+        public int ClassId { get; set; } //FK
         public Classes Classes { get; set; } = null!;
         public int UserID { get; set; } //FK
         public WebUsers User { get; set; } = null!;

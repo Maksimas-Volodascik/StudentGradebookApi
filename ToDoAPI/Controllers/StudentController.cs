@@ -40,7 +40,7 @@ namespace ToDoAPI.Controllers
             var response = await _studentService.AddStudentAsync(studentData);
             if(response == null)
             {
-                return BadRequest("User Already Exists");
+                return BadRequest(new { message = "User Already Exists" });
             }
             return Ok();
         }
@@ -58,10 +58,10 @@ namespace ToDoAPI.Controllers
             var student = await _studentService.GetStudentByIdAsync(id);
             if (student == null)
             {
-                //do nothing
+                return NotFound(new { message = "Student not found" });
             }
             await _studentService.DeleteStudentAsync(student!);
-            return Ok("Student Deleted");
+            return Ok(new { message = "Student Deleted" });
         }   
     }
 }

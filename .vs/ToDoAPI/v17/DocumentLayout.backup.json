@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\repositories\\studentsrepository\\studentsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\repositories\\studentsrepository\\studentsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\services\\teacherservices\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\services\\teacherservices\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\dtos\\students\\editstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\dtos\\students\\editstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\data\\schooldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\data\\schooldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\models\\teachers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\models\\teachers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\services\\studentservices\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\services\\studentservices\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\dtos\\subjectclass\\classsubjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\dtos\\subjectclass\\classsubjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\repositories\\teachersrepository\\iteachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\repositories\\teachersrepository\\iteachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\dtos\\subjectclass\\newclasssubject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\dtos\\subjectclass\\newclasssubject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\repositories\\teachersrepository\\teachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\repositories\\teachersrepository\\teachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\dtos\\students\\studentlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\dtos\\students\\studentlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\dtos\\students\\newstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\dtos\\students\\newstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\todoapi\\todoapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,97 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StudentsRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\StudentsRepository\\StudentsRepository.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Repositories\\StudentsRepository\\StudentsRepository.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\StudentsRepository\\StudentsRepository.cs",
-              "RelativeToolTip": "ToDoAPI\\Repositories\\StudentsRepository\\StudentsRepository.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCEAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "SchoolDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Data\\SchoolDbContext.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Data\\SchoolDbContext.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Data\\SchoolDbContext.cs",
+              "RelativeToolTip": "ToDoAPI\\Data\\SchoolDbContext.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAADwvxMAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T12:44:37.085Z",
+              "WhenOpened": "2026-01-04T09:29:11.461Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "StudentService.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "RelativeToolTip": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAWwD0AAAANAAAAAAAAAA==",
+              "Title": "Teachers.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Models\\Teachers.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Models\\Teachers.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Models\\Teachers.cs",
+              "RelativeToolTip": "ToDoAPI\\Models\\Teachers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:37:07.63Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "NewClassSubject.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\SubjectClass\\NewClassSubject.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\DTOs\\SubjectClass\\NewClassSubject.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\SubjectClass\\NewClassSubject.cs",
-              "RelativeToolTip": "ToDoAPI\\DTOs\\SubjectClass\\NewClassSubject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:35:55.185Z",
+              "WhenOpened": "2026-01-04T09:28:09.362Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ClassSubjects.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\SubjectClass\\ClassSubjects.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\DTOs\\SubjectClass\\ClassSubjects.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\SubjectClass\\ClassSubjects.cs",
-              "RelativeToolTip": "ToDoAPI\\DTOs\\SubjectClass\\ClassSubjects.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
+              "RelativeToolTip": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA1wCQAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:35:45.212Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "StudentList.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\StudentList.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\DTOs\\Students\\StudentList.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\StudentList.cs",
-              "RelativeToolTip": "ToDoAPI\\DTOs\\Students\\StudentList.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:35:32.864Z",
+              "WhenOpened": "2026-01-04T09:11:36.819Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "NewStudent.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\NewStudent.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\DTOs\\Students\\NewStudent.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\NewStudent.cs",
-              "RelativeToolTip": "ToDoAPI\\DTOs\\Students\\NewStudent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Program.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Program.cs",
+              "RelativeToolTip": "ToDoAPI\\Program.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAQwCkAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:35:17.864Z",
+              "WhenOpened": "2026-01-04T09:05:43.273Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EditStudent.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\EditStudent.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\DTOs\\Students\\EditStudent.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\DTOs\\Students\\EditStudent.cs",
-              "RelativeToolTip": "ToDoAPI\\DTOs\\Students\\EditStudent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "TeachersRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\TeachersRepository\\TeachersRepository.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Repositories\\TeachersRepository\\TeachersRepository.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\TeachersRepository\\TeachersRepository.cs",
+              "RelativeToolTip": "ToDoAPI\\Repositories\\TeachersRepository\\TeachersRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T11:35:03.954Z",
+              "WhenOpened": "2026-01-04T08:54:58.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ITeachersRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\TeachersRepository\\ITeachersRepository.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Repositories\\TeachersRepository\\ITeachersRepository.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Repositories\\TeachersRepository\\ITeachersRepository.cs",
+              "RelativeToolTip": "ToDoAPI\\Repositories\\TeachersRepository\\ITeachersRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T08:54:50.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TeacherService.cs",
+              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\TeacherServices\\TeacherService.cs",
+              "RelativeDocumentMoniker": "ToDoAPI\\Services\\TeacherServices\\TeacherService.cs",
+              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\Services\\TeacherServices\\TeacherService.cs",
+              "RelativeToolTip": "ToDoAPI\\Services\\TeacherServices\\TeacherService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAD4vzcAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T08:20:42.893Z",
               "EditorCaption": ""
             }
           ]

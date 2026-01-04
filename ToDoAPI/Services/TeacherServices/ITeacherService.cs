@@ -1,14 +1,15 @@
 ﻿using ToDoAPI.DTOs.Students;
+using ToDoAPI.DTOs.Teachers;
 using ToDoAPI.Models;
 
 namespace ToDoAPI.Services.TeacherServices
 {
     public interface ITeacherService
     {
-        Task<IEnumerable<Teachers?>> GetTeachersAsync();
-        Task<Teachers?> GetTeacherById(int id);
-        Task<Teachers?> EditTeacherById(Teachers teacher,int id);
-        Task<Teachers?> AddNewTeacher(Teachers teacher);
-        Task DeleteTeacher(int id);
+        Task<IEnumerable<Teachers>> GetAllTeachersAsync();
+        Task<Teachers?> GetTeacherByIdAsync(int id);
+        Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData);
+        Task<Teachers?> EditTeacherAsync(TeacherDTO teacher);
+        Task DeleteTeacherAsync(int id);
     }
 }

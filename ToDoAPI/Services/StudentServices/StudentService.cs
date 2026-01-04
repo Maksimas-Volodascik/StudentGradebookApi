@@ -22,11 +22,11 @@ namespace ToDoAPI.Services.StudentServices
             if (studentData == null || studentData.Email.Length <= 5 || studentData.Password.Length <= 5) { 
                 return null;
             }
-            var newLogin = new LoginDTO();
-            newLogin.Email = studentData.Email;
-            newLogin.Password = studentData.Password;
-            var newUser = await _userService.RegisterAsync(newLogin);
-            if(newUser == null)
+            LoginDTO registrationDto = new LoginDTO();
+            registrationDto.Email = studentData.Email;
+            registrationDto.Password = studentData.Password;
+            var registeredUser = await _userService.RegisterAsync(registrationDto);
+            if(registeredUser == null)
             {
                 return null;
             }
@@ -34,7 +34,7 @@ namespace ToDoAPI.Services.StudentServices
             student.FirstName = studentData.FirstName;
             student.LastName = studentData.LastName;
             student.DateOfBirth = studentData.DateOfBirth;
-            student.User = newUser;
+            student.User = registeredUser;
             await _studentsRepository.AddAsync(student);
             await _studentsRepository.SaveChangesAsync();
 
