@@ -1,51 +1,74 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
+using ToDoAPI.DTOs.Teachers;
+using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
 using ToDoAPI.Repositories.Main;
+using ToDoAPI.Repositories.TeachersRepository;
+using ToDoAPI.Services.UserServices;
 
 namespace ToDoAPI.Services.TeacherServices
 {
     public class TeacherService : ITeacherService
     {
-        private readonly IRepositoryBase<Teachers> _teachersRepository;
-        public TeacherService(IRepositoryBase<Teachers> teachersRepository) { 
+        private readonly ITeachersRepository _teachersRepository;
+        private readonly IUserService _userService;
+        public TeacherService(ITeachersRepository teachersRepository, IUserService userService) { 
             _teachersRepository = teachersRepository;
+            _userService = userService;
         }
-        public async Task<Teachers?> AddNewTeacher(Teachers teacherData)
+        public async Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData)
         {
             if (teacherData == null) return null;
-            await _teachersRepository.AddAsync(teacherData);
+            
+            LoginDTO registrationDto = new LoginDTO();
+            registrationDto.Email = teacherData.Email;
+            registrationDto.Password = teacherData.Password;
+            var registeredUser = await _userService.RegisterAsync(registrationDto);
+            if (registeredUser == null) return null;
+
+
+            Teachers newTeacher = new Teachers();
+            newTeacher.FirstName = teacherData.FirstName;
+            newTeacher.LastName = teacherData.LastName;
+            newTeacher.UserID = registeredUser.Id;
+            newTeacher.ClassId = teacherData.ClassId;
+
+            await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
-            return teacherData;
+            return newTeacher;
         }
 
-        public async Task DeleteTeacher(int id)
+        public async Task DeleteTeacherAsync(int id)
         {
             Teachers? teacherToDelete = await _teachersRepository.GetByIdAsync(id);
             if (teacherToDelete == null) return;
             _teachersRepository.Delete(teacherToDelete!);
+
             await _teachersRepository.SaveChangesAsync();
         }
 
-        public async Task<Teachers?> EditTeacherById(Teachers teacher, int id)
+        public async Task<Teachers?> EditTeacherAsync(TeacherDTO teacher)
         {
-            Teachers? updatedTeacher = await _teachersRepository.GetByIdAsync(id);
-            if(updatedTeacher == null) return null;
+            Teachers? updateTeacher = await _teachersRepository.GetByIdAsync(teacher.Id);
+            if(updateTeacher == null) return null;
 
-            updatedTeacher.FirstName = teacher.FirstName;
-            // add remaining data
-            _teachersRepository.Update(updatedTeacher);
+            updateTeacher.FirstName = teacher.FirstName;
+            updateTeacher.LastName = teacher.LastName;
+            updateTeacher.ClassId = teacher.ClassId;
+
+            _teachersRepository.Update(updateTeacher);
             await _teachersRepository.SaveChangesAsync();
 
-            return updatedTeacher;
+            return updateTeacher;
         }
 
-        public async Task<Teachers?> GetTeacherById(int id)
+        public async Task<Teachers?> GetTeacherByIdAsync(int id)
         {
             var teacher = await _teachersRepository.GetByIdAsync(id);
             return teacher;
         }
 
-        public async Task<IEnumerable<Teachers?>> GetTeachersAsync()
+        public async Task<IEnumerable<Teachers?>> GetAllTeachersAsync()
         {
             var teacherList = await _teachersRepository.GetAllAsync();
             return teacherList;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System.Security.Claims;
 using ToDoAPI.Models;
 
@@ -40,7 +41,7 @@ namespace ToDoAPI.Data
             modelBuilder.Entity<Classes>()
                 .HasOne(c => c.Teachers)
                 .WithOne(t => t.Classes)
-                .HasForeignKey<Teachers>(t => t.Class_id);
+                .HasForeignKey<Teachers>(t => t.ClassId);
 
             modelBuilder.Entity<Classes>()
                 .HasOne(c => c.Subjects)
@@ -66,6 +67,7 @@ namespace ToDoAPI.Data
                 .WithOne(s => s.User)
                 .HasForeignKey<Students>(s => s.UserID);
 
+            
         }
 
     }

@@ -7,7 +7,7 @@ using ToDoAPI.Repositories.Main;
 
 namespace ToDoAPI.Repositories.StudentsRepository
 {
-    public class StudentsRepository : RepositoryBase<Students> ,IStudentsRepository
+    public class StudentsRepository : RepositoryBase<Students> , IStudentsRepository
     {
         private readonly SchoolDbContext _context;
         public StudentsRepository(SchoolDbContext context) : base(context)

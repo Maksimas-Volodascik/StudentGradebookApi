@@ -20,20 +20,13 @@ namespace ToDoAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ISubjectClassService _subjectClassService;
         //will need to add more services (teachers, classes etc).
 
-        public UserController(IUserService userService, ISubjectClassService subjectClassService)
+        public UserController(IUserService userService)
         {
-            _subjectClassService = subjectClassService;
             _userService = userService;
         }    
-        [HttpGet("classSubj")]
-        public async Task<ActionResult<IEnumerable<ClassSubjects>>> GetAllClassesAndSubj()
-        {
-            var classSubjects = await _subjectClassService.GetAllClassSubjects();
-            return Ok(classSubjects);
-        }
+
         //Register user
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser (LoginDTO loginDto)
