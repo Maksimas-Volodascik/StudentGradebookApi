@@ -22,10 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Repositories\GradesRepository\" />
-    <Folder Include="Repositories\AttendancesRepository\" />
-    <Folder Include="Repositories\EnrollmentsRepository\" />
-    <Folder Include="Repositories\ClassSubjectsRepository\" />
   </ItemGroup>
 
 </Project>
