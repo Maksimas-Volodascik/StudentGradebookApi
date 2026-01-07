@@ -11,6 +11,7 @@ using ToDoAPI.Mappings;
 using ToDoAPI.Repositories.Main;
 using ToDoAPI.Repositories.StudentsRepository;
 using ToDoAPI.Repositories.TeachersRepository;
+using ToDoAPI.Repositories.UsersRepository;
 using ToDoAPI.Services.StudentServices;
 using ToDoAPI.Services.SubjectClassServices;
 using ToDoAPI.Services.TeacherServices;
@@ -37,6 +38,7 @@ namespace ToDoAPI
             builder.Services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<ITeachersRepository, TeachersRepository>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<ISubjectClassService, SubjectClassService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();

@@ -8,14 +8,15 @@ using System.Text;
 using ToDoAPI.DTOs.Users;
 using ToDoAPI.Models;
 using ToDoAPI.Repositories.Main;
+using ToDoAPI.Repositories.UsersRepository;
 
 namespace ToDoAPI.Services.UserServices
 {
     public class UserService : IUserService
     {
-        private readonly IRepositoryBase<WebUsers> _userRepository;
+        private readonly IUsersRepository _userRepository;
         private readonly IConfiguration _configuration;
-        public UserService(IConfiguration configuration, IRepositoryBase<WebUsers> userRepository)
+        public UserService(IConfiguration configuration, IUsersRepository userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;
@@ -43,8 +44,9 @@ namespace ToDoAPI.Services.UserServices
             if (user == null) { return null; }
             return user;
         }
-        public async Task DeleteUserAsync(WebUsers user)
+        public async Task DeleteUserAsync(int id)
         {
+            var user = await _userRepository.GetByIdAsync(id);
             _userRepository.Delete(user);
             await _userRepository.SaveChangesAsync();
         }

@@ -60,14 +60,14 @@ namespace ToDoAPI.Data
             modelBuilder.Entity<WebUsers>()
                 .HasOne(u => u.Teachers)
                 .WithOne(s => s.User)
-                .HasForeignKey<Teachers>(s => s.UserID);
+                .HasForeignKey<Teachers>(s => s.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WebUsers>()
                 .HasOne(u => u.Students)
                 .WithOne(s => s.User)
-                .HasForeignKey<Students>(s => s.UserID);
-
-            
+                .HasForeignKey<Students>(s => s.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

@@ -10,6 +10,5 @@ namespace ToDoAPI.Services.TeacherServices
         Task<Teachers?> GetTeacherByIdAsync(int id);
         Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData);
         Task<Teachers?> EditTeacherAsync(TeacherDTO teacher);
-        Task DeleteTeacherAsync(int id);
     }
 }
