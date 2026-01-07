@@ -18,6 +18,7 @@ namespace ToDoAPI.Services.TeacherServices
         }
         public async Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData)
         {
+            // check if classID is not occupied
             if (teacherData == null) return null;
             
             LoginDTO registrationDto = new LoginDTO();
@@ -36,15 +37,6 @@ namespace ToDoAPI.Services.TeacherServices
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
             return newTeacher;
-        }
-
-        public async Task DeleteTeacherAsync(int id)
-        {
-            Teachers? teacherToDelete = await _teachersRepository.GetByIdAsync(id);
-            if (teacherToDelete == null) return;
-            _teachersRepository.Delete(teacherToDelete!);
-
-            await _teachersRepository.SaveChangesAsync();
         }
 
         public async Task<Teachers?> EditTeacherAsync(TeacherDTO teacher)

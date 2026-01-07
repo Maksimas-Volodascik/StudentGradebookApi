@@ -9,6 +9,6 @@ namespace ToDoAPI.Services.UserServices
         Task<TokenResponse?> LoginAsync(LoginDTO request);
         Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request);
         Task<WebUsers?> GetUserByIdAsync(int id);
-        Task DeleteUserAsync(WebUsers user);
+        Task DeleteUserAsync(int id);
     }
 }

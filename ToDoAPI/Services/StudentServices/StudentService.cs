@@ -40,15 +40,6 @@ namespace ToDoAPI.Services.StudentServices
 
             return student;
         }
-
-        public async Task DeleteStudentAsync(Students student)
-        {
-            WebUsers userToDelete = await _userService.GetUserByIdAsync(student.UserID);
-
-            _studentsRepository.Delete(student);
-            await _userService.DeleteUserAsync(userToDelete);
-        }
-
         public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
         {
             if (studentData == null || studentData.FirstName == "" || studentData.LastName =="")

@@ -64,5 +64,11 @@ namespace ToDoAPI.Controllers
           {
               return Ok("You are admin!");
           }*/
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser (int id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return Ok();
+        }
     }
 }

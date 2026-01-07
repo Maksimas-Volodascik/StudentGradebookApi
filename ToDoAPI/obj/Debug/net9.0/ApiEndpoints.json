@@ -93,9 +93,45 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "ToDoAPI.Controllers.StudentController",
-    "Method": "DeleteStudent",
-    "RelativePath": "api/student/{id}",
+    "ContainingType": "ToDoAPI.Controllers.TeacherController",
+    "Method": "GetTeachers",
+    "RelativePath": "api/teacher",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ToDoAPI.Models.Teachers, ToDoAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.TeacherController",
+    "Method": "AddNewTeacher",
+    "RelativePath": "api/teacher",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newTeacher",
+        "Type": "ToDoAPI.DTOs.Teachers.NewTeacherDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ToDoAPI.Controllers.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/user/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

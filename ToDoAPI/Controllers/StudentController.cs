@@ -12,7 +12,7 @@ namespace ToDoAPI.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
-        public StudentController(IConfiguration configuration, IStudentService studentService, IMapper mapper)
+        public StudentController(IStudentService studentService, IMapper mapper)
         {
             _studentService = studentService;
             _mapper = mapper;
@@ -51,17 +51,5 @@ namespace ToDoAPI.Controllers
 
             return Ok();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStudent(int id)
-        {
-            var student = await _studentService.GetStudentByIdAsync(id);
-            if (student == null)
-            {
-                return NotFound(new { message = "Student not found" });
-            }
-            await _studentService.DeleteStudentAsync(student!);
-            return Ok(new { message = "Student Deleted" });
-        }   
     }
 }
