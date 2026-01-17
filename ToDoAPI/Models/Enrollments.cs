@@ -10,9 +10,10 @@ namespace ToDoAPI.Models
         public string Status { get; set; } = null!;
         public int StudentID { get; set; } //FK
         public Students Student { get; set; } = null!;
-        public int ClassID { get; set; } //FK
-        public Classes Classes { get; set; } = null!;
+        public int ClassSubjectId { get; set; } //FK
+        public ClassSubjects ClassSubjects { get; set; } = null!;
         public List<Grades> ?Grades { get; set; }
         public List<Attendance> ?Attendances { get; set; }
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoAPI.Data;
 
@@ -11,9 +12,11 @@ using ToDoAPI.Data;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260117071507_SubjectDescription")]
+    partial class SubjectDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,35 +50,6 @@ namespace ToDoAPI.Migrations
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("ToDoAPI.Models.ClassSubjects", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.HasIndex("SubjectId", "ClassId")
-                        .IsUnique();
-
-                    b.ToTable("ClassSubjects");
-                });
-
             modelBuilder.Entity("ToDoAPI.Models.Classes", b =>
                 {
                     b.Property<int>("Id")
@@ -107,7 +81,7 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassSubjectId")
+                    b.Property<int>("ClassID")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -119,9 +93,9 @@ namespace ToDoAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassSubjectId");
+                    b.HasIndex("ClassID");
 
-                    b.HasIndex("StudentID", "ClassSubjectId")
+                    b.HasIndex("StudentID", "ClassID")
                         .IsUnique();
 
                     b.ToTable("Enrollments");
@@ -202,6 +176,9 @@ namespace ToDoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -217,6 +194,9 @@ namespace ToDoAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassId")
+                        .IsUnique();
+
                     b.ToTable("Subjects");
                 });
 
@@ -227,6 +207,9 @@ namespace ToDoAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -240,6 +223,9 @@ namespace ToDoAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClassId")
+                        .IsUnique();
 
                     b.HasIndex("UserID")
                         .IsUnique();
@@ -289,39 +275,12 @@ namespace ToDoAPI.Migrations
                     b.Navigation("Enrollments");
                 });
 
-            modelBuilder.Entity("ToDoAPI.Models.ClassSubjects", b =>
-                {
-                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
-                        .WithMany("ClassSubjects")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ToDoAPI.Models.Subjects", "Subjects")
-                        .WithMany("ClassSubjects")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ToDoAPI.Models.Teachers", "Teachers")
-                        .WithMany("ClassSubjects")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Classes");
-
-                    b.Navigation("Subjects");
-
-                    b.Navigation("Teachers");
-                });
-
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
                 {
-                    b.HasOne("ToDoAPI.Models.ClassSubjects", "ClassSubjects")
+                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
                         .WithMany("Enrollments")
-                        .HasForeignKey("ClassSubjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ClassID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ToDoAPI.Models.Students", "Student")
@@ -330,7 +289,7 @@ namespace ToDoAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ClassSubjects");
+                    b.Navigation("Classes");
 
                     b.Navigation("Student");
                 });
@@ -357,25 +316,45 @@ namespace ToDoAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ToDoAPI.Models.Subjects", b =>
+                {
+                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
+                        .WithOne("Subjects")
+                        .HasForeignKey("ToDoAPI.Models.Subjects", "ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Classes");
+                });
+
             modelBuilder.Entity("ToDoAPI.Models.Teachers", b =>
                 {
+                    b.HasOne("ToDoAPI.Models.Classes", "Classes")
+                        .WithOne("Teachers")
+                        .HasForeignKey("ToDoAPI.Models.Teachers", "ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ToDoAPI.Models.WebUsers", "User")
                         .WithOne("Teachers")
                         .HasForeignKey("ToDoAPI.Models.Teachers", "UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
+                    b.Navigation("Classes");
 
-            modelBuilder.Entity("ToDoAPI.Models.ClassSubjects", b =>
-                {
-                    b.Navigation("Enrollments");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Classes", b =>
                 {
-                    b.Navigation("ClassSubjects");
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Subjects")
+                        .IsRequired();
+
+                    b.Navigation("Teachers")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
@@ -388,16 +367,6 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Students", b =>
                 {
                     b.Navigation("Enrollments");
-                });
-
-            modelBuilder.Entity("ToDoAPI.Models.Subjects", b =>
-                {
-                    b.Navigation("ClassSubjects");
-                });
-
-            modelBuilder.Entity("ToDoAPI.Models.Teachers", b =>
-                {
-                    b.Navigation("ClassSubjects");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.WebUsers", b =>

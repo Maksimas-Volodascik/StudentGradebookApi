@@ -1,6 +1,6 @@
 ﻿namespace ToDoAPI.DTOs.SubjectClass
 {
-    public class ClassSubjects
+    public class GetClassSubjects
     {
         public string AcademicYear { get; set; } = null!;
         public int Room { get; set; }

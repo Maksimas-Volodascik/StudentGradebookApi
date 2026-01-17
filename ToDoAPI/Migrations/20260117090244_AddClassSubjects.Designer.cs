@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoAPI.Data;
 
@@ -11,9 +12,11 @@ using ToDoAPI.Data;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260117090244_AddClassSubjects")]
+    partial class AddClassSubjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,6 +113,9 @@ namespace ToDoAPI.Migrations
                     b.Property<int>("ClassSubjectId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ClassesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -120,6 +126,8 @@ namespace ToDoAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClassSubjectId");
+
+                    b.HasIndex("ClassesId");
 
                     b.HasIndex("StudentID", "ClassSubjectId")
                         .IsUnique();
@@ -324,6 +332,10 @@ namespace ToDoAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ToDoAPI.Models.Classes", null)
+                        .WithMany("Enrollments")
+                        .HasForeignKey("ClassesId");
+
                     b.HasOne("ToDoAPI.Models.Students", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentID")
@@ -376,6 +388,8 @@ namespace ToDoAPI.Migrations
             modelBuilder.Entity("ToDoAPI.Models.Classes", b =>
                 {
                     b.Navigation("ClassSubjects");
+
+                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Enrollments", b =>
