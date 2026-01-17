@@ -1,0 +1,21 @@
+@StudentGradebookApi_HostAddress = https://localhost:7220
+
+POST {{StudentGradebookApi_HostAddress}}/api/todoitems
+Content-Type: application/json
+{
+  "name": "sleep",
+  "isComplete": true
+}
+
+###
+
+GET {{StudentGradebookApi_HostAddress}}/api/school/students
+Accept: application/json
+
+###
+
+@id=1
+GET {{StudentGradebookApi_HostAddress}}/api/school/students/{{id}}
+Accept: application/json
+
+###

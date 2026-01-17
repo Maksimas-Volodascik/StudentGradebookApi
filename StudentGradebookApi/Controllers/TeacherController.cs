@@ -1,0 +1,32 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using StudentGradebookApi.DTOs.Teachers;
+using StudentGradebookApi.Models;
+using StudentGradebookApi.Services.TeacherServices;
+
+namespace StudentGradebookApi.Controllers
+{
+    [Route("api/teacher")]
+    [ApiController]
+    public class TeacherController : ControllerBase
+    {
+        private readonly ITeacherService _teacherService;
+
+        public TeacherController(ITeacherService teacherService)
+        {
+            _teacherService = teacherService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Teachers>>> GetTeachers()
+        {
+            var response = await _teacherService.GetAllTeachersAsync();
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddNewTeacher(NewTeacherDTO newTeacher)
+        {
+            await _teacherService.AddTeacherAsync(newTeacher);
+            return Ok();
+        }
+    }
+}
