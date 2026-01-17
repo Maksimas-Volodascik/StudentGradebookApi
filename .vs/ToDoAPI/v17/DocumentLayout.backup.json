@@ -1,104 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\studentgradebookapi\\todoapipractice\\todoapi\\todoapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\todoapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\studentgradebookapi\\todoapipractice\\todoapi\\controllers\\classsubjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\controllers\\classsubjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\studentgradebookapi\\todoapipractice\\todoapi\\services\\classsubjectsservices\\iclasssubjectsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\services\\classsubjectsservices\\iclasssubjectsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\studentgradebookapi\\todoapipractice\\todoapi\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|c:\\users\\max\\source\\repos\\asp.net projects\\studentgradebookapi\\todoapipractice\\todoapi\\services\\studentservices\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6A9065B-2177-44AE-A5BC-35A14B9111D8}|ToDoAPI\\ToDoAPI.csproj|solutionrelative:todoapi\\services\\studentservices\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ToDoAPI",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj",
-              "RelativeDocumentMoniker": "ToDoAPI\\ToDoAPI.csproj",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj",
-              "RelativeToolTip": "ToDoAPI\\ToDoAPI.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-17T20:49:51.801Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IClassSubjectsService.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Services\\ClassSubjectsServices\\IClassSubjectsService.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Services\\ClassSubjectsServices\\IClassSubjectsService.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Services\\ClassSubjectsServices\\IClassSubjectsService.cs",
-              "RelativeToolTip": "ToDoAPI\\Services\\ClassSubjectsServices\\IClassSubjectsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-17T20:48:50.999Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "StudentController.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Controllers\\StudentController.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Controllers\\StudentController.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Controllers\\StudentController.cs",
-              "RelativeToolTip": "ToDoAPI\\Controllers\\StudentController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-17T20:47:32.15Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ClassSubjects.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Controllers\\ClassSubjects.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Controllers\\ClassSubjects.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Controllers\\ClassSubjects.cs",
-              "RelativeToolTip": "ToDoAPI\\Controllers\\ClassSubjects.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-17T20:41:23.764Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "StudentService.cs",
-              "DocumentMoniker": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "RelativeDocumentMoniker": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "ToolTip": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "RelativeToolTip": "ToDoAPI\\Services\\StudentServices\\StudentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-17T20:26:21.72Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
