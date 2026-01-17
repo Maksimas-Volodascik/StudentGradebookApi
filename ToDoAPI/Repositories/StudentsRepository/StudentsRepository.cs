@@ -20,15 +20,15 @@ namespace ToDoAPI.Repositories.StudentsRepository
             var query = from S in _context.Students
                         join E in _context.Enrollments
                             on S.Id equals E.StudentID
-                        join C in _context.Classes
-                            on E.ClassID equals C.Id
-                        join Sub in _context.Subjects
-                            on C.Id equals Sub.ClassId
+                        //join C in _context.Classes
+                        //    on E.ClassID equals C.Id
+                        //join Sub in _context.Subjects
+                        //    on C.Id equals Sub.ClassId
                         select new StudentEnrolledSubject
                         {
                             FirstName = S.FirstName,
-                            Room = C.Room,
-                            SubjectName = Sub.SubjectName,
+                            //Room = C.Room,
+                           // SubjectName = Sub.SubjectName,
                             Status = E.Status,
                         };
 

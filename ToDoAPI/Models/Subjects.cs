@@ -10,8 +10,9 @@ namespace ToDoAPI.Models
         public string SubjectName { get; set; } = null!;
         [Required(ErrorMessage = "Must contain subject code!")]
         public string SubjectCode { get; set; } = null!;
-        public int ClassId { get; set; }
-        public Classes Classes { get; set; } = null!;
+        [StringLength(500)]
+        public string Description { get; set; } = string.Empty;
+        public ICollection<ClassSubjects> ClassSubjects { get; set; }
 
     }
 }

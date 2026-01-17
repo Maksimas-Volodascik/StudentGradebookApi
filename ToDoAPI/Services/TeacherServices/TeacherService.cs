@@ -32,7 +32,7 @@ namespace ToDoAPI.Services.TeacherServices
             newTeacher.FirstName = teacherData.FirstName;
             newTeacher.LastName = teacherData.LastName;
             newTeacher.UserID = registeredUser.Id;
-            newTeacher.ClassId = teacherData.ClassId;
+            //newTeacher.ClassId = teacherData.ClassId;
 
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
@@ -46,7 +46,7 @@ namespace ToDoAPI.Services.TeacherServices
 
             updateTeacher.FirstName = teacher.FirstName;
             updateTeacher.LastName = teacher.LastName;
-            updateTeacher.ClassId = teacher.ClassId;
+            //updateTeacher.ClassId = teacher.ClassId;
 
             _teachersRepository.Update(updateTeacher);
             await _teachersRepository.SaveChangesAsync();

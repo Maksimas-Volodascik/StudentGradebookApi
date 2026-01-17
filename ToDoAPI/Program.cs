@@ -8,8 +8,11 @@ using System.Diagnostics;
 using System.Text;
 using ToDoAPI.Data;
 using ToDoAPI.Mappings;
+using ToDoAPI.Repositories.ClassesRepository;
+using ToDoAPI.Repositories.ClassSubjectsRepository;
 using ToDoAPI.Repositories.Main;
 using ToDoAPI.Repositories.StudentsRepository;
+using ToDoAPI.Repositories.SubjectsRepository;
 using ToDoAPI.Repositories.TeachersRepository;
 using ToDoAPI.Repositories.UsersRepository;
 using ToDoAPI.Services.StudentServices;
@@ -39,10 +42,15 @@ namespace ToDoAPI
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<ITeachersRepository, TeachersRepository>();
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-            builder.Services.AddScoped<ISubjectClassService, SubjectClassService>();
+            builder.Services.AddScoped<IClassesRepository, ClassesRepository>();
+            builder.Services.AddScoped<ISubjectsRepository, SubjectsRepository>();
+            builder.Services.AddScoped<IClassSubjectsRepository, ClassSubjectsRepository>();
+
+            builder.Services.AddScoped<IClassSubjectsService, ClassSubjectsService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<ITeacherService, TeacherService>();
+            //
 
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
             builder.Services.AddCors(options =>

@@ -8,9 +8,7 @@ namespace ToDoAPI.Models
         public int Id { get; set; }
         public string AcademicYear { get; set; } = null!;
         [Required(ErrorMessage = "Must pick a room!")]
-        public int Room {  get; set; }
-        public Teachers Teachers { get; set; } = null!;
-        public Subjects Subjects { get; set; } = null!;
-        public List<Enrollments> Enrollments { get; set; } = new(); //each class has many student enrollments
+        public int Room { get; set; }
+        public ICollection<ClassSubjects> ClassSubjects { get; set; }
     }
 }

@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "ToDoAPI.Controllers.ClassSubjects",
+    "Method": "NewSubject",
+    "RelativePath": "api/classes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newClassSubject",
+        "Type": "ToDoAPI.DTOs.SubjectClass.NewClassSubject",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ToDoAPI.Controllers.StudentController",
     "Method": "GetStudents",
     "RelativePath": "api/student",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {}
+    "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {
+    "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj",
         "projectName": "ToDoAPI",
-        "projectPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+        "projectPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj",
         "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\obj\\",
+        "outputPath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

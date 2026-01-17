@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qeD7hn5C1Sw=",
+  "dgSpecHash": "i/+sKzMP+38=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+  "projectFilePath": "C:\\Users\\Max\\source\\repos\\ASP.NET Projects\\StudentGradebookApi\\ToDoApiPractice\\ToDoAPI\\ToDoAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Max\\.nuget\\packages\\automapper\\15.1.0\\automapper.15.1.0.nupkg.sha512",
     "C:\\Users\\Max\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
