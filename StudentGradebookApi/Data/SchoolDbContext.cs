@@ -43,7 +43,8 @@ namespace StudentGradebookApi.Data
             modelBuilder.Entity<ClassSubjects>()
                 .HasOne(cs => cs.Teachers)
                 .WithMany(t => t.ClassSubjects)
-                .HasForeignKey(cs => cs.TeacherId);
+                .HasForeignKey(cs => cs.TeacherId)
+                .IsRequired(false);
 
             modelBuilder.Entity<ClassSubjects>()
                 .HasIndex(cs => new { cs.SubjectId, cs.ClassId })

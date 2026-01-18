@@ -5,5 +5,7 @@ namespace StudentGradebookApi.Repositories.ClassesRepository
 {
     public interface IClassesRepository : IRepositoryBase<Classes>
     {
+        //GetClassesByYear
+        Task<IEnumerable<Classes>> GetClassesByYear(string academicYear);
     }
 }

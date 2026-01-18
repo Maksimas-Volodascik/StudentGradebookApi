@@ -30,7 +30,7 @@ namespace StudentGradebookApi.Services.StudentServices
             {
                 return null;
             }
-            var student = new Students();
+            Students student = new Students();
             student.FirstName = studentData.FirstName;
             student.LastName = studentData.LastName;
             student.DateOfBirth = studentData.DateOfBirth;

@@ -46,7 +46,7 @@ namespace StudentGradebookApi.Services.UserServices
         }
         public async Task DeleteUserAsync(int id)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            WebUsers? user = await _userRepository.GetByIdAsync(id);
             _userRepository.Delete(user);
             await _userRepository.SaveChangesAsync();
         }
