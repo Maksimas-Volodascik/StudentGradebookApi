@@ -13,7 +13,7 @@ namespace StudentGradebookApi.Repositories.ClassesRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Classes>> GetClassesByYear(string academicYear)
+        public async Task<IEnumerable<Classes>> GetClassesByYearAsync(string academicYear)
         {
             var query = from c in _context.Classes
                         where c.AcademicYear == academicYear
