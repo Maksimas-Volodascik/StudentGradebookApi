@@ -22,8 +22,8 @@ namespace StudentGradebookApi.Controllers
         public async Task<ActionResult<IEnumerable<StudentList>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
-            var respones = _mapper.Map<List<StudentList>>(students);
-            return Ok(respones);
+            var response = _mapper.Map<IEnumerable<StudentList>>(students);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

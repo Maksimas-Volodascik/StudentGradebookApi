@@ -1,4 +1,5 @@
-﻿using StudentGradebookApi.DTOs.SubjectClass;
+﻿using StudentGradebookApi.DTOs.ClassSubjects;
+using StudentGradebookApi.DTOs.SubjectClass;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.ClassesRepository;
 using StudentGradebookApi.Repositories.ClassSubjectsRepository;
@@ -37,11 +38,11 @@ namespace StudentGradebookApi.Services.SubjectClassServices
             return classSubjects;
         }
 
-        public async Task<ClassSubjects> AssignSubjectToClassAsync(int classId, int subjectId)
+        public async Task<ClassSubjects> AssignSubjectToClassAsync(CombineClassSubjectDTO combineClassSubjectDTO)
         {
             ClassSubjects classSubjects = new ClassSubjects();
-            classSubjects.SubjectId = subjectId;
-            classSubjects.ClassId = classId;
+            classSubjects.SubjectId = combineClassSubjectDTO.SubjectId;
+            classSubjects.ClassId = combineClassSubjectDTO.ClassId;
             await _classSubjectsRepository.AddAsync(classSubjects);
             await _classSubjectsRepository.SaveChangesAsync();
             return classSubjects;
@@ -65,20 +66,19 @@ namespace StudentGradebookApi.Services.SubjectClassServices
             }
 
         }
-
-        public async Task<IEnumerable<Classes>> GetAllClassesByYear(string year)
+        public async Task<ClassSubjects?> GetClassSubjectsByIdAsync(int classSubjectsId)
         {
-            var newClassList = await _classesRepository.GetClassesByYear(year);
-            return newClassList;
-        }
+            ClassSubjects? classSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
 
+            return classSubject;
+        }
         public async Task<IEnumerable<ClassSubjects?>> GetAllClassSubjectsAsync()
         {
             var classSubjectsList = await _classSubjectsRepository.GetAllAsync();
             return classSubjectsList;
         }
 
-        public async Task<ClassSubjects?> RemoveSubjectClass(int classSubjectsId)
+        public async Task<ClassSubjects?> RemoveSubjectClassAsync(int classSubjectsId)
         {
             ClassSubjects? classSubjects = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
             if (classSubjects == null)
@@ -92,6 +92,11 @@ namespace StudentGradebookApi.Services.SubjectClassServices
             }
 
                 throw new NotImplementedException();
+        }
+
+        public Task<NewClassSubject> CreateNewClassSubjectAsync(NewClassSubject newClassSubject)
+        {
+            throw new NotImplementedException();
         }
     }
 }
