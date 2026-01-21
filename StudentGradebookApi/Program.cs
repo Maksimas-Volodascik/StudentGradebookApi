@@ -19,6 +19,8 @@ using StudentGradebookApi.Services.StudentServices;
 using StudentGradebookApi.Services.SubjectClassServices;
 using StudentGradebookApi.Services.TeacherServices;
 using StudentGradebookApi.Services.UserServices;
+using StudentGradebookApi.Services.ClassesServices;
+using StudentGradebookApi.Services.SubjectsService;
 
 namespace StudentGradebookApi
 {
@@ -50,6 +52,8 @@ namespace StudentGradebookApi
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<ITeacherService, TeacherService>();
+            builder.Services.AddScoped<IClassesServices, ClassesServices>();
+            builder.Services.AddScoped<ISubjectsService, SubjectsService>();
             //
 
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);

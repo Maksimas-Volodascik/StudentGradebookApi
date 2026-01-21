@@ -1,4 +1,5 @@
-﻿using StudentGradebookApi.Models;
+﻿using StudentGradebookApi.DTOs.Classes;
+using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.ClassesRepository;
 
 namespace StudentGradebookApi.Services.ClassesServices
@@ -10,11 +11,11 @@ namespace StudentGradebookApi.Services.ClassesServices
             _classesRepository = classesRepository;
         }
 
-        public async Task<Classes> AddClassAsync(string academicYear, int room)
+        public async Task<Classes> AddClassAsync(ClassesContentsDTO classesContentsDTO)
         {
             Classes newClass = new Classes();
-            newClass.Room = room;
-            newClass.AcademicYear = academicYear;
+            newClass.Room = classesContentsDTO.room;
+            newClass.AcademicYear = classesContentsDTO.academicYear;
 
             await _classesRepository.AddAsync(newClass);
             await _classesRepository.SaveChangesAsync();
@@ -49,15 +50,15 @@ namespace StudentGradebookApi.Services.ClassesServices
             return classes;
         }
 
-        public async Task<Classes?> UpdateClassAsync(int id, string academicYear, int room)
+        public async Task<Classes?> UpdateClassAsync(int id, ClassesContentsDTO classesContentsDTO)
         {
             Classes? newClass = await _classesRepository.GetByIdAsync(id);
             if (newClass == null)
             {
                 return null;
             }
-            newClass.Room = room;
-            newClass.AcademicYear=academicYear;
+            newClass.Room = classesContentsDTO.room;
+            newClass.AcademicYear = classesContentsDTO.academicYear;
             _classesRepository.Update(newClass);
             await _classesRepository.SaveChangesAsync();
 

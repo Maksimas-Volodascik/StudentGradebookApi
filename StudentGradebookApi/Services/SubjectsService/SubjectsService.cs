@@ -1,21 +1,22 @@
-﻿using StudentGradebookApi.Models;
+﻿using StudentGradebookApi.DTOs.Subjects;
+using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.SubjectsRepository;
 
 namespace StudentGradebookApi.Services.SubjectsService
 {
     public class SubjectsService : ISubjectsService
     {
-        private readonly SubjectsRepository _subjectsRepository;
-        public SubjectsService(SubjectsRepository subjectsRepository) {
+        private readonly ISubjectsRepository _subjectsRepository;
+        public SubjectsService(ISubjectsRepository subjectsRepository) {
             _subjectsRepository = subjectsRepository;
         }
 
-        public async Task<Subjects> AddSubjectAsync(string subjectName, string subjectCode, string description)
+        public async Task<Subjects> AddSubjectAsync(SujectContentsDTO sujectContentsDTO)
         {
             Subjects newSubject = new Subjects();
-            newSubject.SubjectName = subjectName;
-            newSubject.SubjectCode = subjectCode;
-            newSubject.Description = description;
+            newSubject.SubjectName = sujectContentsDTO.subjectName;
+            newSubject.SubjectCode = sujectContentsDTO.subjectCode;
+            newSubject.Description = sujectContentsDTO.description;
 
             await _subjectsRepository.AddAsync(newSubject);
 
@@ -49,14 +50,14 @@ namespace StudentGradebookApi.Services.SubjectsService
             return subject;
         }
 
-        public async Task<Subjects?> UpdateSubjectAsync(int id, string subjectName, string subjectCode, string description)
+        public async Task<Subjects?> UpdateSubjectAsync(int id, SujectContentsDTO sujectContentsDTO)
         {
             Subjects? subjects = await _subjectsRepository.GetByIdAsync(id);
             if (subjects != null) { return null; }
 
-            subjects!.SubjectName = subjectName;
-            subjects.SubjectCode = subjectCode;
-            subjects.Description = description;
+            subjects!.SubjectName = sujectContentsDTO.subjectName;
+            subjects.SubjectCode = sujectContentsDTO.subjectCode;
+            subjects.Description = sujectContentsDTO.description;
 
             _subjectsRepository.Update(subjects);
             await _subjectsRepository.SaveChangesAsync();

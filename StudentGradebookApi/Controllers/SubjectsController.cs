@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using StudentGradebookApi.DTOs.Subjects;
+using StudentGradebookApi.Models;
+using StudentGradebookApi.Services.SubjectsService;
 
 namespace StudentGradebookApi.Controllers
 {
@@ -8,6 +9,45 @@ namespace StudentGradebookApi.Controllers
     [ApiController]
     public class SubjectsController : ControllerBase
     {
-       
+        private readonly ISubjectsService _subjectsService;
+        public SubjectsController(ISubjectsService subjectsService)
+        {
+            _subjectsService = subjectsService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Subjects>>> GetAllSubjectsAsync()
+        {
+            var subjects = await _subjectsService.GetAllSubjectsAsync();
+            return Ok(subjects);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Subjects>> GetSubjectByIdAsync(int id)
+        {
+            var subjects = await _subjectsService.GetSubjectByIdAsync(id);
+            return Ok(subjects);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Subjects>> UpdateSubjectAsync(int id, SujectContentsDTO sujectContentsDTO)
+        {
+            var subjects = await _subjectsService.UpdateSubjectAsync(id, sujectContentsDTO);
+            return Ok(subjects);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Subjects>> AddSubjectAsync(SujectContentsDTO sujectContentsDTO)
+        {
+            var subjects = await _subjectsService.AddSubjectAsync(sujectContentsDTO);
+            return Ok(subjects);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Subjects>> DeleteSubjectAsync(int id)
+        {
+            var subjects = await _subjectsService.DeleteSubjectAsync(id);
+            return Ok(subjects);
+        }
     }
 }
