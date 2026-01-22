@@ -14,28 +14,11 @@ namespace StudentGradebookApi.Services.SubjectClassServices
     public class ClassSubjectsService : IClassSubjectsService
     {
         private readonly IClassSubjectsRepository _classSubjectsRepository;
-        private readonly ISubjectsRepository _subjectsRepository;
-        private readonly IClassesRepository _classesRepository;
         private readonly ITeachersRepository _teachersRepository;
-        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ISubjectsRepository subjectsRepository, IClassesRepository classesRepository, ITeachersRepository teachersRepository)
+        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ITeachersRepository teachersRepository)
         {
             _classSubjectsRepository = classSubjectsRepository;
-            _subjectsRepository = subjectsRepository;
-            _classesRepository = classesRepository;
             _teachersRepository = teachersRepository;
-        }
-
-        public async Task<NewClassSubject> AddClassesAsync(NewClassSubject classSubjects)
-        {
-            Subjects newClass = new Subjects();
-            newClass.Description = classSubjects.Description;
-            newClass.SubjectName = classSubjects.SubjectName;
-            newClass.SubjectCode = classSubjects.SubjectCode;
-            await _subjectsRepository.AddAsync(newClass);
-            await _classSubjectsRepository.SaveChangesAsync();
-
-
-            return classSubjects;
         }
 
         public async Task<ClassSubjects> AssignSubjectToClassAsync(CombineClassSubjectDTO combineClassSubjectDTO)
@@ -72,9 +55,9 @@ namespace StudentGradebookApi.Services.SubjectClassServices
 
             return classSubject;
         }
-        public async Task<IEnumerable<ClassSubjects?>> GetAllClassSubjectsAsync()
+        public async Task<IEnumerable<ClassSubjectDTO?>> GetAllClassSubjectsAsync()
         {
-            var classSubjectsList = await _classSubjectsRepository.GetAllAsync();
+            var classSubjectsList = await _classSubjectsRepository.GetAllClassSubjectsAsync();
             return classSubjectsList;
         }
 
@@ -94,7 +77,7 @@ namespace StudentGradebookApi.Services.SubjectClassServices
                 throw new NotImplementedException();
         }
 
-        public Task<NewClassSubject> CreateNewClassSubjectAsync(NewClassSubject newClassSubject)
+        public Task<ClassSubjectDTO> CreateNewClassSubjectAsync(ClassSubjectDTO newClassSubject)
         {
             throw new NotImplementedException();
         }

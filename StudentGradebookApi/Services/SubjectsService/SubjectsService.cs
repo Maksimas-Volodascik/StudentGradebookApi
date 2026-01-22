@@ -19,7 +19,7 @@ namespace StudentGradebookApi.Services.SubjectsService
             newSubject.Description = sujectContentsDTO.description;
 
             await _subjectsRepository.AddAsync(newSubject);
-
+            await _subjectsRepository.SaveChangesAsync();
             return newSubject;
         }
 

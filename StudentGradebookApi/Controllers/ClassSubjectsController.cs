@@ -16,7 +16,7 @@ namespace StudentGradebookApi.Controllers
             _classSubjectsService = classSubjectsService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClassSubjects>>> GetAllClassSubjects()
+        public async Task<ActionResult<IEnumerable<ClassSubjectDTO>>> GetAllClassSubjects()
         {
             var response = await _classSubjectsService.GetAllClassSubjectsAsync();
             return Ok(response);
@@ -37,9 +37,9 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NewClassSubject>> CreateNewClassSubject(NewClassSubject newClassSubject)
+        public async Task<ActionResult<ClassSubjectDTO>> CreateNewClassSubject(ClassSubjectDTO newClassSubject)
         {
-            NewClassSubject response = await _classSubjectsService.CreateNewClassSubjectAsync(newClassSubject);
+            ClassSubjectDTO response = await _classSubjectsService.CreateNewClassSubjectAsync(newClassSubject);
             return Ok(response);
         }
 
