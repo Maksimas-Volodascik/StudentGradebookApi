@@ -21,6 +21,8 @@ using StudentGradebookApi.Services.TeacherServices;
 using StudentGradebookApi.Services.UserServices;
 using StudentGradebookApi.Services.ClassesServices;
 using StudentGradebookApi.Services.SubjectsService;
+using StudentGradebookApi.Services.EnrollmentsServices;
+using StudentGradebookApi.Repositories.EnrollmentsRepository;
 
 namespace StudentGradebookApi
 {
@@ -47,7 +49,9 @@ namespace StudentGradebookApi
             builder.Services.AddScoped<IClassesRepository, ClassesRepository>();
             builder.Services.AddScoped<ISubjectsRepository, SubjectsRepository>();
             builder.Services.AddScoped<IClassSubjectsRepository, ClassSubjectsRepository>();
+            builder.Services.AddScoped<IEnrollmentsRepository, EnrollmentsRepository>();
 
+            builder.Services.AddScoped<IEnrollmentServices,  EnrollmentServices>();
             builder.Services.AddScoped<IClassSubjectsService, ClassSubjectsService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IStudentService, StudentService>();
@@ -73,13 +77,13 @@ namespace StudentGradebookApi
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
                         ValidateAudience = true,
-                        ValidAudience = builder.Configuration["AppSettings:Audience"],
                         ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+                        ValidAudience = builder.Configuration["AppSettings:Audience"],                        
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)),
-                        ValidateIssuerSigningKey = true
+                            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!))               
                     };
                 });
             

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentGradebookApi.Data;
 using StudentGradebookApi.DTOs.Students;
-using StudentGradebookApi.DTOs.SubjectClass;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.Main;
 

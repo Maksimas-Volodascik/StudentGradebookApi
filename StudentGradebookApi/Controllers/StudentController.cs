@@ -47,9 +47,10 @@ namespace StudentGradebookApi.Controllers
         [HttpPatch("{id}")]
         public async Task<ActionResult> EditStudent(EditStudent studentData, int id)
         {
-            await _studentService.EditStudentAsync(studentData, id);
+            var response = await _studentService.EditStudentAsync(studentData, id);
+            if (response == null) return BadRequest(new { message = "Invalid First Name or Last Name" });
 
-            return Ok();
+            return Ok(response);
         }
     }
 }

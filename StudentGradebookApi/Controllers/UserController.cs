@@ -15,6 +15,7 @@ using StudentGradebookApi.Services.UserServices;
 
 namespace StudentGradebookApi.Controllers
 {
+
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -45,7 +46,7 @@ namespace StudentGradebookApi.Controllers
             var response = await _userService.LoginAsync(loginDto);
             if (response is null)
             {
-                return BadRequest("Invalid email or password");
+                return Unauthorized("Invalid email or password"); 
             }
             return Ok(response);
         }
@@ -70,5 +71,6 @@ namespace StudentGradebookApi.Controllers
             await _userService.DeleteUserAsync(id);
             return Ok();
         }
+
     }
 }

@@ -7,7 +7,7 @@ namespace StudentGradebookApi.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Select enrollment status!")]
-        public string Status { get; set; } = null!;
+        public string Status { get; set; } = "Enrolled";
         public int StudentID { get; set; } //FK
         public Students Student { get; set; } = null!;
         public int ClassSubjectId { get; set; } //FK
