@@ -7,5 +7,7 @@ namespace StudentGradebookApi.Repositories.StudentsRepository
     public interface IStudentsRepository : IRepositoryBase<Students>
     {
         Task<IEnumerable<StudentEnrolledSubject>> GetStudentEnrolledSubjects();
+
+        Task<Students> GetStudentByEmail(string email);
     }
 }

@@ -33,5 +33,15 @@ namespace StudentGradebookApi.Repositories.StudentsRepository
 
             return await query.ToListAsync();
         }
+        public async Task<Students> GetStudentByEmail(string email)
+        {
+            Students? student = await (from S in _context.Students
+                                 join WU in _context.WebUsers
+                                     on S.UserID equals WU.Id
+                                 where WU.Email == email
+                                 select S).FirstOrDefaultAsync();
+
+            return student;
+        }
     }
 }

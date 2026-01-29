@@ -5,6 +5,8 @@ namespace StudentGradebookApi.Services.EnrollmentsServices
 {
     public interface IEnrollmentServices
     {
-        Task<IEnumerable<StudentEnrollments>> GetStudentEnrollments(int id);
+        Task<IEnumerable<StudentEnrollments>> GetStudentEnrollments(int studentId);
+
+        Task EnrollStudent(int classSubjectId, string studentEmail);
     }
 }

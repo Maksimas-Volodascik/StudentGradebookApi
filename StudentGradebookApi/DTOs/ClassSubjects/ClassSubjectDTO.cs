@@ -2,6 +2,7 @@
 {
     public class ClassSubjectDTO
     {
+        public int Id { get; set; }
         public string AcademicYear { get; set; } = null!;
         public int Room { get; set; }
         public string SubjectName { get; set; } = null!;
