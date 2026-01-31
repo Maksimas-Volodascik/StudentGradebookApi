@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentGradebookApi.DTOs.Enrollments;
+using StudentGradebookApi.DTOs.Grades;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Services.EnrollmentsServices;
+using StudentGradebookApi.Services.GradesServices;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,8 +17,10 @@ namespace StudentGradebookApi.Controllers
     public class EnrollmentsController : ControllerBase
     {
         private readonly IEnrollmentServices _enrollmentServices;
-        public EnrollmentsController(IEnrollmentServices enrollmentServices) {
+        private readonly IGradesServices _gradesServices;
+        public EnrollmentsController(IEnrollmentServices enrollmentServices, IGradesServices gradesServices) {
             _enrollmentServices = enrollmentServices;
+            _gradesServices = gradesServices;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentEnrollments>>> GetStudentEnrollments()
@@ -33,5 +37,6 @@ namespace StudentGradebookApi.Controllers
             await _enrollmentServices.EnrollStudent(classSubjectId, userEmail);
             return Ok();
         }
+
     }
 }

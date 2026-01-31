@@ -23,6 +23,8 @@ using StudentGradebookApi.Services.ClassesServices;
 using StudentGradebookApi.Services.SubjectsService;
 using StudentGradebookApi.Services.EnrollmentsServices;
 using StudentGradebookApi.Repositories.EnrollmentsRepository;
+using StudentGradebookApi.Repositories.GradesRepository;
+using StudentGradebookApi.Services.GradesServices;
 
 namespace StudentGradebookApi
 {
@@ -50,7 +52,9 @@ namespace StudentGradebookApi
             builder.Services.AddScoped<ISubjectsRepository, SubjectsRepository>();
             builder.Services.AddScoped<IClassSubjectsRepository, ClassSubjectsRepository>();
             builder.Services.AddScoped<IEnrollmentsRepository, EnrollmentsRepository>();
+            builder.Services.AddScoped<IGradesRepository,  GradesRepository>();
 
+            builder.Services.AddScoped<IGradesServices, GradesServices>();
             builder.Services.AddScoped<IEnrollmentServices,  EnrollmentServices>();
             builder.Services.AddScoped<IClassSubjectsService, ClassSubjectsService>();
             builder.Services.AddScoped<IUserService, UserService>();

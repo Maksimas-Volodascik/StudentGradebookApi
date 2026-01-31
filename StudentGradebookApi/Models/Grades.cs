@@ -8,7 +8,7 @@ namespace StudentGradebookApi.Models
         public int Id { get; set; }
         [Range(0, 10, ErrorMessage ="Score must be between 1 and 10")]
         public byte Score { get; set; }
-        [Required(ErrorMessage = "Select grade type - default, test, exam")]
+        //[Required(ErrorMessage = "Select grade type - default, test, exam")]
         public string Grade_Type { get; set; } = "default";
         public DateTimeOffset GradingDate { get; set; } = DateTimeOffset.Now;
         public int EnrollmentId { get; set; }

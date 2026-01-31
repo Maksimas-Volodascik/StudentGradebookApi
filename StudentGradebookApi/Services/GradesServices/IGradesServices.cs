@@ -1,10 +1,8 @@
 ﻿using StudentGradebookApi.DTOs.Grades;
-using StudentGradebookApi.Models;
-using StudentGradebookApi.Repositories.Main;
 
-namespace StudentGradebookApi.Repositories.GradesRepository
+namespace StudentGradebookApi.Services.GradesServices
 {
-    public interface IGradesRepository : IRepositoryBase<Grades>
+    public interface IGradesServices
     {
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId();
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId();
