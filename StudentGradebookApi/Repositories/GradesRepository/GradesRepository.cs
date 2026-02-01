@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Humanizer;
+using Microsoft.EntityFrameworkCore;
 using StudentGradebookApi.Data;
 using StudentGradebookApi.DTOs.Enrollments;
 using StudentGradebookApi.DTOs.Grades;
@@ -17,8 +18,7 @@ namespace StudentGradebookApi.Repositories.GradesRepository
 
         public Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId()
         {
-
-            throw new NotImplementedException();
+            return null;
         }
 
         public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId()
@@ -29,14 +29,23 @@ namespace StudentGradebookApi.Repositories.GradesRepository
                         join S in _context.Students
                             on E.StudentID equals S.Id
                         where G.GradingDate.Year == 2026 && G.GradingDate.Month == 1 && E.ClassSubjectId == 3
+                        group G by new
+                        {
+                            S.FirstName,
+                            S.LastName,
+                            E.ClassSubjectId,
+                        }into stud
                         select new StudentGradesBySubjectDTO
                         {
-                            FirstName = S.FirstName,
-                            LastName = S.LastName,
-                            Score = G.Score,
-                            GradingDate = G.GradingDate,
-                            Grade_Type = G.Grade_Type,
-                            ClassSubjectId = E.ClassSubjectId,
+                            FirstName = stud.Key.FirstName,
+                            LastName = stud.Key.LastName,
+                            ClassSubjectId = stud.Key.ClassSubjectId,
+                            Grades = stud.Select(x => new GradesListDTO
+                            {
+                                Score = x.Score,
+                                Grade_Type = x.Grade_Type,
+                                GradingDate = x.GradingDate
+                            }).ToList()
                         };
 
             return await query.ToListAsync(); 
