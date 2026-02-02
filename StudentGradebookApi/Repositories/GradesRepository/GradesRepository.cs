@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StudentGradebookApi.Data;
 using StudentGradebookApi.DTOs.Enrollments;
@@ -16,36 +17,48 @@ namespace StudentGradebookApi.Repositories.GradesRepository
             _context = context;
         }
 
-        public Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId()
+        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId()
         {
+
             return null;
         }
 
-        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId()
+        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month)
         {
-            var query = from E in _context.Enrollments
+            var query = from S in _context.Students
+
+                        join E in _context.Enrollments
+                            on S.Id equals E.StudentID into enrollments
+                        from E in enrollments
+                        .Where(e => e.ClassSubjectId == 3)
+
                         join G in _context.Grades
-                            on E.Id equals G.EnrollmentId
-                        join S in _context.Students
-                            on E.StudentID equals S.Id
-                        where G.GradingDate.Year == 2026 && G.GradingDate.Month == 1 && E.ClassSubjectId == 3
+                             on E.Id equals G.EnrollmentId into grades
+                        from G in grades
+                        .Where(g => g.GradingDate.Year == year && g.GradingDate.Month == month)
+                        .DefaultIfEmpty()
+
                         group G by new
                         {
                             S.FirstName,
                             S.LastName,
-                            E.ClassSubjectId,
-                        }into stud
+                            E.ClassSubjectId
+                        } into stud
+
                         select new StudentGradesBySubjectDTO
                         {
                             FirstName = stud.Key.FirstName,
                             LastName = stud.Key.LastName,
                             ClassSubjectId = stud.Key.ClassSubjectId,
-                            Grades = stud.Select(x => new GradesListDTO
+                            Grades = stud
+                            .Where(x => x != null)
+                            .Select(x => new GradesListDTO
                             {
                                 Score = x.Score,
                                 Grade_Type = x.Grade_Type,
                                 GradingDate = x.GradingDate
-                            }).ToList()
+                            })
+                            .ToList()
                         };
 
             return await query.ToListAsync(); 

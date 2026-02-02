@@ -6,7 +6,7 @@ namespace StudentGradebookApi.Repositories.GradesRepository
 {
     public interface IGradesRepository : IRepositoryBase<Grades>
     {
-        Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId();
+        Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month);
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId();
     }
 }
