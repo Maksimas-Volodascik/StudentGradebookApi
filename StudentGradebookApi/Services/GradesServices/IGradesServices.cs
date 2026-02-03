@@ -6,5 +6,6 @@ namespace StudentGradebookApi.Services.GradesServices
     {
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month);
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId(int year, int month);
+        Task AddGrade(byte score, string gradeType, DateTime gradingDate, int enrollmentId);
     }
 }

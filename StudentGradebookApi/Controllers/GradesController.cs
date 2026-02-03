@@ -23,5 +23,13 @@ namespace StudentGradebookApi.Controllers
             var studentGrades = await _gradesService.GetStudentGradesBySubjectId(year, month);
             return Ok(studentGrades);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<NewGradeDTO>> NewGrade(byte score, string gradeType, string gradingDate, int enrollmentId)
+        {
+            DateTime receivedDate = DateTime.Parse(gradingDate);
+            await _gradesService.AddGrade(score, gradeType, receivedDate, enrollmentId);
+            return Ok();
+        }
     }
 }

@@ -19,7 +19,6 @@ namespace StudentGradebookApi.Repositories.GradesRepository
 
         public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId()
         {
-
             return null;
         }
 
@@ -42,7 +41,8 @@ namespace StudentGradebookApi.Repositories.GradesRepository
                         {
                             S.FirstName,
                             S.LastName,
-                            E.ClassSubjectId
+                            E.ClassSubjectId,
+                            E.Id
                         } into stud
 
                         select new StudentGradesBySubjectDTO
@@ -50,6 +50,7 @@ namespace StudentGradebookApi.Repositories.GradesRepository
                             FirstName = stud.Key.FirstName,
                             LastName = stud.Key.LastName,
                             ClassSubjectId = stud.Key.ClassSubjectId,
+                            EnrollmentId = stud.Key.Id,
                             Grades = stud
                             .Where(x => x != null)
                             .Select(x => new GradesListDTO

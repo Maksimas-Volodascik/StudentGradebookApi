@@ -1,0 +1,10 @@
+﻿namespace StudentGradebookApi.DTOs.Grades
+{
+    public class NewGradeDTO
+    {
+        public byte score {  get; set; }
+        public string gradeType { get; set; } = "default";
+        public DateTime gradingDate {  get; set; }
+        public int enrollmentId { get; set; }
+    }
+}
