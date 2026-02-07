@@ -13,15 +13,25 @@ namespace StudentGradebookApi.Services.GradesServices
             _gradesRepository = gradesRepository;
         }
 
-        public async Task AddGrade(byte score, string gradeType, DateTime gradingDate, int enrollmentId)
+        public async Task EditGrade(NewGradeDTO newGrade)
         {
-            Grades newGrade = new Grades();
-            newGrade.GradingDate = gradingDate;
-            newGrade.Grade_Type = gradeType;
-            newGrade.Score = score;
-            newGrade.EnrollmentId = enrollmentId;
+            Grades updateGrade = await _gradesRepository.GetGradeByDateAndEnrollmentId(newGrade.gradingDate, newGrade.enrollmentId);
+            updateGrade.Grade_Type = newGrade.gradeType;
+            updateGrade.Score = newGrade.score;
 
-            await _gradesRepository.AddAsync(newGrade);
+            _gradesRepository.Update(updateGrade);
+            await _gradesRepository.SaveChangesAsync();
+        }
+
+        public async Task AddGrade(NewGradeDTO newGrade)
+        {
+            Grades createGrade = new Grades();
+            createGrade.GradingDate = newGrade.gradingDate;
+            createGrade.Grade_Type = newGrade.gradeType;
+            createGrade.Score = newGrade.score;
+            createGrade.EnrollmentId = newGrade.enrollmentId;
+
+            await _gradesRepository.AddAsync(createGrade);
             await _gradesRepository.SaveChangesAsync();
         }
 
@@ -29,6 +39,7 @@ namespace StudentGradebookApi.Services.GradesServices
         {
             return null;
         }
+
         public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month)
         {
             var studentGradeList = await _gradesRepository.GetStudentGradesBySubjectId(year, month);

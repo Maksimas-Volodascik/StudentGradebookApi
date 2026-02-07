@@ -8,5 +8,6 @@ namespace StudentGradebookApi.Repositories.GradesRepository
     {
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month);
         Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId();
+        Task<Grades> GetGradeByDateAndEnrollmentId(DateTime dateTime, int enrollmentId);
     }
 }

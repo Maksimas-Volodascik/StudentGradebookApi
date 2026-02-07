@@ -40,6 +40,14 @@ namespace StudentGradebookApi.Data
                 .WithOne(e => e.Enrollments)
                 .HasForeignKey(g => g.EnrollmentId);
 
+            modelBuilder.Entity<Grades>()
+                .Property(g => g.GradingDay)
+                .HasComputedColumnSql("CAST([GradingDate] AS date)", stored: true); //
+
+            modelBuilder.Entity<Grades>()
+                .HasIndex(g => new { g.GradingDay, g.EnrollmentId })
+                .IsUnique();
+
             modelBuilder.Entity<ClassSubjects>()
                 .HasOne(cs => cs.Teachers)
                 .WithMany(t => t.ClassSubjects)

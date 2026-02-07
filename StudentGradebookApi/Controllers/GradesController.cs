@@ -25,10 +25,16 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NewGradeDTO>> NewGrade(byte score, string gradeType, string gradingDate, int enrollmentId)
+        public async Task<ActionResult<NewGradeDTO>> NewGrade(NewGradeDTO newGrade)
         {
-            DateTime receivedDate = DateTime.Parse(gradingDate);
-            await _gradesService.AddGrade(score, gradeType, receivedDate, enrollmentId);
+            await _gradesService.AddGrade(newGrade);
+            return Ok();
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult<NewGradeDTO>> EditGrade(NewGradeDTO newGrade)
+        {
+            await _gradesService.EditGrade(newGrade);
             return Ok();
         }
     }

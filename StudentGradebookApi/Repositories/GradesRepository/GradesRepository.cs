@@ -17,6 +17,13 @@ namespace StudentGradebookApi.Repositories.GradesRepository
             _context = context;
         }
 
+        public async Task<Grades> GetGradeByDateAndEnrollmentId(DateTime dateTime, int enrollmentId)
+        {
+            Grades? query = await _context.Grades.FirstOrDefaultAsync(g => g.GradingDay == dateTime && g.EnrollmentId == enrollmentId);
+                        
+            return query;
+        }
+
         public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId()
         {
             return null;
