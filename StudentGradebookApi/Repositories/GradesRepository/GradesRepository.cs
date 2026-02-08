@@ -29,14 +29,14 @@ namespace StudentGradebookApi.Repositories.GradesRepository
             return null;
         }
 
-        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month)
+        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month, int classSubjectId)
         {
             var query = from S in _context.Students
 
                         join E in _context.Enrollments
                             on S.Id equals E.StudentID into enrollments
                         from E in enrollments
-                        .Where(e => e.ClassSubjectId == 3)
+                        .Where(e => e.ClassSubjectId == classSubjectId)
 
                         join G in _context.Grades
                              on E.Id equals G.EnrollmentId into grades

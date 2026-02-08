@@ -18,9 +18,9 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentGradesBySubjectDTO>>> GetStudentGradesBySubject(int year, int month)
+        public async Task<ActionResult<IEnumerable<StudentGradesBySubjectDTO>>> GetStudentGradesBySubject(int year, int month, int classSubjectId)
         {
-            var studentGrades = await _gradesService.GetStudentGradesBySubjectId(year, month);
+            var studentGrades = await _gradesService.GetStudentGradesBySubjectId(year, month, classSubjectId);
             return Ok(studentGrades);
         }
 
@@ -32,10 +32,10 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<NewGradeDTO>> EditGrade(NewGradeDTO newGrade)
+        public async Task<ActionResult<Grades>> EditGrade(NewGradeDTO newGrade)
         {
-            await _gradesService.EditGrade(newGrade);
-            return Ok();
+            var response = await _gradesService.EditGrade(newGrade);
+            return Ok(response);
         }
     }
 }

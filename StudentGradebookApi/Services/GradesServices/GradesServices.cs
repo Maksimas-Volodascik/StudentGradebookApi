@@ -13,14 +13,16 @@ namespace StudentGradebookApi.Services.GradesServices
             _gradesRepository = gradesRepository;
         }
 
-        public async Task EditGrade(NewGradeDTO newGrade)
+        public async Task<Grades> EditGrade(NewGradeDTO newGrade)
         {
-            Grades updateGrade = await _gradesRepository.GetGradeByDateAndEnrollmentId(newGrade.gradingDate, newGrade.enrollmentId);
+            Grades updateGrade = await _gradesRepository.GetGradeByDateAndEnrollmentId(newGrade.gradingDate.Date, newGrade.enrollmentId);
+
             updateGrade.Grade_Type = newGrade.gradeType;
             updateGrade.Score = newGrade.score;
 
             _gradesRepository.Update(updateGrade);
             await _gradesRepository.SaveChangesAsync();
+            return updateGrade;
         }
 
         public async Task AddGrade(NewGradeDTO newGrade)
@@ -40,9 +42,9 @@ namespace StudentGradebookApi.Services.GradesServices
             return null;
         }
 
-        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month)
+        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month, int classSubjectId)
         {
-            var studentGradeList = await _gradesRepository.GetStudentGradesBySubjectId(year, month);
+            var studentGradeList = await _gradesRepository.GetStudentGradesBySubjectId(year, month, classSubjectId);
             return studentGradeList;
         }
     }
