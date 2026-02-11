@@ -52,5 +52,16 @@ namespace StudentGradebookApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteStudent(int id)
+        {
+            var response = await _studentService.DeleteStudentAsync(id);
+            if(response == null)
+            {
+                return BadRequest(new {message = "User not found"});
+            }
+            return Ok();
+        }
     }
 }

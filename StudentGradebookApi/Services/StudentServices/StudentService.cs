@@ -40,6 +40,18 @@ namespace StudentGradebookApi.Services.StudentServices
 
             return student;
         }
+
+        public async Task<Students?> DeleteStudentAsync(int id)
+        {
+            Students? studentToDelete = await _studentsRepository.GetByIdAsync(id);
+            if(studentToDelete == null)
+            {
+                return null;
+            }
+            await _userService.DeleteUserAsync(studentToDelete.UserID);
+            return studentToDelete;
+        }
+
         public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
         {
             if (studentData == null || studentData.FirstName == "" || studentData.LastName =="")

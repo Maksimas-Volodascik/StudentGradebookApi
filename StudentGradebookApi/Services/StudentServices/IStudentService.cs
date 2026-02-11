@@ -10,5 +10,6 @@ namespace StudentGradebookApi.Services.StudentServices
         Task<Students?> GetStudentByIdAsync(int id);
         Task<Students?> AddStudentAsync(NewStudent studentData);
         Task<Students?> EditStudentAsync(EditStudent studentData, int id);
+        Task<Students?> DeleteStudentAsync(int id);
     }
 }

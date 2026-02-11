@@ -28,5 +28,16 @@ namespace StudentGradebookApi.Controllers
             await _teacherService.AddTeacherAsync(newTeacher);
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTeacher(int id)
+        {
+            var response = await _teacherService.DeleteTeacherAsync(id);
+            if (response == null)
+            {
+                return BadRequest(new { message = "User not found" });
+            }
+            return Ok();
+        }
     }
 }

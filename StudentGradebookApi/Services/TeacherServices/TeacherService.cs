@@ -65,5 +65,16 @@ namespace StudentGradebookApi.Services.TeacherServices
             var teacherList = await _teachersRepository.GetAllAsync();
             return teacherList;
         }
+
+        public async Task<Teachers?> DeleteTeacherAsync(int id)
+        {
+            Teachers? teacherToDelete = await _teachersRepository.GetByIdAsync(id);
+            if (teacherToDelete == null)
+            {
+                return null;
+            }
+            await _userService.DeleteUserAsync(teacherToDelete.UserID);
+            return teacherToDelete;
+        }
     }
 }
