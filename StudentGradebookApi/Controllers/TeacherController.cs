@@ -17,7 +17,7 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Teachers>>> GetTeachers()
+        public async Task<ActionResult<List<TeacherDTO>>> GetTeachers()
         {
             var response = await _teacherService.GetAllTeachersAsync();
             return Ok(response);

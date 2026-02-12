@@ -60,9 +60,9 @@ namespace StudentGradebookApi.Services.TeacherServices
             return teacher;
         }
 
-        public async Task<IEnumerable<Teachers?>> GetAllTeachersAsync()
+        public async Task<List<TeacherDTO?>> GetAllTeachersAsync()
         {
-            var teacherList = await _teachersRepository.GetAllAsync();
+            var teacherList = await _teachersRepository.GetTeachersWithSubjectsAsync();
             return teacherList;
         }
 
