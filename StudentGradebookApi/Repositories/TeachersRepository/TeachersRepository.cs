@@ -33,6 +33,7 @@ namespace StudentGradebookApi.Repositories.TeachersRepository
                             FirstName = T.FirstName,
                             LastName = T.LastName,
                             SubjectName = S != null ? S.SubjectName : null,
+                            ClassSubjectId = CS != null ? CS.Id : null,
                         };
 
             return query.ToListAsync();
