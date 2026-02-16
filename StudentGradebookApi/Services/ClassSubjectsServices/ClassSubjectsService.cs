@@ -31,11 +31,15 @@ namespace StudentGradebookApi.Services.SubjectClassServices
             return classSubjects;
         }
 
-        public async Task<ClassSubjects> EditSubjectClassTeacher(int classSubjectsId, int teacherId)
+        public async Task<ClassSubjects> EditSubjectClassTeacher(int? classSubjectsId, int? teacherId)
         {
-            Teachers? newTeacher = await _teachersRepository.GetByIdAsync(teacherId);
+            if (classSubjectsId == null || teacherId == null)
+            {
+                return null;
+            }
 
-            ClassSubjects? newClassSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
+            Teachers? newTeacher = await _teachersRepository.GetByIdAsync(teacherId.Value);
+            ClassSubjects? newClassSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId.Value);
 
             if (newClassSubject == null || newTeacher == null){
                 return null; 

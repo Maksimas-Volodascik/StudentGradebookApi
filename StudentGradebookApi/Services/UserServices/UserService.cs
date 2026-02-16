@@ -21,35 +21,40 @@ namespace StudentGradebookApi.Services.UserServices
             _configuration = configuration;
             _userRepository = userRepository;
         }
-        public async Task<WebUsers?> RegisterAsync(LoginDTO loginDto)
+
+        public async Task<WebUsers?> RegisterAsync(NewUserDTO newUser)
         {
-            if (await _userRepository.GetByEmailAsync(loginDto.Email) != null || loginDto.Password.Length <= 5 || loginDto.Email.Length <= 5)
+            if (await _userRepository.GetByEmailAsync(newUser.Email) != null || newUser.Password.Length <= 5 || newUser.Email.Length <= 5)
             {
                 return null; //User exists
             }
-            var user = new WebUsers();
+            WebUsers user = new WebUsers();
             var passwordHasher = new PasswordHasher<WebUsers>();
-            var hashedPassword = passwordHasher.HashPassword(user, loginDto.Password);
-            user.Email = loginDto.Email;
+            var hashedPassword = passwordHasher.HashPassword(user, newUser.Password);
+            user.Email = newUser.Email;
             user.PasswordHash = hashedPassword;
+            user.Role = newUser.Role;
 
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();
 
             return user;
         }
+
         public async Task<WebUsers?> GetUserByIdAsync(int id)
         {
             WebUsers ?user = await _userRepository.GetByIdAsync(id);
             if (user == null) { return null; }
             return user;
         }
+
         public async Task DeleteUserAsync(int id)
         {
             WebUsers? user = await _userRepository.GetByIdAsync(id);
             _userRepository.Delete(user);
             await _userRepository.SaveChangesAsync();
         }
+
         public async Task<TokenResponse?> LoginAsync(LoginDTO loginDto)
         {
             var user = await _userRepository.GetByEmailAsync(loginDto.Email);
@@ -60,6 +65,7 @@ namespace StudentGradebookApi.Services.UserServices
 
             return await CreateTokenResponse(user); 
         }
+
         private async Task<TokenResponse> CreateTokenResponse(WebUsers user)
         {
             return new TokenResponse
@@ -68,6 +74,7 @@ namespace StudentGradebookApi.Services.UserServices
                 RefreshToken = await GenerateAndSaveRefreshTokenAsyc(user)
             };
         }
+
         private async Task<WebUsers?> ValidateRefreshTokenAsync(int userId, string refreshToken)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -77,6 +84,7 @@ namespace StudentGradebookApi.Services.UserServices
             }
             return user;
         }
+
         public async Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request)
         {
             var user = await ValidateRefreshTokenAsync(request.UserID, request.RefreshToken);
@@ -84,6 +92,7 @@ namespace StudentGradebookApi.Services.UserServices
                 return null;
             return await CreateTokenResponse(user);
         }
+
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -91,6 +100,7 @@ namespace StudentGradebookApi.Services.UserServices
             rng.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
         }
+
         private async Task<string> GenerateAndSaveRefreshTokenAsyc(WebUsers user)
         {
             var refreshToken = GenerateRefreshToken();
@@ -99,6 +109,7 @@ namespace StudentGradebookApi.Services.UserServices
             await _userRepository.SaveChangesAsync();
             return refreshToken;
         }
+
         private string CreateToken(WebUsers user)
         {
             var claims = new List<Claim>

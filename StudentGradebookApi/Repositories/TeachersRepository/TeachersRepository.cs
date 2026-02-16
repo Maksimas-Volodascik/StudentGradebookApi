@@ -39,6 +39,15 @@ namespace StudentGradebookApi.Repositories.TeachersRepository
             return query.ToListAsync();
         }
 
-        //Custom calls goes here
+        public async Task<Teachers> GetTeacherByEmail(string email)
+        {
+            Teachers? teacher = await(from T in _context.Teachers
+                                      join WU in _context.WebUsers
+                                          on T.UserID equals WU.Id
+                                      where WU.Email == email
+                                      select T).FirstOrDefaultAsync();
+
+            return teacher;
+        }
     }
 }

@@ -22,19 +22,23 @@ namespace StudentGradebookApi.Services.StudentServices
             if (studentData == null || studentData.Email.Length <= 5 || studentData.Password.Length <= 5) { 
                 return null;
             }
-            LoginDTO registrationDto = new LoginDTO();
-            registrationDto.Email = studentData.Email;
-            registrationDto.Password = studentData.Password;
-            var registeredUser = await _userService.RegisterAsync(registrationDto);
+
+            NewUserDTO newUser = new NewUserDTO();
+            newUser.Email = studentData.Email;
+            newUser.Password = studentData.Password;
+            newUser.Role = "student";
+            var registeredUser = await _userService.RegisterAsync(newUser);
             if(registeredUser == null)
             {
                 return null;
             }
+
             Students student = new Students();
             student.FirstName = studentData.FirstName;
             student.LastName = studentData.LastName;
             student.DateOfBirth = studentData.DateOfBirth;
             student.User = registeredUser;
+
             await _studentsRepository.AddAsync(student);
             await _studentsRepository.SaveChangesAsync();
 

@@ -8,8 +8,8 @@ namespace StudentGradebookApi.Services.TeacherServices
     {
         Task<List<TeacherDTO>> GetAllTeachersAsync();
         Task<Teachers?> GetTeacherByIdAsync(int id);
-        Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData);
-        Task<Teachers?> EditTeacherAsync(TeacherDTO teacher);
+        Task<Teachers?> AddTeacherAsync(TeacherRequestDTO teacherData);
+        Task<Teachers?> EditTeacherAsync(int teacherId, TeacherRequestDTO teacher);
         Task<Teachers?> DeleteTeacherAsync(int id);
     }
 }

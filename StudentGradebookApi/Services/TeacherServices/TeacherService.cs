@@ -4,6 +4,7 @@ using StudentGradebookApi.DTOs.Users;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.TeachersRepository;
+using StudentGradebookApi.Services.SubjectClassServices;
 using StudentGradebookApi.Services.UserServices;
 
 namespace StudentGradebookApi.Services.TeacherServices
@@ -12,44 +13,49 @@ namespace StudentGradebookApi.Services.TeacherServices
     {
         private readonly ITeachersRepository _teachersRepository;
         private readonly IUserService _userService;
-        public TeacherService(ITeachersRepository teachersRepository, IUserService userService) { 
+        private readonly IClassSubjectsService _classSubjectsService;
+        public TeacherService(ITeachersRepository teachersRepository, IUserService userService, IClassSubjectsService classSubjectsService) { 
             _teachersRepository = teachersRepository;
             _userService = userService;
+            _classSubjectsService = classSubjectsService;
         }
-        public async Task<Teachers?> AddTeacherAsync(NewTeacherDTO teacherData)
+        public async Task<Teachers?> AddTeacherAsync(TeacherRequestDTO teacherData)
         {
-            // check if classID is not occupied
+            //todo: check if classID is not occupied
             if (teacherData == null) return null;
             
-            LoginDTO registrationDto = new LoginDTO();
-            registrationDto.Email = teacherData.Email;
-            registrationDto.Password = teacherData.Password;
-            var registeredUser = await _userService.RegisterAsync(registrationDto);
+            NewUserDTO newUser = new NewUserDTO();
+            newUser.Email = teacherData.Email;
+            newUser.Password = teacherData.Password;
+            newUser.Role = "teacher";
+            var registeredUser = await _userService.RegisterAsync(newUser);
             if (registeredUser == null) return null;
-
 
             Teachers newTeacher = new Teachers();
             newTeacher.FirstName = teacherData.FirstName;
             newTeacher.LastName = teacherData.LastName;
             newTeacher.UserID = registeredUser.Id;
-            //newTeacher.ClassId = teacherData.ClassId;
-
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
+
+            Teachers? getTeacher = await _teachersRepository.GetTeacherByEmail(teacherData.Email);
+            await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, getTeacher.Id);
+
             return newTeacher;
         }
 
-        public async Task<Teachers?> EditTeacherAsync(TeacherDTO teacher)
+        public async Task<Teachers?> EditTeacherAsync(int teacherId, TeacherRequestDTO teacher)
         {
-            Teachers? updateTeacher = await _teachersRepository.GetByIdAsync(teacher.Id);
+            Teachers? updateTeacher = await _teachersRepository.GetByIdAsync(teacherId);
             if(updateTeacher == null) return null;
 
             updateTeacher.FirstName = teacher.FirstName;
             updateTeacher.LastName = teacher.LastName;
-            //updateTeacher.ClassId = teacher.ClassId;
-
+            
             _teachersRepository.Update(updateTeacher);
             await _teachersRepository.SaveChangesAsync();
+
+            await _classSubjectsService.EditSubjectClassTeacher(teacher.ClassSubjectId, teacherId);
 
             return updateTeacher;
         }

@@ -22,10 +22,18 @@ namespace StudentGradebookApi.Controllers
             var response = await _teacherService.GetAllTeachersAsync();
             return Ok(response);
         }
+
         [HttpPost]
-        public async Task<ActionResult> AddNewTeacher(NewTeacherDTO newTeacher)
+        public async Task<ActionResult> AddNewTeacher(TeacherRequestDTO newTeacher)
         {
             await _teacherService.AddTeacherAsync(newTeacher);
+            return Ok();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> EditTeacher(int id, TeacherRequestDTO teacher)
+        {
+            await _teacherService.EditTeacherAsync(id, teacher);
             return Ok();
         }
 

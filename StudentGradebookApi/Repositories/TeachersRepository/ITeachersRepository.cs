@@ -8,5 +8,6 @@ namespace StudentGradebookApi.Repositories.TeachersRepository
     public interface ITeachersRepository : IRepositoryBase<Teachers>
     {
         Task<List<TeacherDTO>> GetTeachersWithSubjectsAsync();
+        Task<Teachers> GetTeacherByEmail(string email);
     }
 }
