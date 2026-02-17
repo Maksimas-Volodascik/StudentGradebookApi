@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using StudentGradebookApi.DTOs.Users;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.UsersRepository;
+using StudentGradebookApi.Shared;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace StudentGradebookApi.Services.UserServices
 {
@@ -21,13 +24,19 @@ namespace StudentGradebookApi.Services.UserServices
             _configuration = configuration;
             _userRepository = userRepository;
         }
-
-        public async Task<WebUsers?> RegisterAsync(NewUserDTO newUser)
+        
+        public async Task<Result<WebUsers>> RegisterAsync(NewUserDTO newUser)
         {
-            if (await _userRepository.GetByEmailAsync(newUser.Email) != null || newUser.Password.Length <= 5 || newUser.Email.Length <= 5)
-            {
-                return null; //User exists
-            }
+            var emailValidator = new EmailAddressAttribute();
+            if (!emailValidator.IsValid(newUser.Email))
+                return Result<WebUsers>.Failure(Errors.User.EmailInvalid);
+
+            if (string.IsNullOrWhiteSpace(newUser.Email))
+                return Result<WebUsers>.Failure(Errors.User.EmailRequired);
+
+            if (await _userRepository.GetByEmailAsync(newUser.Email) != null)
+                return Result<WebUsers>.Failure(Errors.User.EmailExists);
+
             WebUsers user = new WebUsers();
             var passwordHasher = new PasswordHasher<WebUsers>();
             var hashedPassword = passwordHasher.HashPassword(user, newUser.Password);
@@ -38,7 +47,7 @@ namespace StudentGradebookApi.Services.UserServices
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();
 
-            return user;
+            return Result<WebUsers>.Success(user);
         }
 
         public async Task<WebUsers?> GetUserByIdAsync(int id)

@@ -1,4 +1,6 @@
-﻿namespace StudentGradebookApi.DTOs.Users
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StudentGradebookApi.DTOs.Users
 {
     public class NewUserDTO
     {

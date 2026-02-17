@@ -32,12 +32,12 @@ namespace StudentGradebookApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser (NewUserDTO newUser)
         {
-            var user = await _userService.RegisterAsync(newUser);
-            if (user == null)
+            var result = await _userService.RegisterAsync(newUser);
+            if (result.IsSuccess)
             {
-                return BadRequest("Incorrect E-Mail or password");
+                return Ok(result.Data);
             }
-            return Ok();
+            return BadRequest(result.Error);
         }
         //Login user
         [HttpPost("login")]

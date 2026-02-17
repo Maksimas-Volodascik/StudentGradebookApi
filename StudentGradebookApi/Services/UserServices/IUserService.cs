@@ -1,11 +1,12 @@
 ﻿using StudentGradebookApi.DTOs.Users;
 using StudentGradebookApi.Models;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.UserServices
 {
     public interface IUserService
     {
-        Task<WebUsers?> RegisterAsync(NewUserDTO request);
+        Task<Result<WebUsers>> RegisterAsync(NewUserDTO request);
         Task<TokenResponse?> LoginAsync(LoginDTO request);
         Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request);
         Task<WebUsers?> GetUserByIdAsync(int id);

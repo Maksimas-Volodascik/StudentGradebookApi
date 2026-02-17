@@ -19,9 +19,9 @@ namespace StudentGradebookApi.Services.TeacherServices
             _userService = userService;
             _classSubjectsService = classSubjectsService;
         }
+
         public async Task<Teachers?> AddTeacherAsync(TeacherRequestDTO teacherData)
         {
-            //todo: check if classID is not occupied
             if (teacherData == null) return null;
             
             NewUserDTO newUser = new NewUserDTO();
@@ -34,7 +34,7 @@ namespace StudentGradebookApi.Services.TeacherServices
             Teachers newTeacher = new Teachers();
             newTeacher.FirstName = teacherData.FirstName;
             newTeacher.LastName = teacherData.LastName;
-            newTeacher.UserID = registeredUser.Id;
+            newTeacher.UserID = registeredUser.Data!.Id;
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
 

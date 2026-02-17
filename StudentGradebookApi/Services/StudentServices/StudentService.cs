@@ -37,7 +37,7 @@ namespace StudentGradebookApi.Services.StudentServices
             student.FirstName = studentData.FirstName;
             student.LastName = studentData.LastName;
             student.DateOfBirth = studentData.DateOfBirth;
-            student.User = registeredUser;
+            student.User = registeredUser.Data;
 
             await _studentsRepository.AddAsync(student);
             await _studentsRepository.SaveChangesAsync();
