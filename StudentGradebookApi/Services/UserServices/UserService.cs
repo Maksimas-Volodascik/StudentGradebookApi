@@ -27,12 +27,12 @@ namespace StudentGradebookApi.Services.UserServices
         
         public async Task<Result<WebUsers>> RegisterAsync(NewUserDTO newUser)
         {
+            if (string.IsNullOrWhiteSpace(newUser.Email))
+                return Result<WebUsers>.Failure(Errors.User.EmailRequired);
+
             var emailValidator = new EmailAddressAttribute();
             if (!emailValidator.IsValid(newUser.Email))
                 return Result<WebUsers>.Failure(Errors.User.EmailInvalid);
-
-            if (string.IsNullOrWhiteSpace(newUser.Email))
-                return Result<WebUsers>.Failure(Errors.User.EmailRequired);
 
             if (await _userRepository.GetByEmailAsync(newUser.Email) != null)
                 return Result<WebUsers>.Failure(Errors.User.EmailExists);

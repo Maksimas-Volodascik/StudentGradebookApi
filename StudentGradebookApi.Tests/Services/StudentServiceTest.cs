@@ -8,7 +8,7 @@ namespace StudentGradebookApi.Tests.Services
     public class StudentServiceTest
     {
         [Fact] 
-        public async Task GetStudentByIdAsync_StudenntExists_ReturnsStudent() { 
+        public async Task GetStudentByIdAsync_StudentExists_ReturnsStudent() { 
             var mockRepo = new Mock<IStudentsRepository>();
             mockRepo.Setup(repo => repo.GetByIdAsync(1))
                 .ReturnsAsync(new Models.Students

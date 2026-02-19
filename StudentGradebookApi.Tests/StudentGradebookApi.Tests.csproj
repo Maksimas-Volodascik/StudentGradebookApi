@@ -24,4 +24,14 @@
     <ProjectReference Include="..\StudentGradebookApi\StudentGradebookApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Services\Grade\" />
+    <Folder Include="Services\Class\" />
+    <Folder Include="Services\Subject\" />
+    <Folder Include="Services\Student\" />
+    <Folder Include="Services\Teacher\" />
+  </ItemGroup>
+
 </Project>
