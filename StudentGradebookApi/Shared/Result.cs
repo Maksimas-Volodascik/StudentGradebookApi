@@ -1,18 +1,29 @@
 ﻿namespace StudentGradebookApi.Shared
 {
-    public class Result <T>
+    public class Result
     {
-        public bool IsSuccess { get; private set; }
-        public T? Data { get; private set; }
-        public string? Error { get; private set; }
+        public bool IsSuccess { get; }
+        public Error? Error { get; }
 
-        private Result(bool isSuccess, T? data, string? error) {
-            IsSuccess = isSuccess; 
-            Data = data; 
-            Error = error; 
+        protected Result(bool isSuccess, Error? error)
+        {
+            IsSuccess = isSuccess;
+            Error = error;
         }
 
-        public static Result<T> Success(T data) => new Result<T>(true, data, null); 
-        public static Result<T> Failure(string error) => new Result<T>(false, default, error);
+        public static Result Success() => new Result(true, null);
+        public static Result Failure(Error error) => new Result(false, error);
+    }
+    public class Result<T> : Result
+    {
+        public T? Data { get; private set; }
+
+        private Result(bool isSuccess, T? data, Error? error) : base(isSuccess, error)
+        {
+            Data = data;
+        }
+
+        public static Result<T> Success(T data) => new Result<T>(true, data, null);
+        public static Result<T> Failure(Error error) => new Result<T>(false, default, error);
     }
 }
