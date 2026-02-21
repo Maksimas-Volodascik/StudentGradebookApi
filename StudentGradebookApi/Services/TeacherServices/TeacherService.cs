@@ -6,6 +6,8 @@ using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.TeachersRepository;
 using StudentGradebookApi.Services.SubjectClassServices;
 using StudentGradebookApi.Services.UserServices;
+using StudentGradebookApi.Shared;
+using System.ComponentModel.DataAnnotations;
 
 namespace StudentGradebookApi.Services.TeacherServices
 {
@@ -20,67 +22,91 @@ namespace StudentGradebookApi.Services.TeacherServices
             _classSubjectsService = classSubjectsService;
         }
 
-        public async Task<Teachers?> AddTeacherAsync(TeacherRequestDTO teacherData)
+        public async Task<Result<Teachers>> AddTeacherAsync(TeacherRequestDTO teacherData)
         {
-            if (teacherData == null) return null;
-            
+            var validateTeacherData = ValidateTeacherData(teacherData);
+            if (!validateTeacherData.IsSuccess) 
+                return Result<Teachers>.Failure(validateTeacherData.Error);
+
             NewUserDTO newUser = new NewUserDTO();
             newUser.Email = teacherData.Email;
             newUser.Password = teacherData.Password;
             newUser.Role = "teacher";
             var registeredUser = await _userService.RegisterAsync(newUser);
-            if (registeredUser == null) return null;
+            if (!registeredUser.IsSuccess) return Result<Teachers>.Failure(registeredUser.Error);
 
-            Teachers newTeacher = new Teachers();
-            newTeacher.FirstName = teacherData.FirstName;
-            newTeacher.LastName = teacherData.LastName;
-            newTeacher.UserID = registeredUser.Data!.Id;
+            Teachers newTeacher = new Teachers
+            {
+                FirstName = teacherData.FirstName,
+                LastName = teacherData.LastName,
+                UserID = registeredUser.Data.Id
+            };
+
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
 
-            Teachers? getTeacher = await _teachersRepository.GetTeacherByEmail(teacherData.Email);
-            await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, getTeacher.Id);
+            Teachers getTeacher = await _teachersRepository.GetTeacherByEmail(teacherData.Email);
+            if (getTeacher != null) 
+                await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, getTeacher.Id);
 
-            return newTeacher;
+            return Result<Teachers>.Success(newTeacher);
         }
 
-        public async Task<Teachers?> EditTeacherAsync(int teacherId, TeacherRequestDTO teacher)
+        public async Task<Result<Teachers>> EditTeacherAsync(int teacherId, TeacherRequestDTO teacherData)
         {
-            Teachers? updateTeacher = await _teachersRepository.GetByIdAsync(teacherId);
-            if(updateTeacher == null) return null;
+            var validation = ValidateTeacherData(teacherData);
+            if (!validation.IsSuccess)
+                return Result<Teachers>.Failure(validation.Error);
 
-            updateTeacher.FirstName = teacher.FirstName;
-            updateTeacher.LastName = teacher.LastName;
+            Teachers updateTeacher = await _teachersRepository.GetByIdAsync(teacherId);
+            if(updateTeacher == null) return Result<Teachers>.Failure(Errors.TeacherErrors.TeacherNotFound);
+
+            updateTeacher.FirstName = teacherData.FirstName;
+            updateTeacher.LastName = teacherData.LastName;
             
+            await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, teacherId);
+
             _teachersRepository.Update(updateTeacher);
             await _teachersRepository.SaveChangesAsync();
 
-            await _classSubjectsService.EditSubjectClassTeacher(teacher.ClassSubjectId, teacherId);
-
-            return updateTeacher;
+            return Result<Teachers>.Success(updateTeacher);
         }
 
-        public async Task<Teachers?> GetTeacherByIdAsync(int id)
+        public async Task<Result<Teachers>> GetTeacherByIdAsync(int id)
+        {
+            var response = await _teachersRepository.GetByIdAsync(id);
+            if (response == null) return Result<Teachers>.Failure(Errors.TeacherErrors.TeacherNotFound);
+
+            return Result<Teachers>.Success(response);
+        }
+
+        public async Task<Result<List<TeacherDTO>>> GetAllTeachersAsync()
+        {
+            var response = await _teachersRepository.GetTeachersWithSubjectsAsync();
+            return Result<List<TeacherDTO>>.Success(response);
+        }
+
+        public async Task<Result> DeleteTeacherAsync(int id)
         {
             var teacher = await _teachersRepository.GetByIdAsync(id);
-            return teacher;
+            if (teacher == null)
+                return Result.Failure(Errors.TeacherErrors.TeacherNotFound);
+
+            var response = await _userService.DeleteUserAsync(teacher.UserID);
+            if (!response.IsSuccess) return Result.Failure(response.Error);
+
+            return Result.Success();
         }
 
-        public async Task<List<TeacherDTO?>> GetAllTeachersAsync()
+        public Result<TeacherRequestDTO> ValidateTeacherData(TeacherRequestDTO teacherData)
         {
-            var teacherList = await _teachersRepository.GetTeachersWithSubjectsAsync();
-            return teacherList;
-        }
+            if (string.IsNullOrWhiteSpace(teacherData.FirstName))
+                return Result<TeacherRequestDTO>.Failure(Errors.TeacherErrors.FirstNameMissing);
 
-        public async Task<Teachers?> DeleteTeacherAsync(int id)
-        {
-            Teachers? teacherToDelete = await _teachersRepository.GetByIdAsync(id);
-            if (teacherToDelete == null)
-            {
-                return null;
-            }
-            await _userService.DeleteUserAsync(teacherToDelete.UserID);
-            return teacherToDelete;
+            if (string.IsNullOrWhiteSpace(teacherData.LastName))
+                return Result<TeacherRequestDTO>.Failure(Errors.TeacherErrors.LastNameMissing);
+
+            return Result<TeacherRequestDTO>.Success(teacherData);
         }
     }
 }

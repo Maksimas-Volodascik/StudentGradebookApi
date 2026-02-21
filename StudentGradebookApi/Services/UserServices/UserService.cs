@@ -28,14 +28,17 @@ namespace StudentGradebookApi.Services.UserServices
         public async Task<Result<WebUsers>> RegisterAsync(NewUserDTO newUser)
         {
             if (string.IsNullOrWhiteSpace(newUser.Email))
-                return Result<WebUsers>.Failure(Errors.User.EmailRequired);
+                return Result<WebUsers>.Failure(Errors.UserErrors.EmailRequired);
+
+            if (string.IsNullOrWhiteSpace(newUser.Password))
+                return Result<WebUsers>.Failure(Errors.UserErrors.PasswordRequired);
 
             var emailValidator = new EmailAddressAttribute();
             if (!emailValidator.IsValid(newUser.Email))
-                return Result<WebUsers>.Failure(Errors.User.EmailInvalid);
+                return Result<WebUsers>.Failure(Errors.UserErrors.EmailInvalid);
 
             if (await _userRepository.GetByEmailAsync(newUser.Email) != null)
-                return Result<WebUsers>.Failure(Errors.User.EmailExists);
+                return Result<WebUsers>.Failure(Errors.UserErrors.EmailExists);
 
             WebUsers user = new WebUsers();
             var passwordHasher = new PasswordHasher<WebUsers>();
@@ -50,29 +53,35 @@ namespace StudentGradebookApi.Services.UserServices
             return Result<WebUsers>.Success(user);
         }
 
-        public async Task<WebUsers?> GetUserByIdAsync(int id)
+        public async Task<Result<WebUsers>> GetUserByIdAsync(int id)
         {
-            WebUsers ?user = await _userRepository.GetByIdAsync(id);
-            if (user == null) { return null; }
-            return user;
+            var result = await _userRepository.GetByIdAsync(id);
+            if (result == null) return Result<WebUsers>.Failure(Errors.UserErrors.UserNotFound);
+
+            return Result<WebUsers>.Success(result);
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task<Result> DeleteUserAsync(int id)
         {
             WebUsers? user = await _userRepository.GetByIdAsync(id);
+            if (user == null) return Result.Failure(Errors.UserErrors.UserNotFound);
+
             _userRepository.Delete(user);
             await _userRepository.SaveChangesAsync();
+            return Result.Success();
         }
 
-        public async Task<TokenResponse?> LoginAsync(LoginDTO loginDto)
+        public async Task<Result<TokenResponse>> LoginAsync(LoginDTO loginDto)
         {
             var user = await _userRepository.GetByEmailAsync(loginDto.Email);
             if (user is null || new PasswordHasher<WebUsers>().VerifyHashedPassword(user, user.PasswordHash, loginDto.Password) == PasswordVerificationResult.Failed)
             {
-                return null;
+                return Result<TokenResponse>.Failure(Errors.UserErrors.InvalidUserCredentials);
             }
 
-            return await CreateTokenResponse(user); 
+            TokenResponse token = await CreateTokenResponse(user);
+
+            return Result<TokenResponse>.Success(token);
         }
 
         private async Task<TokenResponse> CreateTokenResponse(WebUsers user)
@@ -94,7 +103,7 @@ namespace StudentGradebookApi.Services.UserServices
             return user;
         }
 
-        public async Task<TokenResponse?> RefreshTokensAsync(RefreshTokenRequest request)
+        public async Task<TokenResponse> RefreshTokensAsync(RefreshTokenRequest request)
         {
             var user = await ValidateRefreshTokenAsync(request.UserID, request.RefreshToken);
             if (user is null)
