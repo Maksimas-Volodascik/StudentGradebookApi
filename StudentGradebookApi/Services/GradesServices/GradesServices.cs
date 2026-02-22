@@ -1,7 +1,9 @@
 ﻿
 using StudentGradebookApi.DTOs.Grades;
+using StudentGradebookApi.DTOs.Teachers;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.GradesRepository;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.GradesServices
 {
@@ -13,20 +15,27 @@ namespace StudentGradebookApi.Services.GradesServices
             _gradesRepository = gradesRepository;
         }
 
-        public async Task<Grades> EditGrade(NewGradeDTO newGrade)
+        public async Task<Result> EditGrade(NewGradeDTO newGrade)
         {
-            Grades updateGrade = await _gradesRepository.GetGradeByDateAndEnrollmentId(newGrade.gradingDate.Date, newGrade.enrollmentId);
+            var valid = ValidateTeacherData(newGrade);
+            if (!valid.IsSuccess) return Result.Failure(valid.Error);
 
-            updateGrade.Grade_Type = newGrade.gradeType;
-            updateGrade.Score = newGrade.score;
+            Grades grade = await _gradesRepository.GetGradeByDateAndEnrollmentId(newGrade.gradingDate.Date, newGrade.enrollmentId);
+            //TODO: test grade that does not exist
+            grade.Grade_Type = newGrade.gradeType;
+            grade.Score = newGrade.score;
 
-            _gradesRepository.Update(updateGrade);
+            _gradesRepository.Update(grade);
             await _gradesRepository.SaveChangesAsync();
-            return updateGrade;
+
+            return Result.Success();
         }
 
-        public async Task AddGrade(NewGradeDTO newGrade)
+        public async Task<Result> AddGrade(NewGradeDTO newGrade)
         {
+            var valid = ValidateTeacherData(newGrade);
+            if (!valid.IsSuccess) return Result.Failure(valid.Error!);
+
             Grades createGrade = new Grades();
             createGrade.GradingDate = newGrade.gradingDate;
             createGrade.Grade_Type = newGrade.gradeType;
@@ -35,17 +44,37 @@ namespace StudentGradebookApi.Services.GradesServices
 
             await _gradesRepository.AddAsync(createGrade);
             await _gradesRepository.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesByStudentId(int year, int month)
+        public async Task<Result<IEnumerable<StudentGradesBySubjectDTO>>> GetStudentGradesByStudentId(int year, int month)
         {
-            return null;
+            //TODO: add call for student grades by ID
+            return Result<IEnumerable<StudentGradesBySubjectDTO>>.Success(await _gradesRepository.GetStudentGradesBySubjectId(year, month, 1));
         }
 
-        public async Task<IEnumerable<StudentGradesBySubjectDTO>> GetStudentGradesBySubjectId(int year, int month, int classSubjectId)
+        public async Task<Result<IEnumerable<StudentGradesBySubjectDTO>>> GetStudentGradesBySubjectId(int year, int month, int classSubjectId)
         {
-            var studentGradeList = await _gradesRepository.GetStudentGradesBySubjectId(year, month, classSubjectId);
-            return studentGradeList;
+            return Result<IEnumerable<StudentGradesBySubjectDTO>>.Success(await _gradesRepository.GetStudentGradesBySubjectId(year, month, classSubjectId));
+        }
+
+        public Result ValidateTeacherData(NewGradeDTO grade)
+        {
+            if (grade.score > 10)
+                return Result.Failure(Errors.GradeErrors.ScoreOutOfRange);
+
+            var allowedGradeTypes = new[] { "default", "test", "exam", "project" };
+            if (string.IsNullOrEmpty(grade.gradeType) || !allowedGradeTypes.Contains(grade.gradeType))
+                return Result.Failure(Errors.GradeErrors.GradeTypeInvalid); 
+
+            if (grade.gradingDate == default(DateTime))
+                return Result.Failure(Errors.GradeErrors.GradingDateInvalid); 
+
+            if (grade.enrollmentId <= 0)
+                return Result.Failure(Errors.GradeErrors.EnrollmentIdInvalid); 
+
+            return Result.Success();
         }
     }
 }

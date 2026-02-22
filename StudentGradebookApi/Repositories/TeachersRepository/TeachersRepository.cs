@@ -13,7 +13,7 @@ namespace StudentGradebookApi.Repositories.TeachersRepository
             _context = context;
         }
 
-        public Task<List<TeacherDTO>> GetTeachersWithSubjectsAsync()
+        public async Task<IEnumerable<TeacherDTO>> GetTeachersWithSubjectsAsync()
         {
             var query = from T in _context.Teachers
 
@@ -36,7 +36,7 @@ namespace StudentGradebookApi.Repositories.TeachersRepository
                             ClassSubjectId = CS != null ? CS.Id : null,
                         };
 
-            return query.ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<Teachers> GetTeacherByEmail(string email)

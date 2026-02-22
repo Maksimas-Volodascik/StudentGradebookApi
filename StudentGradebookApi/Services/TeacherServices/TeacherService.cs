@@ -22,11 +22,11 @@ namespace StudentGradebookApi.Services.TeacherServices
             _classSubjectsService = classSubjectsService;
         }
 
-        public async Task<Result<Teachers>> AddTeacherAsync(TeacherRequestDTO teacherData)
+        public async Task<Result> AddTeacherAsync(TeacherRequestDTO teacherData)
         {
             var validateTeacherData = ValidateTeacherData(teacherData);
             if (!validateTeacherData.IsSuccess) 
-                return Result<Teachers>.Failure(validateTeacherData.Error);
+                return Result<Teachers>.Failure(validateTeacherData.Error!);
 
             NewUserDTO newUser = new NewUserDTO();
             newUser.Email = teacherData.Email;
@@ -45,18 +45,18 @@ namespace StudentGradebookApi.Services.TeacherServices
             await _teachersRepository.AddAsync(newTeacher);
             await _teachersRepository.SaveChangesAsync();
 
-            Teachers getTeacher = await _teachersRepository.GetTeacherByEmail(teacherData.Email);
-            if (getTeacher != null) 
-                await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, getTeacher.Id);
+            Teachers teacher = await _teachersRepository.GetTeacherByEmail(teacherData.Email);
+            if (teacher != null) 
+                await _classSubjectsService.EditSubjectClassTeacher(teacherData.ClassSubjectId, teacher.Id);
 
-            return Result<Teachers>.Success(newTeacher);
+            return Result.Success();
         }
 
-        public async Task<Result<Teachers>> EditTeacherAsync(int teacherId, TeacherRequestDTO teacherData)
+        public async Task<Result> EditTeacherAsync(int teacherId, TeacherRequestDTO teacherData)
         {
             var validation = ValidateTeacherData(teacherData);
             if (!validation.IsSuccess)
-                return Result<Teachers>.Failure(validation.Error);
+                return Result<Teachers>.Failure(validation.Error!);
 
             Teachers updateTeacher = await _teachersRepository.GetByIdAsync(teacherId);
             if(updateTeacher == null) return Result<Teachers>.Failure(Errors.TeacherErrors.TeacherNotFound);
@@ -69,7 +69,7 @@ namespace StudentGradebookApi.Services.TeacherServices
             _teachersRepository.Update(updateTeacher);
             await _teachersRepository.SaveChangesAsync();
 
-            return Result<Teachers>.Success(updateTeacher);
+            return Result.Success();
         }
 
         public async Task<Result<Teachers>> GetTeacherByIdAsync(int id)
@@ -80,10 +80,10 @@ namespace StudentGradebookApi.Services.TeacherServices
             return Result<Teachers>.Success(response);
         }
 
-        public async Task<Result<List<TeacherDTO>>> GetAllTeachersAsync()
+        public async Task<Result<IEnumerable<TeacherDTO>>> GetAllTeachersAsync()
         {
             var response = await _teachersRepository.GetTeachersWithSubjectsAsync();
-            return Result<List<TeacherDTO>>.Success(response);
+            return Result<IEnumerable<TeacherDTO>>.Success(response);
         }
 
         public async Task<Result> DeleteTeacherAsync(int id)
@@ -93,7 +93,7 @@ namespace StudentGradebookApi.Services.TeacherServices
                 return Result.Failure(Errors.TeacherErrors.TeacherNotFound);
 
             var response = await _userService.DeleteUserAsync(teacher.UserID);
-            if (!response.IsSuccess) return Result.Failure(response.Error);
+            if (!response.IsSuccess) return Result.Failure(response.Error!);
 
             return Result.Success();
         }

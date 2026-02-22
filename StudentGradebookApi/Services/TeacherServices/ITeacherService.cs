@@ -7,10 +7,10 @@ namespace StudentGradebookApi.Services.TeacherServices
 {
     public interface ITeacherService
     {
-        Task<Result<List<TeacherDTO>>> GetAllTeachersAsync();
+        Task<Result<IEnumerable<TeacherDTO>>> GetAllTeachersAsync();
         Task<Result<Teachers>> GetTeacherByIdAsync(int id);
-        Task<Result<Teachers>> AddTeacherAsync(TeacherRequestDTO teacherData);
-        Task<Result<Teachers>> EditTeacherAsync(int teacherId, TeacherRequestDTO teacher);
+        Task<Result> AddTeacherAsync(TeacherRequestDTO teacherData);
+        Task<Result> EditTeacherAsync(int teacherId, TeacherRequestDTO teacher);
         Task<Result> DeleteTeacherAsync(int id);
     }
 }

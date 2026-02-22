@@ -1,6 +1,8 @@
 ﻿using StudentGradebookApi.DTOs.Subjects;
+using StudentGradebookApi.DTOs.Teachers;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.SubjectsRepository;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.SubjectsService
 {
@@ -11,57 +13,78 @@ namespace StudentGradebookApi.Services.SubjectsService
             _subjectsRepository = subjectsRepository;
         }
 
-        public async Task<Subjects> AddSubjectAsync(SujectContentsDTO sujectContentsDTO)
+        public async Task<Result> AddSubjectAsync(SujectContentsDTO subjectContentsDTO)
         {
-            Subjects newSubject = new Subjects();
-            newSubject.SubjectName = sujectContentsDTO.subjectName;
-            newSubject.SubjectCode = sujectContentsDTO.subjectCode;
-            newSubject.Description = sujectContentsDTO.description;
+            var valid = ValidateSubjectData(subjectContentsDTO);
+            if (!valid.IsSuccess) return Result.Failure(valid.Error);
+
+            Subjects newSubject = new Subjects {
+                SubjectName = subjectContentsDTO.subjectName,
+                SubjectCode = subjectContentsDTO.subjectCode,
+                Description = subjectContentsDTO.description
+            };
 
             await _subjectsRepository.AddAsync(newSubject);
             await _subjectsRepository.SaveChangesAsync();
-            return newSubject;
+
+            return Result.Success();
         }
 
-        public async Task<Subjects?> DeleteSubjectAsync(int id)
+        public async Task<Result> DeleteSubjectAsync(int id)
         {
-            Subjects? subjectToDelete = await _subjectsRepository.GetByIdAsync(id);
-            if (subjectToDelete != null)
-            {
-                return null;
-            }
-            else
-            {
-                _subjectsRepository.Delete(subjectToDelete!);
-                await _subjectsRepository.SaveChangesAsync();
-                return subjectToDelete;
-            }
+            Subjects subject = await _subjectsRepository.GetByIdAsync(id);
+            if (subject == null)
+                return Result.Failure(Errors.SubjectErrors.SubjectNotFound);
+
+            _subjectsRepository.Delete(subject);
+            await _subjectsRepository.SaveChangesAsync();
+
+            return Result.Success();
+
         }
 
-        public async Task<IEnumerable<Subjects>> GetAllSubjectsAsync()
+        public async Task<Result<IEnumerable<Subjects>>> GetAllSubjectsAsync()
         {
-            var subjects = await _subjectsRepository.GetAllAsync();
-            return subjects;
+            return Result<IEnumerable<Subjects>>.Success(await _subjectsRepository.GetAllAsync());
         }
 
-        public async Task<Subjects?> GetSubjectByIdAsync(int id)
+        public async Task<Result<Subjects>> GetSubjectByIdAsync(int id)
         {
-            Subjects? subject = await _subjectsRepository.GetByIdAsync(id);
-            return subject;
+            Subjects subject = await _subjectsRepository.GetByIdAsync(id);
+            if (subject == null) 
+                return Result<Subjects>.Failure(Errors.SubjectErrors.SubjectNotFound);
+
+            return Result<Subjects>.Success(subject);
         }
 
-        public async Task<Subjects?> UpdateSubjectAsync(int id, SujectContentsDTO sujectContentsDTO)
+        public async Task<Result> UpdateSubjectAsync(int id, SujectContentsDTO subjectContentsDTO)
         {
-            Subjects? subjects = await _subjectsRepository.GetByIdAsync(id);
-            if (subjects != null) { return null; }
+            var valid = ValidateSubjectData(subjectContentsDTO);
+            if (!valid.IsSuccess) return Result.Failure(valid.Error);
 
-            subjects!.SubjectName = sujectContentsDTO.subjectName;
-            subjects.SubjectCode = sujectContentsDTO.subjectCode;
-            subjects.Description = sujectContentsDTO.description;
+            Subjects subjects = await _subjectsRepository.GetByIdAsync(id);
+            if (subjects == null)
+                return Result.Failure(Errors.SubjectErrors.SubjectNotFound); 
+
+            subjects.SubjectName = subjectContentsDTO.subjectName;
+            subjects.SubjectCode = subjectContentsDTO.subjectCode;
+            subjects.Description = subjectContentsDTO.description;
 
             _subjectsRepository.Update(subjects);
             await _subjectsRepository.SaveChangesAsync();
-            return subjects;
+
+            return Result.Success();
+        }
+
+        public Result<SujectContentsDTO> ValidateSubjectData(SujectContentsDTO subjectContentsDTO)
+        {
+            if (string.IsNullOrWhiteSpace(subjectContentsDTO.subjectCode))
+                return Result<SujectContentsDTO>.Failure(Errors.SubjectErrors.SubjectCodeMissing);
+
+            if (string.IsNullOrWhiteSpace(subjectContentsDTO.subjectName))
+                return Result<SujectContentsDTO>.Failure(Errors.SubjectErrors.SubjectNameMissing);
+
+            return Result<SujectContentsDTO>.Success(subjectContentsDTO);
         }
     }
 }

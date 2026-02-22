@@ -1,16 +1,16 @@
 ﻿using StudentGradebookApi.DTOs.ClassSubjects;
 using StudentGradebookApi.DTOs.SubjectClass;
 using StudentGradebookApi.Models;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.SubjectClassServices
 {
     public interface IClassSubjectsService
     {
-        Task<ClassSubjects> AssignSubjectToClassAsync (CombineClassSubjectDTO combineClassSubjectDTO);
-        Task<ClassSubjects?> RemoveSubjectClassAsync(int classSubjectsId);
-        Task<ClassSubjects> EditSubjectClassTeacher(int? classSubjectsId, int? teacherId);  //Function to change class teacher
-        Task<IEnumerable<ClassSubjectDTO?>> GetAllClassSubjectsAsync();
-        Task<ClassSubjects?> GetClassSubjectsByIdAsync(int classSubjectsId);
-        Task<ClassSubjectDTO> CreateNewClassSubjectAsync(ClassSubjectDTO newClassSubject);
+        Task<Result> AssignSubjectToClassAsync (CombineClassSubjectDTO combineClassSubjectDTO);
+        Task<Result> RemoveSubjectClassAsync(int classSubjectsId);
+        Task<Result> EditSubjectClassTeacher(int classSubjectsId, int teacherId);  //Function to change class teacher
+        Task<Result<IEnumerable<ClassSubjectDTO>>> GetAllClassSubjectsAsync();
+        Task<Result<ClassSubjects>> GetClassSubjectsByIdAsync(int classSubjectsId);
     }
 }

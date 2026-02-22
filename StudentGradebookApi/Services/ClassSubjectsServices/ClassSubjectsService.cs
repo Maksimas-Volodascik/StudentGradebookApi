@@ -8,6 +8,8 @@ using StudentGradebookApi.Repositories.StudentsRepository;
 using StudentGradebookApi.Repositories.SubjectsRepository;
 using StudentGradebookApi.Repositories.TeachersRepository;
 using StudentGradebookApi.Services.UserServices;
+using StudentGradebookApi.Shared;
+using System.Collections.Generic;
 
 namespace StudentGradebookApi.Services.SubjectClassServices
 {
@@ -15,75 +17,73 @@ namespace StudentGradebookApi.Services.SubjectClassServices
     {
         private readonly IClassSubjectsRepository _classSubjectsRepository;
         private readonly ITeachersRepository _teachersRepository;
-        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ITeachersRepository teachersRepository)
+        private readonly ISubjectsRepository _subjectsRepository;
+        private readonly IClassesRepository _classesRepository;
+        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ITeachersRepository teachersRepository, ISubjectsRepository subjectsRepository, IClassesRepository classesRepository)
         {
             _classSubjectsRepository = classSubjectsRepository;
             _teachersRepository = teachersRepository;
+            _subjectsRepository = subjectsRepository;
+            _classesRepository = classesRepository;
         }
 
-        public async Task<ClassSubjects> AssignSubjectToClassAsync(CombineClassSubjectDTO combineClassSubjectDTO)
+        public async Task<Result> AssignSubjectToClassAsync(CombineClassSubjectDTO combineClassSubjectDTO)
         {
+            if (_subjectsRepository.GetByIdAsync(combineClassSubjectDTO.SubjectId) == null || _classesRepository.GetByIdAsync(combineClassSubjectDTO.ClassId) == null)
+                return Result.Failure(Errors.ClassSubjectErrors.InvalidClassSubject);
+
             ClassSubjects classSubjects = new ClassSubjects();
             classSubjects.SubjectId = combineClassSubjectDTO.SubjectId;
             classSubjects.ClassId = combineClassSubjectDTO.ClassId;
+
             await _classSubjectsRepository.AddAsync(classSubjects);
             await _classSubjectsRepository.SaveChangesAsync();
-            return classSubjects;
+
+            return Result.Success();
         }
 
-        public async Task<ClassSubjects> EditSubjectClassTeacher(int? classSubjectsId, int? teacherId)
+        public async Task<Result> EditSubjectClassTeacher(int classSubjectsId, int teacherId)
         {
-            if (classSubjectsId == null || teacherId == null)
-            {
-                return null;
-            }
-
-            Teachers? newTeacher = await _teachersRepository.GetByIdAsync(teacherId.Value);
-            ClassSubjects? newClassSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId.Value);
-
-            if (newClassSubject == null || newTeacher == null){
-                return null; 
-            }else
-            {
-                newClassSubject.Teachers = newTeacher;
-                newClassSubject.TeacherId = teacherId;
-                _classSubjectsRepository.Update(newClassSubject);
-                await _classSubjectsRepository.SaveChangesAsync();
-                return newClassSubject;
-            }
-
-        }
-        public async Task<ClassSubjects?> GetClassSubjectsByIdAsync(int classSubjectsId)
-        {
+            Teachers? teacher = await _teachersRepository.GetByIdAsync(teacherId);
             ClassSubjects? classSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
 
-            return classSubject;
-        }
-        public async Task<IEnumerable<ClassSubjectDTO?>> GetAllClassSubjectsAsync()
-        {
-            var classSubjectsList = await _classSubjectsRepository.GetAllClassSubjectsAsync();
-            return classSubjectsList;
-        }
+            if (teacher == null)
+                return Result.Failure(Errors.TeacherErrors.TeacherNotFound);
 
-        public async Task<ClassSubjects?> RemoveSubjectClassAsync(int classSubjectsId)
-        {
-            ClassSubjects? classSubjects = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
-            if (classSubjects == null)
-            {
-                return null;
-            }
-            else
-            {
-                _classSubjectsRepository.Delete(classSubjects);
-                await _classSubjectsRepository.SaveChangesAsync();
-            }
+            if (classSubject == null)
+                return Result.Failure(Errors.ClassSubjectErrors.ClassSubjectNotFound);
 
-                throw new NotImplementedException();
+            classSubject.Teachers = teacher;
+            classSubject.TeacherId = teacherId;
+
+            _classSubjectsRepository.Update(classSubject);
+            await _classSubjectsRepository.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public Task<ClassSubjectDTO> CreateNewClassSubjectAsync(ClassSubjectDTO newClassSubject)
+        public async Task<Result<ClassSubjects>> GetClassSubjectsByIdAsync(int classSubjectsId)
         {
-            throw new NotImplementedException();
+            ClassSubjects? classSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
+            if (classSubject == null) return Result<ClassSubjects>.Failure(Errors.ClassSubjectErrors.ClassSubjectNotFound);
+
+            return Result<ClassSubjects>.Success(classSubject);
+        }
+
+        public async Task<Result<IEnumerable<ClassSubjectDTO>>> GetAllClassSubjectsAsync()
+        {
+            return Result<IEnumerable<ClassSubjectDTO>>.Success(await _classSubjectsRepository.GetAllClassSubjectsAsync());
+        }
+
+        public async Task<Result> RemoveSubjectClassAsync(int classSubjectsId)
+        {
+            ClassSubjects? classSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
+            if (classSubject == null) return Result<ClassSubjects>.Failure(Errors.ClassSubjectErrors.ClassSubjectNotFound);
+
+            _classSubjectsRepository.Delete(classSubject);
+            await _classSubjectsRepository.SaveChangesAsync();
+            
+            return Result.Success();
         }
     }
 }

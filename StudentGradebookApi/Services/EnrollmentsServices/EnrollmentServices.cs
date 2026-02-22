@@ -1,7 +1,9 @@
 ﻿using StudentGradebookApi.DTOs.Enrollments;
 using StudentGradebookApi.Models;
+using StudentGradebookApi.Repositories.ClassSubjectsRepository;
 using StudentGradebookApi.Repositories.EnrollmentsRepository;
 using StudentGradebookApi.Repositories.StudentsRepository;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.EnrollmentsServices
 {
@@ -9,30 +11,35 @@ namespace StudentGradebookApi.Services.EnrollmentsServices
     {
         private readonly IEnrollmentsRepository _enrollmentsRepository;
         private readonly IStudentsRepository _studentsRepository;
-        public EnrollmentServices(IEnrollmentsRepository enrollmentsRepository, IStudentsRepository studentsRepository) {
+        private readonly IClassSubjectsRepository _classSubjectRepository;
+        public EnrollmentServices(IEnrollmentsRepository enrollmentsRepository, IStudentsRepository studentsRepository, IClassSubjectsRepository classSubjectRepository) {
             _enrollmentsRepository = enrollmentsRepository;
             _studentsRepository = studentsRepository;
+            _classSubjectRepository = classSubjectRepository;
         }
 
-        public async Task EnrollStudent(int classSubjectId, string studentEmail)
+        public async Task<Result> EnrollStudent(int classSubjectId, string studentEmail)
         {
-            Students getStudent = await _studentsRepository.GetStudentByEmail(studentEmail);
+            Students student = await _studentsRepository.GetStudentByEmail(studentEmail);
+            if (student == null) return Result.Failure(Errors.StudentErrors.StudentNotFound);
 
+            ClassSubjects classSubject = await _classSubjectRepository.GetByIdAsync(classSubjectId);
+            if (classSubject == null) return Result.Failure(Errors.ClassSubjectErrors.ClassSubjectNotFound);
 
-            Enrollments newEnrollment = new Enrollments();
-            newEnrollment.Status = "Enrolled";
-            newEnrollment.StudentID = getStudent.Id;
-            newEnrollment.ClassSubjectId = classSubjectId;
-            await _enrollmentsRepository.AddAsync(newEnrollment);
+            Enrollments enrollment = new Enrollments();
+            enrollment.Status = "Enrolled";
+            enrollment.StudentID = student.Id;
+            enrollment.ClassSubjectId = classSubjectId;
+
+            await _enrollmentsRepository.AddAsync(enrollment);
             await _enrollmentsRepository.SaveChangesAsync();
-            return;
+
+            return Result.Success();
         }
 
-        public async Task<IEnumerable<StudentEnrollments>> GetStudentEnrollments(int studentId)
+        public async Task<Result<IEnumerable<StudentEnrollments>>> GetStudentEnrollments(int studentId)
         {
-            var studentEnrollments = await _enrollmentsRepository.GetStudentEnrollmentsAsync(studentId);
-
-            return studentEnrollments;
+            return Result<IEnumerable<StudentEnrollments>>.Success(await _enrollmentsRepository.GetStudentEnrollmentsAsync(studentId));
         }
 
 

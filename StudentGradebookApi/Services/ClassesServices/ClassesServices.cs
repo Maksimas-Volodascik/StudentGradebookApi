@@ -1,6 +1,10 @@
 ﻿using StudentGradebookApi.DTOs.Classes;
+using StudentGradebookApi.DTOs.Teachers;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.ClassesRepository;
+using StudentGradebookApi.Shared;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace StudentGradebookApi.Services.ClassesServices
 {
@@ -11,7 +15,7 @@ namespace StudentGradebookApi.Services.ClassesServices
             _classesRepository = classesRepository;
         }
 
-        public async Task<Classes> AddClassAsync(ClassesContentsDTO classesContentsDTO)
+        public async Task<Result> AddClassAsync(ClassesContentsDTO classesContentsDTO)
         {
             Classes newClass = new Classes();
             newClass.Room = classesContentsDTO.room;
@@ -20,49 +24,53 @@ namespace StudentGradebookApi.Services.ClassesServices
             await _classesRepository.AddAsync(newClass);
             await _classesRepository.SaveChangesAsync();
 
-            return newClass;
+            return Result.Success();
         }
 
-        public async Task<IEnumerable<Classes?>> GetAllClassesAsync()
+        public async Task<Result<IEnumerable<Classes>>> GetAllClassesAsync()
         {
-            var classes = await _classesRepository.GetAllAsync();
-            if (classes == null)
-            {
-                return Enumerable.Empty<Classes>(); //In controller check with !classes.Any() if there are any classes
-            }
-            return classes;
+            return Result<IEnumerable<Classes>>.Success(await _classesRepository.GetAllAsync());
         }
 
-        public async Task<Classes?> GetClassByIdAsync(int id)
+        public async Task<Result<Classes>> GetClassByIdAsync(int id)
         {
             Classes? classes = await _classesRepository.GetByIdAsync(id);
+            if (classes == null) return Result<Classes>.Failure(Errors.ClassesErrors.ClassNotFound);
 
-            return classes;
+            return Result<Classes>.Success(classes);
         }
 
-        public async Task<IEnumerable<Classes?>> GetClassesByYearAsync(string academicYear)
+        public async Task<Result<IEnumerable<Classes>>> GetClassesByYearAsync(string academicYear)
         {
-            var classes = await _classesRepository.GetClassesByYearAsync(academicYear);
-            if (classes is null)
-            {
-                return Enumerable.Empty<Classes>();
-            } 
-            return classes;
+            return Result<IEnumerable<Classes>>.Success(await _classesRepository.GetClassesByYearAsync(academicYear));
         }
 
-        public async Task<Classes?> UpdateClassAsync(int id, ClassesContentsDTO classesContentsDTO)
+        public async Task<Result> UpdateClassAsync(int id, ClassesContentsDTO classesContentsDTO)
         {
-            Classes? newClass = await _classesRepository.GetByIdAsync(id);
-            if (newClass == null)
-            {
-                return null;
-            }
-            newClass.Room = classesContentsDTO.room;
-            newClass.AcademicYear = classesContentsDTO.academicYear;
-            _classesRepository.Update(newClass);
+            var valid = ValidateTeacherData(classesContentsDTO);
+            if (!valid.IsSuccess) return Result.Failure(valid.Error!);
+
+            Classes classes = await _classesRepository.GetByIdAsync(id);
+            if (classes == null) return Result.Failure(Errors.ClassesErrors.ClassNotFound);
+
+            classes.Room = classesContentsDTO.room;
+            classes.AcademicYear = classesContentsDTO.academicYear;
+
+            _classesRepository.Update(classes);
             await _classesRepository.SaveChangesAsync();
 
-            return newClass;
+            return Result.Success();
+        }
+
+        public Result ValidateTeacherData(ClassesContentsDTO classesContentsDTO)
+        {
+            if (Regex.IsMatch(classesContentsDTO.academicYear, @"^(\d{4})-(\d{4})$") && int.Parse(classesContentsDTO.academicYear.Split('-')[1]) == int.Parse(classesContentsDTO.academicYear.Split('-')[0]) + 1)
+                return Result.Failure(Errors.ClassesErrors.InvalidClassesAcademicYear);
+
+            if (classesContentsDTO.room < 100 || classesContentsDTO.room > 1000)
+                return Result.Failure(Errors.ClassesErrors.InvalidClassesRoom);
+
+            return Result.Success();
         }
     }
 }

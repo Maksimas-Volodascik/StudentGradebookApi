@@ -7,10 +7,49 @@
             public static readonly Error InternalServerError = new("internal.server.error", null, "Something went wrong. Please try again later.");
         }
 
+        public static class ClassSubjectErrors
+        {
+            public static readonly Error ClassSubjectNotFound = new("class.subject.notFound", null, "ClassSubject not found.");
+            public static readonly Error InvalidClassSubject = new("class.subject.invalid", "classSubject", "Class or Subject does not exist.");
+        }
+
+        public static class ClassesErrors
+        {
+            public static readonly Error ClassNotFound = new("class.not.found", null, "Class not found.");
+            public static readonly Error InvalidClassesRoom = new("room.out.of.range", "room", "Invalid room number.");
+            public static readonly Error InvalidClassesAcademicYear = new("academic.year.invalid.format", "academicYear", "Invalid academic year.");
+        }
+
+        public static class StudentErrors
+        {
+            public static readonly Error StudentNotFound = new("student.not.found", null, "Student not found.");
+        }
+
+        public static class EnrollmentErrors
+        {
+            //tba
+        }
+
+        public static class GradeErrors
+        {
+            public static readonly Error ScoreOutOfRange = new("score.out.of.range", "score", "Score number must be from 0 to 10.");
+            public static readonly Error GradeTypeInvalid = new("grade.type.invalid", "gradeType", "Grade type must be one of the following: default, test, exam, project.");
+            public static readonly Error GradingDateInvalid = new("grading.date.invalid", "gradingDate", "Grading date must be a valid date.");
+            public static readonly Error EnrollmentIdInvalid = new("enrollment.id.invalid", "enrollmentId", "Enrollment ID must be a positive number.");
+            public static readonly Error GradeNotFound = new("grade.not.found", null, "Grade not found.");
+        }
+
+        public static class SubjectErrors
+        {
+            public static readonly Error SubjectNameMissing = new("subject.name.missing", "name", "Subject name is required.");
+            public static readonly Error SubjectCodeMissing = new("subject.code.missing", "code", "Subject code is required.");
+            public static readonly Error SubjectNotFound = new("subject.not.found", null, "Subject not found.");
+        }
+
         public static class TeacherErrors
         {
-            public static readonly Error FirstNameMissing = new("teacher.firstname.missing", "FirstName", "First name is required.");
-            public static readonly Error LastNameMissing = new("teacher.lastname.missing", "LastName", "Last name is required.");
+            public static readonly Error FirstNameMissing = new("teacher.firstname.missing", "firstName", "First name is required.");
+            public static readonly Error LastNameMissing = new("teacher.lastname.missing", "lastName", "Last name is required.");
             public static readonly Error TeacherNotFound = new("teacher.not.found", null, "Teacher not found.");
         }
 

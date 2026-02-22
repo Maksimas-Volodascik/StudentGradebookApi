@@ -36,13 +36,6 @@ namespace StudentGradebookApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ClassSubjectDTO>> CreateNewClassSubject(ClassSubjectDTO newClassSubject)
-        {
-            ClassSubjectDTO response = await _classSubjectsService.CreateNewClassSubjectAsync(newClassSubject);
-            return Ok(response);
-        }
-
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteClassSubject(int id)
         {
