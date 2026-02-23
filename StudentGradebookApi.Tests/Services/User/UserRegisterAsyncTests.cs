@@ -22,17 +22,7 @@ namespace StudentGradebookApi.Tests.Services.User
         public UserRegisterAsyncTests()
         {
             _mockUserRepo = new Mock<IUsersRepository>();
-
-            var appSettingsConfiguration = new Dictionary<string, string>
-            {
-                { "AppSettings:Token", "SECRET_KEY_123456789" }
-            };
-
-            Microsoft.Extensions.Configuration.IConfiguration configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(appSettingsConfiguration)
-                .Build();
-
-            _userService = new UserService(configuration, _mockUserRepo.Object);
+            _userService = new UserService(null, _mockUserRepo.Object);
         }
 
         [Fact]
@@ -48,7 +38,7 @@ namespace StudentGradebookApi.Tests.Services.User
             var result = await _userService.RegisterAsync(newUser);
 
             Assert.False(result.IsSuccess);
-            Assert.Equal(Errors.User.EmailInvalid, result.Error);
+            Assert.Equal(Errors.UserErrors.EmailInvalid, result.Error);
         }
 
         [Fact]
@@ -64,7 +54,7 @@ namespace StudentGradebookApi.Tests.Services.User
             var result = await _userService.RegisterAsync(newUser);
 
             Assert.False(result.IsSuccess);
-            Assert.Equal(Errors.User.EmailRequired, result.Error);
+            Assert.Equal(Errors.UserErrors.EmailRequired, result.Error);
         }
 
         [Fact]
@@ -84,7 +74,7 @@ namespace StudentGradebookApi.Tests.Services.User
             var result = await _userService.RegisterAsync(newUser);
 
             Assert.False(result.IsSuccess);
-            Assert.Equal(Errors.User.EmailExists, result.Error);
+            Assert.Equal(Errors.UserErrors.EmailExists, result.Error);
         }
 
         [Fact]
@@ -117,6 +107,6 @@ namespace StudentGradebookApi.Tests.Services.User
 
             _mockUserRepo.Verify(r => r.AddAsync(It.IsAny<WebUsers>()), Times.Once);
             _mockUserRepo.Verify(r => r.SaveChangesAsync());
-            }
         }
+    }
 }

@@ -23,8 +23,9 @@ namespace StudentGradebookApi.Tests.Services
                     UserID = 10,
                     User = new Models.WebUsers()
                 });
-                var userService = new Mock<IUserService>(); 
+            var userService = new Mock<IUserService>(); 
             var service = new StudentService(userService.Object, mockRepo.Object); 
+
             var result = await service.GetStudentByIdAsync(1);
 
             Assert.Equal(1, result.Id);
@@ -35,11 +36,9 @@ namespace StudentGradebookApi.Tests.Services
         [Fact]
         public async Task GetStudentByIdAsync_StudentDoesNotExist_ReturnsNull()
         {
-
             var mockRepo = new Mock<IStudentsRepository>();
             mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
                     .ReturnsAsync((Models.Students?)null);
-
             var userService = new Mock<IUserService>();
             var service = new StudentService(userService.Object, mockRepo.Object);
 
