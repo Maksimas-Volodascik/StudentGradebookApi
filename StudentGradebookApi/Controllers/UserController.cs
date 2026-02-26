@@ -44,11 +44,9 @@ namespace StudentGradebookApi.Controllers
         public async Task<ActionResult<TokenResponse>> LoginUser (LoginDTO loginDto)
         {
             var response = await _userService.LoginAsync(loginDto);
-            if (response is null)
-            {
-                return Unauthorized("Invalid email or password"); 
-            }
-            return Ok(response);
+            if (!response.IsSuccess)
+                return BadRequest(response.Error);
+            return Ok(response.Data);
         }
 
         [HttpPost("refresh-token")]
