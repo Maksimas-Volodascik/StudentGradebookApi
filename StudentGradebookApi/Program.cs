@@ -4,27 +4,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using System.Diagnostics;
-using System.Text;
+using Serilog;
 using StudentGradebookApi.Data;
 using StudentGradebookApi.Mappings;
+using StudentGradebookApi.Middleware;
 using StudentGradebookApi.Repositories.ClassesRepository;
 using StudentGradebookApi.Repositories.ClassSubjectsRepository;
+using StudentGradebookApi.Repositories.EnrollmentsRepository;
+using StudentGradebookApi.Repositories.GradesRepository;
 using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.StudentsRepository;
 using StudentGradebookApi.Repositories.SubjectsRepository;
 using StudentGradebookApi.Repositories.TeachersRepository;
 using StudentGradebookApi.Repositories.UsersRepository;
+using StudentGradebookApi.Services.ClassesServices;
+using StudentGradebookApi.Services.EnrollmentsServices;
+using StudentGradebookApi.Services.GradesServices;
 using StudentGradebookApi.Services.StudentServices;
 using StudentGradebookApi.Services.SubjectClassServices;
+using StudentGradebookApi.Services.SubjectsService;
 using StudentGradebookApi.Services.TeacherServices;
 using StudentGradebookApi.Services.UserServices;
-using StudentGradebookApi.Services.ClassesServices;
-using StudentGradebookApi.Services.SubjectsService;
-using StudentGradebookApi.Services.EnrollmentsServices;
-using StudentGradebookApi.Repositories.EnrollmentsRepository;
-using StudentGradebookApi.Repositories.GradesRepository;
-using StudentGradebookApi.Services.GradesServices;
+using System.Diagnostics;
+using System.Text;
 
 namespace StudentGradebookApi
 {
@@ -64,7 +66,19 @@ namespace StudentGradebookApi
             builder.Services.AddScoped<ISubjectsService, SubjectsService>();
             //
 
+            //Store Logs in File
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
+            //
+
+            //AutoMapper
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly);
+            //
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend",
@@ -75,6 +89,7 @@ namespace StudentGradebookApi
                         .AllowAnyMethod();
                     });
             });
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
@@ -100,6 +115,8 @@ namespace StudentGradebookApi
             }
             app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<LoggingMiddleware>();
 
             app.UseAuthentication();
 
