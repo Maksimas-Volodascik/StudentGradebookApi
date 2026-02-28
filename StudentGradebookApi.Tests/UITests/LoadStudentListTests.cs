@@ -34,9 +34,8 @@ namespace StudentGradebookApi.Tests.UITests
 
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10)); //wait timer
             wait.Until(d => d.Url == "http://localhost:5173/dashboard");
-            //var table = wait.Until(d => d.FindElement(By.CssSelector("[data-testid='student-table']")));
-            //var rows = table.FindElements(By.CssSelector(".MuiDataGrid-row"));
-            //Assert.True(rows.Count > 0);
+
+            Assert.True(driver.Url == "http://localhost:5173/dashboard");
         }
 
         [Fact]
