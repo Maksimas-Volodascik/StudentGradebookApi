@@ -9,7 +9,7 @@ namespace StudentGradebookApi.Middleware
         {
             services.AddRateLimiter(options =>
             {
-                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                options.AddPolicy("userFixed", httpContext =>
                     RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.User.Identity?.Name ?? "anonymous",
                         factory: _ => new FixedWindowRateLimiterOptions
@@ -18,6 +18,7 @@ namespace StudentGradebookApi.Middleware
                             Window = TimeSpan.FromMinutes(1)
                         }));
             });
+
             return services;
         }
     }
