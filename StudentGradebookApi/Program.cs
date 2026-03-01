@@ -113,6 +113,7 @@ namespace StudentGradebookApi
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
+
             app.UseCors("AllowFrontend");
 
             app.UseHttpsRedirection();
@@ -121,7 +122,7 @@ namespace StudentGradebookApi
 
             app.UseRateLimiter();
 
-            app.MapControllers().RequireRateLimiting("fixed");
+            app.MapControllers().RequireRateLimiting("userFixed");
 
             app.UseAuthentication();
 

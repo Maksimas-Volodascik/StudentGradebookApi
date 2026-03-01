@@ -22,33 +22,39 @@ namespace StudentGradebookApi.Controllers
         public async Task<ActionResult<IEnumerable<StudentList>>> GetStudents()
         {
             var students = await _studentService.GetAllStudentsAsync();
-            var response = _mapper.Map<IEnumerable<StudentList>>(students);
+
+            var response = _mapper.Map<IEnumerable<StudentList>>(students.Data);
+
             return Ok(response);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<StudentList>>> GetStudent(int id)
+        public async Task<ActionResult<StudentList>> GetStudent(int id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
-            StudentList response = _mapper.Map<StudentList>(student);
+
+            if (!student.IsSuccess) return NotFound(student.Error);
+
+            StudentList response = _mapper.Map<StudentList>(student.Data);
+
             return Ok(response);
         }
 
         [HttpPost()]
-        public async Task<ActionResult<IEnumerable<Students>>> AddStudent(NewStudent studentData)
+        public async Task<ActionResult> AddStudent(NewStudent studentData)
         {
             var response = await _studentService.AddStudentAsync(studentData);
-            if(response == null)
-            {
-                return BadRequest(new { message = "User Already Exists" });
-            }
+
+            if(!response.IsSuccess) return BadRequest(response.Error);
+
             return Ok();
         }
         [HttpPatch("{id}")]
         public async Task<ActionResult> EditStudent(EditStudent studentData, int id)
         {
             var response = await _studentService.EditStudentAsync(studentData, id);
-            if (response == null) return BadRequest(new { message = "Invalid First Name or Last Name" });
+
+            if (!response.IsSuccess) return BadRequest(response.Error);
 
             return Ok(response);
         }
@@ -57,9 +63,9 @@ namespace StudentGradebookApi.Controllers
         public async Task<ActionResult> DeleteStudent(int id)
         {
             var response = await _studentService.DeleteStudentAsync(id);
-            if(response == null)
+            if(!response.IsSuccess)
             {
-                return BadRequest(new {message = "User not found"});
+                return NotFound(response.Error);
             }
             return Ok();
         }
