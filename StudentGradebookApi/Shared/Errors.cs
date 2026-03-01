@@ -23,6 +23,9 @@
         public static class StudentErrors
         {
             public static readonly Error StudentNotFound = new("student.not.found", null, "Student not found.");
+            public static readonly Error StudentDataNull = new("student.data.null", "studentData", "Student data cannot be null.");
+            public static readonly Error StudentFirstNameEmpty = new("student.first.name.empty", "firstName", "Student first name cannot be empty.");
+            public static readonly Error StudentLastNameEmpty = new("student.last.name.empty", "lastName", "Student last name cannot be empty.");
         }
 
         public static class EnrollmentErrors

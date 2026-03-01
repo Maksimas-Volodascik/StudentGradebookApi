@@ -4,6 +4,7 @@ using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.StudentsRepository;
 using StudentGradebookApi.Services.UserServices;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.StudentServices
 {
@@ -17,21 +18,17 @@ namespace StudentGradebookApi.Services.StudentServices
             _userService = userService;
         }
 
-        public async Task<Students?> AddStudentAsync(NewStudent studentData)
+        public async Task<Result> AddStudentAsync(NewStudent studentData)
         {
-            if (studentData == null || studentData.Email.Length <= 5 || studentData.Password.Length <= 5) { 
-                return null;
-            }
+            if (studentData == null) return Result.Failure(Errors.StudentErrors.StudentDataNull);
 
             NewUserDTO newUser = new NewUserDTO();
             newUser.Email = studentData.Email;
             newUser.Password = studentData.Password;
             newUser.Role = "student";
+
             var registeredUser = await _userService.RegisterAsync(newUser);
-            if(registeredUser == null)
-            {
-                return null;
-            }
+            if (!registeredUser.IsSuccess) return Result.Failure(registeredUser.Error!);
 
             Students student = new Students();
             student.FirstName = studentData.FirstName;
@@ -42,49 +39,53 @@ namespace StudentGradebookApi.Services.StudentServices
             await _studentsRepository.AddAsync(student);
             await _studentsRepository.SaveChangesAsync();
 
-            return student;
+            return Result.Success();
         }
 
-        public async Task<Students?> DeleteStudentAsync(int id)
+        public async Task<Result> DeleteStudentAsync(int id)
         {
             Students? studentToDelete = await _studentsRepository.GetByIdAsync(id);
-            if(studentToDelete == null)
-            {
-                return null;
-            }
+
+            if(studentToDelete == null) return Result.Failure(Errors.StudentErrors.StudentNotFound);
+
             await _userService.DeleteUserAsync(studentToDelete.UserID);
-            return studentToDelete;
+
+            return Result.Success();
         }
 
-        public async Task<Students?> EditStudentAsync(EditStudent studentData, int id)
+        public async Task<Result> EditStudentAsync(EditStudent studentData, int id)
         {
-            if (studentData == null || studentData.FirstName == "" || studentData.LastName =="")
-            {
-                return null;
-            }
+            if (studentData == null) return Result.Failure(Errors.StudentErrors.StudentDataNull);
 
-            Students ?student = await _studentsRepository.GetByIdAsync(id);
-            if (student == null)
-            {
-                return null;
-            }
+            if (string.IsNullOrWhiteSpace(studentData.FirstName)) return Result.Failure(Errors.StudentErrors.StudentFirstNameEmpty);
+
+            if (string.IsNullOrWhiteSpace(studentData.LastName)) return Result.Failure(Errors.StudentErrors.StudentLastNameEmpty);
+
+            Students student = await _studentsRepository.GetByIdAsync(id);
+            if (student == null) return Result.Failure(Errors.StudentErrors.StudentNotFound);
+
             student.FirstName=studentData.FirstName;
             student.LastName=studentData.LastName;
             student.DateOfBirth=studentData.DateOfBirth;
+            
             _studentsRepository.Update(student);
             await _studentsRepository.SaveChangesAsync();
 
-            return student;
+            return Result.Success();
         }
 
-        public async Task<IEnumerable<Students>> GetAllStudentsAsync()
+        public async Task<Result<IEnumerable<Students>>> GetAllStudentsAsync()
         {
-            return await _studentsRepository.GetAllAsync();
+            return Result<IEnumerable<Students>>.Success(await _studentsRepository.GetAllAsync());
         }
 
-        public async Task<Students?> GetStudentByIdAsync(int id)
+        public async Task<Result<Students>> GetStudentByIdAsync(int id)
         {
-            return await _studentsRepository.GetByIdAsync(id);
+            var result = await _studentsRepository.GetByIdAsync(id);
+
+            if (result == null) return Result<Students>.Failure(Errors.StudentErrors.StudentNotFound);
+
+            return Result<Students>.Success(result);
         }
     }
 }

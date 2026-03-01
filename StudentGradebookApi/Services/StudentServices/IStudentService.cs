@@ -1,15 +1,16 @@
 ﻿using StudentGradebookApi.DTOs.Students;
 using StudentGradebookApi.Models;
 using StudentGradebookApi.Repositories.Main;
+using StudentGradebookApi.Shared;
 
 namespace StudentGradebookApi.Services.StudentServices
 {
     public interface IStudentService
     {
-        Task<IEnumerable<Students>> GetAllStudentsAsync();
-        Task<Students?> GetStudentByIdAsync(int id);
-        Task<Students?> AddStudentAsync(NewStudent studentData);
-        Task<Students?> EditStudentAsync(EditStudent studentData, int id);
-        Task<Students?> DeleteStudentAsync(int id);
+        Task<Result<IEnumerable<Students>>> GetAllStudentsAsync();
+        Task<Result<Students>> GetStudentByIdAsync(int id);
+        Task<Result> AddStudentAsync(NewStudent studentData);
+        Task<Result> EditStudentAsync(EditStudent studentData, int id);
+        Task<Result> DeleteStudentAsync(int id);
     }
 }
