@@ -49,6 +49,7 @@ namespace StudentGradebookApi.Controllers
 
             return Ok();
         }
+
         [HttpPatch("{id}")]
         public async Task<ActionResult> EditStudent(EditStudent studentData, int id)
         {
