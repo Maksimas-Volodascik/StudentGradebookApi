@@ -40,6 +40,16 @@ namespace StudentGradebookApi.Controllers
             return Ok(response);
         }
 
+        [HttpGet("/email/{email}")]
+        public async Task<ActionResult<StudentList>> GetEmail(string email)
+        {
+            var student = await _studentService.GetStudentByEmailAsync(email);
+
+            if (!student.IsSuccess) return NotFound(student.Error);
+
+            return Ok(student);
+        }
+
         [HttpPost()]
         public async Task<ActionResult> AddStudent(NewStudent studentData)
         {

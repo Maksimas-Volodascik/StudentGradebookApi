@@ -31,7 +31,6 @@
     <Folder Include="Repositories\" />
     <Folder Include="Controllers\" />
     <Folder Include="Services\Classes\" />
-    <Folder Include="Services\Enrollments\" />
     <Folder Include="Services\ClassSubjects\" />
   </ItemGroup>
 
