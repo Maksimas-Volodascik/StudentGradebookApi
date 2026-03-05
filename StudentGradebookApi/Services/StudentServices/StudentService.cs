@@ -79,6 +79,15 @@ namespace StudentGradebookApi.Services.StudentServices
             return Result<IEnumerable<Students>>.Success(await _studentsRepository.GetAllAsync());
         }
 
+        public async Task<Result<Students>> GetStudentByEmailAsync(string email)
+        {
+            var result = await _studentsRepository.GetStudentByEmail(email);
+
+            if (result == null) return Result<Students>.Failure(Errors.StudentErrors.StudentNotFound);
+
+            return Result<Students>.Success(result);
+        }
+
         public async Task<Result<Students>> GetStudentByIdAsync(int id)
         {
             var result = await _studentsRepository.GetByIdAsync(id);

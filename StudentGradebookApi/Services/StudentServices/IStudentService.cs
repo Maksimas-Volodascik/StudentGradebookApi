@@ -12,5 +12,6 @@ namespace StudentGradebookApi.Services.StudentServices
         Task<Result> AddStudentAsync(NewStudent studentData);
         Task<Result> EditStudentAsync(EditStudent studentData, int id);
         Task<Result> DeleteStudentAsync(int id);
+        Task<Result<Students>> GetStudentByEmailAsync(string email);
     }
 }
