@@ -30,14 +30,14 @@ namespace StudentGradebookApi.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Subjects>> UpdateSubjectAsync(int id, SujectContentsDTO sujectContentsDTO)
+        public async Task<ActionResult<Subjects>> UpdateSubjectAsync(int id, SubjectContentsDTO sujectContentsDTO)
         {
             var subjects = await _subjectsService.UpdateSubjectAsync(id, sujectContentsDTO);
             return Ok(subjects);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Subjects>> AddSubjectAsync(SujectContentsDTO sujectContentsDTO)
+        public async Task<ActionResult<Subjects>> AddSubjectAsync(SubjectContentsDTO sujectContentsDTO)
         {
             var subjects = await _subjectsService.AddSubjectAsync(sujectContentsDTO);
             return Ok(subjects);

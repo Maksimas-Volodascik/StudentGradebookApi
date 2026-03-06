@@ -27,7 +27,7 @@ namespace StudentGradebookApi.Tests.Services.Subject
         {
             var subject = new Subjects();
 
-            var dto = new SujectContentsDTO
+            var dto = new SubjectContentsDTO
             {
                 subjectName = "Math",
                 subjectCode = "Math101",
@@ -47,7 +47,7 @@ namespace StudentGradebookApi.Tests.Services.Subject
         [Fact]
         public async Task UpdateSubjectAsync_InvalidData_ReturnsFailureResult()
         {
-            var dto = new SujectContentsDTO
+            var dto = new SubjectContentsDTO
             {
                 subjectName = "",
                 subjectCode = "",
@@ -63,7 +63,7 @@ namespace StudentGradebookApi.Tests.Services.Subject
         [Fact]
         public async Task UpdateSubjectAsync_SubjectNotFound_ReturnsFailureResult()
         {
-            var dto = new SujectContentsDTO
+            var dto = new SubjectContentsDTO
             {
                 subjectName = "Math",
                 subjectCode = "Math101",

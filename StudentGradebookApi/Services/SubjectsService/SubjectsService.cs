@@ -13,7 +13,7 @@ namespace StudentGradebookApi.Services.SubjectsService
             _subjectsRepository = subjectsRepository;
         }
 
-        public async Task<Result> AddSubjectAsync(SujectContentsDTO subjectContentsDTO)
+        public async Task<Result> AddSubjectAsync(SubjectContentsDTO subjectContentsDTO)
         {
             var valid = ValidateSubjectData(subjectContentsDTO);
             if (!valid.IsSuccess) return Result.Failure(valid.Error);
@@ -57,7 +57,7 @@ namespace StudentGradebookApi.Services.SubjectsService
             return Result<Subjects>.Success(subject);
         }
 
-        public async Task<Result> UpdateSubjectAsync(int id, SujectContentsDTO subjectContentsDTO)
+        public async Task<Result> UpdateSubjectAsync(int id, SubjectContentsDTO subjectContentsDTO)
         {
             var valid = ValidateSubjectData(subjectContentsDTO);
             if (!valid.IsSuccess) return Result.Failure(valid.Error);
@@ -76,15 +76,15 @@ namespace StudentGradebookApi.Services.SubjectsService
             return Result.Success();
         }
 
-        public Result<SujectContentsDTO> ValidateSubjectData(SujectContentsDTO subjectContentsDTO)
+        public Result<SubjectContentsDTO> ValidateSubjectData(SubjectContentsDTO subjectContentsDTO)
         {
             if (string.IsNullOrWhiteSpace(subjectContentsDTO.subjectCode))
-                return Result<SujectContentsDTO>.Failure(Errors.SubjectErrors.SubjectCodeMissing);
+                return Result<SubjectContentsDTO>.Failure(Errors.SubjectErrors.SubjectCodeMissing);
 
             if (string.IsNullOrWhiteSpace(subjectContentsDTO.subjectName))
-                return Result<SujectContentsDTO>.Failure(Errors.SubjectErrors.SubjectNameMissing);
+                return Result<SubjectContentsDTO>.Failure(Errors.SubjectErrors.SubjectNameMissing);
 
-            return Result<SujectContentsDTO>.Success(subjectContentsDTO);
+            return Result<SubjectContentsDTO>.Success(subjectContentsDTO);
         }
     }
 }

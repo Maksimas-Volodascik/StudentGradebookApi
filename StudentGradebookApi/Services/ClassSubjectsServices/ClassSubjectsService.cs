@@ -7,6 +7,9 @@ using StudentGradebookApi.Repositories.Main;
 using StudentGradebookApi.Repositories.StudentsRepository;
 using StudentGradebookApi.Repositories.SubjectsRepository;
 using StudentGradebookApi.Repositories.TeachersRepository;
+using StudentGradebookApi.Services.ClassesServices;
+using StudentGradebookApi.Services.SubjectsService;
+using StudentGradebookApi.Services.TeacherServices;
 using StudentGradebookApi.Services.UserServices;
 using StudentGradebookApi.Shared;
 using System.Collections.Generic;
@@ -16,21 +19,26 @@ namespace StudentGradebookApi.Services.SubjectClassServices
     public class ClassSubjectsService : IClassSubjectsService
     {
         private readonly IClassSubjectsRepository _classSubjectsRepository;
-        private readonly ITeachersRepository _teachersRepository;
-        private readonly ISubjectsRepository _subjectsRepository;
-        private readonly IClassesRepository _classesRepository;
-        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ITeachersRepository teachersRepository, ISubjectsRepository subjectsRepository, IClassesRepository classesRepository)
+        private readonly ITeacherService _teacherService;
+        private readonly ISubjectsService _subjectsService;
+        private readonly IClassesServices _classesServices;
+
+        public ClassSubjectsService(IClassSubjectsRepository classSubjectsRepository, ITeacherService teacherService, ISubjectsService subjectsService, IClassesServices classesServices)
         {
             _classSubjectsRepository = classSubjectsRepository;
-            _teachersRepository = teachersRepository;
-            _subjectsRepository = subjectsRepository;
-            _classesRepository = classesRepository;
+            _teacherService = teacherService;
+            _subjectsService= subjectsService;
+            _classesServices = classesServices;
         }
 
         public async Task<Result> AssignSubjectToClassAsync(CombineClassSubjectDTO combineClassSubjectDTO)
         {
-            if (_subjectsRepository.GetByIdAsync(combineClassSubjectDTO.SubjectId) == null || _classesRepository.GetByIdAsync(combineClassSubjectDTO.ClassId) == null)
-                return Result.Failure(Errors.ClassSubjectErrors.InvalidClassSubject);
+            var subject = await _subjectsService.GetSubjectByIdAsync(combineClassSubjectDTO.SubjectId);
+            var classes = await _classesServices.GetClassByIdAsync(combineClassSubjectDTO.ClassId);
+
+            if (!subject.IsSuccess) return Result.Failure(subject.Error);
+
+            if (!classes.IsSuccess) return Result.Failure(classes.Error);
 
             ClassSubjects classSubjects = new ClassSubjects();
             classSubjects.SubjectId = combineClassSubjectDTO.SubjectId;
@@ -44,19 +52,17 @@ namespace StudentGradebookApi.Services.SubjectClassServices
 
         public async Task<Result> EditSubjectClassTeacher(int classSubjectsId, int teacherId)
         {
-            Teachers? teacher = await _teachersRepository.GetByIdAsync(teacherId);
-            ClassSubjects? classSubject = await _classSubjectsRepository.GetByIdAsync(classSubjectsId);
+            var teacher = await _teacherService.GetTeacherByIdAsync(teacherId);
+            var classSubject = await GetClassSubjectsByIdAsync(classSubjectsId);
 
-            if (teacher == null)
-                return Result.Failure(Errors.TeacherErrors.TeacherNotFound);
+            if (!teacher.IsSuccess) return Result.Failure(teacher.Error);
+                
+            if (!classSubject.IsSuccess) return Result.Failure(classSubject.Error);
 
-            if (classSubject == null)
-                return Result.Failure(Errors.ClassSubjectErrors.ClassSubjectNotFound);
+            classSubject.Data.Teachers = teacher.Data;
+            classSubject.Data.TeacherId = teacherId;
 
-            classSubject.Teachers = teacher;
-            classSubject.TeacherId = teacherId;
-
-            _classSubjectsRepository.Update(classSubject);
+            _classSubjectsRepository.Update(classSubject.Data);
             await _classSubjectsRepository.SaveChangesAsync();
 
             return Result.Success();
