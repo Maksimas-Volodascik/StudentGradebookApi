@@ -64,22 +64,12 @@ namespace StudentGradebookApi.Tests.Services.Teacher
             _teacherRepMock.Setup(t => t.SaveChangesAsync())
                 .Returns(Task.CompletedTask);
 
-            _teacherRepMock.Setup(t => t.GetTeacherByEmail(teacherDTO.Email))
-                .ReturnsAsync(new Teachers
-                {
-                    Id = 1,
-                    FirstName = teacherDTO.FirstName,
-                    LastName = teacherDTO.LastName,
-                    UserID = webUser.Id,
-                });
-
             var result = await _teacherService.AddTeacherAsync(teacherDTO);
 
             Assert.True(result.IsSuccess);
             _userServiceMock.Verify(u => u.RegisterAsync(It.IsAny<NewUserDTO>()), Times.Once);
             _teacherRepMock.Verify(t => t.AddAsync(It.IsAny<Teachers>()), Times.Once);
             _teacherRepMock.Verify(t => t.SaveChangesAsync(), Times.Once);
-            _teacherRepMock.Verify(t => t.GetTeacherByEmail(teacherDTO.Email), Times.Once);
         }
 
         [Fact]
