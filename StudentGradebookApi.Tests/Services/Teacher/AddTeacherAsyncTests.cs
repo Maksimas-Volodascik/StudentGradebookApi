@@ -47,7 +47,6 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         [Fact]
         public async Task AddTeacherAsync_ValidData_ReturnsSuccessResult()
         {
-            //Arrange
             var teacherDTO = TeacherDTOBuilder.Build();
 
             var webUser = new WebUsers
