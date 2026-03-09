@@ -64,7 +64,7 @@ namespace StudentGradebookApi.Services.ClassesServices
 
         public Result ValidateTeacherData(ClassesContentsDTO classesContentsDTO)
         {
-            if (Regex.IsMatch(classesContentsDTO.academicYear, @"^(\d{4})-(\d{4})$") && int.Parse(classesContentsDTO.academicYear.Split('-')[1]) == int.Parse(classesContentsDTO.academicYear.Split('-')[0]) + 1)
+            if (!Regex.IsMatch(classesContentsDTO.academicYear, @"^(\d{4})-(\d{4})$") && int.Parse(classesContentsDTO.academicYear.Split('-')[1]) != int.Parse(classesContentsDTO.academicYear.Split('-')[0]) + 1)
                 return Result.Failure(Errors.ClassesErrors.InvalidClassesAcademicYear);
 
             if (classesContentsDTO.room < 100 || classesContentsDTO.room > 1000)
