@@ -19,15 +19,13 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         private readonly TeacherService _teacherService;
         private readonly Mock<ITeachersRepository> _teacherRepMock;
         private readonly Mock<IUserService> _userServiceMock;
-        private readonly Mock<IClassSubjectsService> _classSubjMock;
 
         public EditTeacherAsyncTests()
         {
             _teacherRepMock = new Mock<ITeachersRepository>();
-            _classSubjMock = new Mock<IClassSubjectsService>();
             _userServiceMock = new Mock<IUserService>();
 
-            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object, _classSubjMock.Object);
+            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object);
         }
         public static class TeacherDTOBuilder
         {
@@ -47,9 +45,7 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         [Fact]
         public async Task EditTeacherAsync_ValidData_ReturnsSuccessResult()
         {
-            //Arrange
             var teacherDTO = TeacherDTOBuilder.Build();
-
             var oldTeacherData = new Teachers
             {
                 Id = 1,
@@ -60,9 +56,6 @@ namespace StudentGradebookApi.Tests.Services.Teacher
             _teacherRepMock.Setup(t => t.GetByIdAsync(1))
                 .ReturnsAsync(oldTeacherData);
 
-            _classSubjMock.Setup(c => c.EditSubjectClassTeacher(teacherDTO.ClassSubjectId,1))
-                .ReturnsAsync(Result.Success);
-
             Teachers updatedTeacher = null;
             _teacherRepMock.Setup(t => t.Update(It.IsAny<Teachers>()))
                 .Callback<Teachers>(t => updatedTeacher = t);
@@ -70,16 +63,13 @@ namespace StudentGradebookApi.Tests.Services.Teacher
             _teacherRepMock.Setup(t => t.SaveChangesAsync())
                 .Returns(Task.CompletedTask);
 
-            //Act
             var result = await _teacherService.EditTeacherAsync(1, teacherDTO);
             
-            //Assert
             Assert.True(result.IsSuccess);
             Assert.Same(oldTeacherData, updatedTeacher);
             Assert.Equal(teacherDTO.FirstName, updatedTeacher.FirstName);
             Assert.Equal(teacherDTO.LastName, updatedTeacher.LastName);
             _teacherRepMock.Verify(t => t.GetByIdAsync(1), Times.Once);
-            _classSubjMock.Verify(c => c.EditSubjectClassTeacher(teacherDTO.ClassSubjectId, 1), Times.Once);
             _teacherRepMock.Verify(t => t.Update(It.IsAny<Teachers>()), Times.Once);
             _teacherRepMock.Verify(t => t.SaveChangesAsync(), Times.Once);
             
@@ -88,7 +78,6 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         [Fact]
         public async Task EditTeacherAsync_InvalidTeacherData_ReturnsFailureResult()
         {
-            // Arrange
             var invalidTeacherDTO = new TeacherRequestDTO
             {
                 Email = "",
@@ -98,35 +87,27 @@ namespace StudentGradebookApi.Tests.Services.Teacher
                 ClassSubjectId = 1
             };
 
-            // Act
             var result = await _teacherService.EditTeacherAsync(1, invalidTeacherDTO);
 
-            // Assert
             Assert.False(result.IsSuccess);
             Assert.NotNull(result.Error);
             _teacherRepMock.VerifyNoOtherCalls();
-            _classSubjMock.VerifyNoOtherCalls();
         }
 
         [Fact]
         public async Task EditTeacherAsync_TeacherNotFound_ReturnsFailureResult()
         {
-            // Arrange
             var teacherDTO = TeacherDTOBuilder.Build();
 
             _teacherRepMock.Setup(t => t.GetByIdAsync(1))
                 .ReturnsAsync((Teachers)null); 
 
-            // Act
             var result = await _teacherService.EditTeacherAsync(1, teacherDTO);
 
-            // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal(Errors.TeacherErrors.TeacherNotFound, result.Error);
-
             _teacherRepMock.Verify(t => t.GetByIdAsync(1), Times.Once);
             _teacherRepMock.VerifyNoOtherCalls();
-            _classSubjMock.VerifyNoOtherCalls();
         }
     }
 }

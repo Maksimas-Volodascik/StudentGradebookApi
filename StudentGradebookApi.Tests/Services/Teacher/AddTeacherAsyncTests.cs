@@ -21,14 +21,12 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         private readonly TeacherService _teacherService;
         private readonly Mock<ITeachersRepository> _teacherRepMock;
         private readonly Mock<IUserService> _userServiceMock;
-        private readonly Mock<IClassSubjectsService> _classSubjMock;
 
         public AddTeacherAsyncTests() { 
             _teacherRepMock = new Mock<ITeachersRepository>();
-            _classSubjMock = new Mock<IClassSubjectsService>();
             _userServiceMock = new Mock<IUserService>();
 
-            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object, _classSubjMock.Object);
+            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object);
         }
 
         public static class TeacherDTOBuilder
@@ -76,19 +74,13 @@ namespace StudentGradebookApi.Tests.Services.Teacher
                     UserID = webUser.Id,
                 });
 
-            _classSubjMock.Setup(c => c.EditSubjectClassTeacher(teacherDTO.ClassSubjectId, It.IsAny<int>()))
-                .ReturnsAsync(Result.Success);
-
-            //Act
             var result = await _teacherService.AddTeacherAsync(teacherDTO);
 
-            //Assert
             Assert.True(result.IsSuccess);
             _userServiceMock.Verify(u => u.RegisterAsync(It.IsAny<NewUserDTO>()), Times.Once);
             _teacherRepMock.Verify(t => t.AddAsync(It.IsAny<Teachers>()), Times.Once);
             _teacherRepMock.Verify(t => t.SaveChangesAsync(), Times.Once);
             _teacherRepMock.Verify(t => t.GetTeacherByEmail(teacherDTO.Email), Times.Once);
-            _classSubjMock.Verify(c => c.EditSubjectClassTeacher(teacherDTO.ClassSubjectId, It.IsAny<int>()), Times.Once);
         }
 
         [Fact]

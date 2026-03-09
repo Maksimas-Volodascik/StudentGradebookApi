@@ -19,21 +19,18 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         private readonly TeacherService _teacherService;
         private readonly Mock<ITeachersRepository> _teacherRepMock;
         private readonly Mock<IUserService> _userServiceMock;
-        private readonly Mock<IClassSubjectsService> _classSubjMock;
 
         public DeleteTeacherAsyncTests()
         {
             _teacherRepMock = new Mock<ITeachersRepository>();
-            _classSubjMock = new Mock<IClassSubjectsService>();
             _userServiceMock = new Mock<IUserService>();
 
-            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object, _classSubjMock.Object);
+            _teacherService = new TeacherService(_teacherRepMock.Object, _userServiceMock.Object);
         }
 
         [Fact]
         public async Task DeleteTeacherAsync_TeacherExistsAndUserDeleted_ReturnsSuccess()
         {
-            // Arrange
             var teacher = new Teachers { Id = 1, UserID = 2};
 
             _teacherRepMock.Setup(r => r.GetByIdAsync(1))
@@ -42,13 +39,10 @@ namespace StudentGradebookApi.Tests.Services.Teacher
             _userServiceMock.Setup(u => u.DeleteUserAsync(2))
                 .ReturnsAsync(Result.Success());
 
-            // Act
             var result = await _teacherService.DeleteTeacherAsync(1);
 
-            // Assert
             Assert.True(result.IsSuccess);
             Assert.Null(result.Error);
-
             _teacherRepMock.Verify(r => r.GetByIdAsync(1), Times.Once);
             _userServiceMock.Verify(u => u.DeleteUserAsync(2), Times.Once);
         }
@@ -56,17 +50,13 @@ namespace StudentGradebookApi.Tests.Services.Teacher
         [Fact]
         public async Task DeleteTeacherAsync_TeacherNotFound_ReturnsFailure()
         {
-            // Arrange
             _teacherRepMock.Setup(r => r.GetByIdAsync(1))
                 .ReturnsAsync((Teachers)null); 
 
-            // Act
             var result = await _teacherService.DeleteTeacherAsync(1);
 
-            // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal(Errors.TeacherErrors.TeacherNotFound, result.Error);
-
             _teacherRepMock.Verify(r => r.GetByIdAsync(1), Times.Once);
             _userServiceMock.VerifyNoOtherCalls();
         }
