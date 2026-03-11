@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
+using StackExchange.Redis;
 using StudentGradebookApi.Data;
 using StudentGradebookApi.Mappings;
 using StudentGradebookApi.Middleware;
@@ -64,8 +65,7 @@ namespace StudentGradebookApi
             builder.Services.AddScoped<ITeacherService, TeacherService>();
             builder.Services.AddScoped<IClassesServices, ClassesServices>();
             builder.Services.AddScoped<ISubjectsService, SubjectsService>();
-            //
-
+            
             //Store Logs in File
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
@@ -73,8 +73,11 @@ namespace StudentGradebookApi
                 .CreateLogger();
 
             builder.Host.UseSerilog();
-            //
-  
+
+            ////Redis cache
+            //builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost"));
+            //builder.Services.AddHttpClient();
+
             builder.Services.AddCustomRateLimiting(); //Rate Limit
             
             builder.Services.AddAutoMapper(cfg => { }, typeof(StudentProfile).Assembly); //AutoMapper
